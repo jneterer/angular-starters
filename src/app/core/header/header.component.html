@@ -1,19 +1,20 @@
 <mat-toolbar class="header">
-  <button mat-flat-button>
-    <img class="app-logo" [src]="theme[currentTheme].logoUrl" alt="Angular Starters Logo">
-    <span>
-      Angular Starters
-    </span>
-  </button>
-  <button mat-button class="header-button">Starters</button>
-  <button mat-button class="header-button">Themes</button>
-  <button mat-button class="header-button">Sites</button>
-  
-  <span style="flex: 1 1 auto;"></span>
-  
-  <mat-form-field class="search-form-field" appearance="fill">
-    <input matInput placeholder="Search">
-    <mat-icon matSuffix>search</mat-icon>
-  </mat-form-field>
-  <button mat-button (click)="toggleTheme($event)" class="theme-icon-button"><mat-icon class="theme-icon">{{ theme[currentTheme].icon }}</mat-icon></button>
+  <div class="header-container">
+    <button mat-flat-button>
+      <img class="header-logo" [src]="theme[currentTheme].logoUrl" alt="Angular Starters Logo">
+      <span class="header-name">
+        Angular Starters
+      </span>
+    </button>
+    <div app-header-buttons class="header-nav-buttons"></div>
+    
+    <span class="header-spacer"></span>
+    
+    <mat-form-field class="search-form-field" appearance="fill">
+      <input matInput placeholder="Search">
+      <mat-icon matSuffix>search</mat-icon>
+    </mat-form-field>
+    <button mat-button (click)="toggleTheme($event)" class="theme-icon-button"><mat-icon class="theme-icon">{{ theme[currentTheme].icon }}</mat-icon></button>
+  </div>
+  <div app-header-buttons class="header-nav-buttons-responsive"></div>
 </mat-toolbar>

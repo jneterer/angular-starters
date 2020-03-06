@@ -1,0 +1,103 @@
+$button-margin-left-above-desktop: 1em;
+$button-margin-left-below-desktop: .5em;
+.header {
+  @include belowDesktop {
+    @include aboveTablet {
+      padding: .5em !important;
+    }
+  }
+  @include belowTablet {
+    flex-direction: column !important;
+    height: unset !important;
+    justify-content: space-between;
+    padding: .5em .25em !important;
+  }
+  &-container {
+    display: flex;
+    width: 100%;
+    > button {
+      @include belowIpad {
+        padding: 0;
+        width: 1em;
+      }
+    }
+  }
+  &-logo {
+    width: 40px;
+    @include aboveIpad {
+      margin: 0 4px 3px 0;
+    }
+  }
+  &-name {
+    @include belowIpad {
+      display: none;
+    }
+  }
+  &-nav-buttons {
+    .header-button {
+      padding: .2em 1em;
+      @include aboveDesktop {
+        margin-left: $button-margin-left-above-desktop;
+      }
+      &:not(:first-child) {
+        @include belowDesktop {
+          margin-left: $button-margin-left-below-desktop;
+        }
+      }
+    }
+    @include belowTablet {
+      display: none;
+    }
+    &-responsive {
+      @include aboveTablet {
+        display: none;
+      }
+      @include belowTablet {
+        display: flex;
+        justify-content: space-around;
+        margin-top: .5em;
+        width: 100%;
+        button {
+          margin: 0 !important;
+          width: 100%;
+        }
+      }
+    }
+  }
+  &-spacer {
+    flex: 1 1 auto;
+    @include belowIpad() {
+      display: none;
+    }
+  }
+  button {
+    font-size: 1em;
+  }
+  .theme-icon-button {
+    @include aboveDesktop {
+      margin-left: $button-margin-left-above-desktop;
+    }
+    @include belowDesktop {
+      @include aboveIpad {
+        margin-left: $button-margin-left-below-desktop;
+      }
+      @include belowIpad {
+        width: 1em;
+      }
+    }
+    .mat-icon {
+      font-size: 1.15em;
+      padding: .35em 0;
+    }
+  }
+  .search-form-field {
+    font-size: .7em;
+    @include aboveIpad {
+      width: 350px;
+    }
+    @include belowIpad {
+      margin: 0 .5em;
+      flex-grow: 1;
+    }
+  }
+}

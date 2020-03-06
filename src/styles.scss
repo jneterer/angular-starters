@@ -248,3 +248,5 @@ body {
   --text-warn-lighter-color: #{$dark-primary-text};
   --text-warn-darker-color: #{$light-primary-text};
 }
+@import './styles/breakpoints';
+@import './styles/components/header.component';
