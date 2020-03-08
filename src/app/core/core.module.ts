@@ -4,12 +4,16 @@ import { SharedModule } from '../shared/shared.module';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderButtonsComponent } from './header/header-buttons/header-buttons.component';
 import { HeaderComponent } from './header/header.component';
+import { HeroComponent } from './home/hero/hero.component';
+import { HomeComponent } from './home/home.component';
 
 @NgModule({
   declarations: [
     FooterComponent,
     HeaderComponent,
-    HeaderButtonsComponent
+    HeaderButtonsComponent,
+    HomeComponent,
+    HeroComponent
   ],
   imports: [
     CommonModule,

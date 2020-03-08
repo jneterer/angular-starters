@@ -1,0 +1,75 @@
+.hero {
+  &es-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  &-container {
+    align-items: flex-start;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 auto;
+    padding: 4em 0;
+    @include aboveDesktop {
+      max-width: 80%;
+    }
+    @include belowDesktop {
+      max-width: 90%;
+      @include belowIpad {
+        align-items: center;
+        flex-wrap: wrap-reverse;
+      }
+    }
+    &.reversed {
+      @include aboveIpad {
+        flex-flow: row-reverse;
+      }
+    }
+  }
+  &-image {
+    @include aboveIpad {
+      width: 48%;
+    }
+    @include belowIpad {
+      margin: 0 auto;
+      @include aboveTablet {
+        width: 60% !important;
+      }
+      @include belowTablet {
+        width: 100% !important;
+      }
+    }
+  }
+  &-text-container {
+    @include aboveIpad {
+      padding: 2em 0;
+      width: 47%;
+    }
+    @include belowIpad {
+      text-align: center;
+    }
+    h2 {
+      @include aboveIpad {
+        font-size: 3em;
+      }
+      @include belowIpad {
+        font-size: 2.5em;
+      }
+    }
+    p {
+      font-weight: 100;
+      line-height: 1.5em;
+      @include aboveIpad {
+        font-size: 2em;
+      }
+      @include belowIpad {
+        font-size: 1.5em;
+      }
+    }
+    button {
+      font-size: 1.5em;
+      margin: 1em 0 2em;
+      padding: .5em 1.5em;
+    }
+  }
+}

@@ -1,0 +1,10 @@
+<div class="home-container">
+  <div class="welcome-text">
+    <h1>Angular Starters</h1>
+    <p>Your one-stop <strong>Open Source</strong> shop for great Angular starter projects!</p>
+    <button mat-raised-button color="primary">Explore Starters <mat-icon>arrow_forwards</mat-icon></button>
+  </div>
+  <div class="heroes-container">
+    <app-hero *ngFor="let hero of heroData" [heroData]="hero"></app-hero>
+  </div>
+</div>

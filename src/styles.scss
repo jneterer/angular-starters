@@ -181,16 +181,17 @@ $mat-warn: (
 );
 $theme-warn: mat-palette($mat-warn, main, lighter, darker);;
 
-$theme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
-$altTheme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
+$lightTheme: mat-light-theme($theme-primary, $theme-accent, $theme-warn);
+$darkTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 
 // Theme Init
-@include angular-material-theme($theme);
+@include angular-material-theme($lightTheme);
 
-.theme-alternate {
-  @include angular-material-theme($altTheme);
+.dark-theme {
+  @include angular-material-theme($darkTheme);
+  background: $dark-bg-lighter-5;
+  color: white;
 }
-
 
 // Specific component overrides, pieces that are not in line with the general theming
 
@@ -249,4 +250,6 @@ body {
   --text-warn-darker-color: #{$light-primary-text};
 }
 @import './styles/breakpoints';
+@import './styles/components/home/hero.component';
+@import './styles/components/home/home.component.scss';
 @import './styles/components/header.component';

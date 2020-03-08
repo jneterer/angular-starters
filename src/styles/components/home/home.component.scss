@@ -1,0 +1,42 @@
+.home-container {
+  @include aboveTablet {
+    padding: 6em 0;
+  }
+  @include belowTablet {
+    @include abovePhone {
+      padding: 4em .5em;
+    }
+    @include belowPhone {
+      padding: 0 .5em;
+    }
+  }
+  .welcome-text {
+    text-align: center;
+    padding: 4em 0;
+    h1 {
+      font-weight: 800;
+      line-height: 1.25em;
+      @include aboveTablet {
+        font-size: 5em;
+      }
+      @include belowTablet {
+        font-size: 3em;
+      }
+    }
+    p {
+      font-weight: 100;
+      line-height: 1.5em;
+      margin-bottom: 1.25em;
+      @include aboveTablet {
+        font-size: 3em;
+      }
+      @include belowTablet {
+        font-size: 2em;
+      }
+    }
+    button {
+      font-size: 2em;
+      padding: .5em 1em;
+    }
+  }
+}
