@@ -7,36 +7,54 @@
       padding: 4em .5em;
     }
     @include belowPhone {
-      padding: 0 .5em;
+      padding: 2em .5em;
     }
   }
-  .welcome-text {
-    text-align: center;
-    padding: 4em 0;
-    h1 {
-      font-weight: 800;
-      line-height: 1.25em;
+  .welcome {
+    &-logo {
       @include aboveTablet {
-        font-size: 5em;
+        width: 300px;
       }
       @include belowTablet {
-        font-size: 3em;
+        width: 200px;
       }
     }
-    p {
-      font-weight: 100;
-      line-height: 1.5em;
-      margin-bottom: 1.25em;
+    &-text {
+      text-align: center;
+      @include aboveDesktop {
+        padding: 0 8em;
+      }
       @include aboveTablet {
-        font-size: 3em;
+        padding-bottom: 4em;
       }
       @include belowTablet {
+        padding-bottom: 2em;
+      }
+      h1 {
+        font-weight: 800;
+        line-height: 1.25em;
+        @include aboveTablet {
+          font-size: 5em;
+        }
+        @include belowTablet {
+          font-size: 3em;
+        }
+      }
+      p {
+        font-weight: 100;
+        line-height: 1.5em;
+        margin-bottom: 1.25em;
+        @include aboveTablet {
+          font-size: 3em;
+        }
+        @include belowTablet {
+          font-size: 2em;
+        }
+      }
+      button {
         font-size: 2em;
+        padding: .5em 1em;
       }
-    }
-    button {
-      font-size: 2em;
-      padding: .5em 1em;
     }
   }
 }

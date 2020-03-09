@@ -44,6 +44,11 @@ $button-margin-left-below-desktop: .5em;
           margin-left: $button-margin-left-below-desktop;
         }
       }
+      &:nth-child(n+4) {
+        @include belowDesktop {
+          display: none;
+        }
+      }
     }
     @include belowTablet {
       display: none;
