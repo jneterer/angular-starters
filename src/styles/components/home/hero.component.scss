@@ -5,19 +5,24 @@
     flex-wrap: wrap;
   }
   &-container {
-    align-items: flex-start;
+    align-items: center;
     display: flex;
     justify-content: space-between;
     margin: 0 auto;
-    padding: 4em 0;
     @include aboveDesktop {
       max-width: 80%;
+    }
+    @include aboveIpad {
+      padding: 4em 0 0;
     }
     @include belowDesktop {
       max-width: 90%;
       @include belowIpad {
         align-items: center;
         flex-wrap: wrap-reverse;
+      }
+      @include belowTablet {
+        padding: 3em 0 0;
       }
     }
     &.reversed {
@@ -46,6 +51,7 @@
       width: 47%;
     }
     @include belowIpad {
+      margin: 0 auto;
       text-align: center;
     }
     h2 {

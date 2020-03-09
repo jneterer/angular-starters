@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { IHeroData } from 'src/app/contracts/components/hero/ihero-data';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { ITheme } from 'src/app/contracts/shared/theme';
+import { IHeroData } from '../../contracts/components/hero/ihero-data';
+import { ContentService } from '../../shared/content/content.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
+  private unsubscribe: Subject<any> = new Subject<any>();
   readonly heroData: IHeroData[] = [
     {
       imgUrl: '../../../assets/undraw_software_engineer_lvl5.svg',
@@ -13,7 +18,7 @@ export class HomeComponent implements OnInit {
       reversed: false,
       title: 'Starters',
       subtitle: 
-      `Access Angular starter projects from developers all over the world and get your own projects off the ground and running in minutes in categories like: Headless CMS, MongoDB Stitch, Angular Universal, and so much more!`,
+      `Find Angular starter projects built for Headless CMS, Userbase, MongoDB Stitch, Angular Universal, and so much more!`,
       buttonText: 'Explore Starters',
       buttonUrl: '/starters',
       buttonIcon: 'arrow_forwards'
@@ -24,7 +29,7 @@ export class HomeComponent implements OnInit {
       reversed: true,
       title: 'Themes',
       subtitle: 
-      `Begin your project with a well thought out design and pre-built theme using some of the best UI frameworks like: Angular Material, TailwindCSS, Bootstrap, and more!`,
+      `Choose from an amazing collection of pre-built themed Angular projects using some of the best UI frameworks like Angular Material, TailwindCSS, Bootstrap, and more!`,
       buttonText: 'Explore Themes',
       buttonUrl: '/themes',
       buttonIcon: 'arrow_forwards'
@@ -35,16 +40,24 @@ export class HomeComponent implements OnInit {
       reversed: false,
       title: 'Sites',
       subtitle: 
-      `Browse sites built using one of our starters or themes!`,
+      `Browse featured sites built using a starter or themed project!`,
       buttonText: 'Explore Sites',
       buttonUrl: '/sites',
       buttonIcon: 'arrow_forwards'
     }
-  ]
+  ];
+  currentTheme: ITheme;
 
-  constructor() { }
+  constructor(private contentService: ContentService) { }
 
   ngOnInit(): void {
+    // Subscribe to any theme changes.
+    this.contentService.currentThemeConfig$.pipe(takeUntil(this.unsubscribe)).subscribe((theme: ITheme) => this.currentTheme = theme);
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }

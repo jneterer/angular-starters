@@ -1,7 +1,7 @@
 <mat-toolbar class="header">
   <div class="header-container">
     <button mat-flat-button>
-      <img class="header-logo" [src]="theme[currentTheme].logoUrl" alt="Angular Starters Logo">
+      <img class="header-logo" [src]="currentTheme.headerLogoUrl" alt="Angular Starters Logo">
       <span class="header-name">
         Angular Starters
       </span>
@@ -14,7 +14,7 @@
       <input matInput placeholder="Search">
       <mat-icon matSuffix>search</mat-icon>
     </mat-form-field>
-    <button mat-button (click)="toggleTheme($event)" class="theme-icon-button"><mat-icon class="theme-icon">{{ theme[currentTheme].icon }}</mat-icon></button>
+    <button mat-button (click)="toggleTheme($event)" class="theme-icon-button"><mat-icon class="theme-icon">{{ currentTheme.icon }}</mat-icon></button>
   </div>
   <div app-header-buttons class="header-nav-buttons-responsive"></div>
 </mat-toolbar>
