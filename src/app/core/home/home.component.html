@@ -6,6 +6,6 @@
     <button mat-raised-button color="primary">Read More <mat-icon>arrow_downwards</mat-icon></button>
   </div>
   <div class="heroes-container">
-    <app-hero *ngFor="let hero of heroData" [heroData]="hero"></app-hero>
+    <div app-hero *ngFor="let hero of heroData" [heroData]="hero" class="hero-container" [class.reversed]="hero.reversed"></div >
   </div>
 </div>
