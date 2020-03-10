@@ -24,14 +24,15 @@
         padding: 3em 1em;
       }
     }
-    .dark-theme & {
-      &:nth-child(even) {
-        background-color: $dark-background;
-      }
+    &:nth-child(odd) {
+      background-color: $accent-color;
     }
-    :not(dark-theme) & {
+    .dark-theme & {
+      &:nth-child(odd) {
+        background-color: $dark-bg-lighter-5;
+      }
       &:nth-child(even) {
-        background-color: $accent-color;
+        background-color: $dark-background !important;
       }
     }
     &.reversed {

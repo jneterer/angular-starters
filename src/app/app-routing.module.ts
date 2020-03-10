@@ -42,6 +42,14 @@ const routes: Routes = [
     component: InDevelopmentComponent,
     resolve: [ ContentResolverService ]
   },
+  { 
+    path: 'contributing',
+    data: {
+      title: 'Contributing'
+    },
+    component: InDevelopmentComponent,
+    resolve: [ ContentResolverService ]
+  },
   { path: '**', redirectTo: '/' }
 ];
 

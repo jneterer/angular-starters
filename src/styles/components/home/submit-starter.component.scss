@@ -1,0 +1,32 @@
+.submit-starter-container {
+  background-color: #004aad;
+  .dark-theme & {
+    background-color: $dark-background;
+  }
+  color: white;
+  padding: 4em 1em;
+  text-align: center;
+  h2 {
+    @include aboveIpad {
+      font-size: 3em;
+    }
+    @include belowIpad {
+      font-size: 2.5em;
+    }
+  }
+  p {
+    font-weight: 100;
+    line-height: 1.5em;
+    @include aboveIpad {
+      font-size: 2em;
+    }
+    @include belowIpad {
+      font-size: 1.5em;
+    }
+  }
+  a {
+    font-size: 1.5em;
+    margin-top: 1em;
+    padding: 0.5em 1.5em;
+  }
+}
