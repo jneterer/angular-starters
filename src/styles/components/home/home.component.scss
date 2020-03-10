@@ -4,10 +4,10 @@
   }
   @include belowTablet {
     @include abovePhone {
-      padding: 4em .5em;
+      padding: 4em 0;
     }
     @include belowPhone {
-      padding: 2em .5em;
+      padding: 2em 0;
     }
   }
   .welcome {
