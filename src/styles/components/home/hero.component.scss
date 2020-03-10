@@ -10,19 +10,26 @@
     justify-content: space-between;
     margin: 0 auto;
     @include aboveDesktop {
-      max-width: 80%;
-    }
-    @include aboveIpad {
-      padding: 4em 0 0;
+      padding: 4em 10%;
     }
     @include belowDesktop {
-      max-width: 90%;
       @include belowIpad {
         align-items: center;
         flex-wrap: wrap-reverse;
       }
+      @include aboveTablet {
+        padding: 4em 5%;
+      }
       @include belowTablet {
-        padding: 3em 0 0;
+        padding: 3em 1em;
+      }
+    }
+    &:nth-child(odd):not(:only-child) {
+      background-color: $accent-color;
+    }
+    .dark-theme & {
+      &:nth-child(odd):not(:only-child) {
+        background-color: $dark-background !important;
       }
     }
     &.reversed {
@@ -47,7 +54,6 @@
   }
   &-text-container {
     @include aboveIpad {
-      padding: 2em 0;
       width: 47%;
     }
     @include belowIpad {
@@ -63,8 +69,6 @@
       }
     }
     p {
-      font-weight: 100;
-      line-height: 1.5em;
       @include aboveIpad {
         font-size: 2em;
       }
@@ -72,10 +76,13 @@
         font-size: 1.5em;
       }
     }
-    button {
+    a {
       font-size: 1.5em;
-      margin: 1em 0 2em;
+      margin: 1em 0 0;
       padding: .5em 1.5em;
+      @include belowIpad {
+        margin: 1em 0 2em;
+      }
     }
   }
 }

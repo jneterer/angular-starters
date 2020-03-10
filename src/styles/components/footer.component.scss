@@ -1,0 +1,42 @@
+.footer-container {
+  display: flex;
+  justify-content: space-around;
+  padding: 4em;
+  @include belowTablet {
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  .link-section {
+    display: flex;
+    flex-direction: column;
+    @include belowTablet {
+      &:nth-child(n+2) {
+        margin-top: 3em;
+      }
+    }
+    h3 {
+      font-size: 1.5em;
+      font-weight: 800;
+      @include belowTablet {
+        margin-bottom: 0px;
+      }
+    }
+    a {
+      color: black;
+      font-size: 1.25em;
+      margin-top: .75em;
+      text-decoration: none;
+      transition: all .25s ease;
+      &:hover {
+        color: $primary-color;
+        text-decoration: underline;
+      }
+      .dark-theme & {
+        color: white;
+      }
+      img {
+        width: 30px;
+      }
+    }
+  }
+}

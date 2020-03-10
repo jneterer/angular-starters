@@ -9,6 +9,9 @@
 
 // Fonts
 // @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
+
+$primary-color: #004aad;
+$accent-color: #e2e9f1;
      
 $fontConfig: (
   display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
@@ -156,10 +159,10 @@ $mat-primary: (
 $theme-primary: mat-palette($mat-primary, main, lighter, darker);
 
 $mat-accent: (
-  main: #e2e9f1,
+  main: $accent-color,
   lighter: #f6f8fb,
   darker: #d6dfeb,
-  200: #e2e9f1, // For slide toggle,
+  200: $accent-color, // For slide toggle,
   contrast : (
     main: $dark-primary-text,
     lighter: $dark-primary-text,
@@ -202,12 +205,10 @@ $darkTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   min-width: 3em;
   line-height: 36.4px
 }
-
 .mat-standard-chip {
   padding: .5em .85em;
   min-height: 2.5em;
 }
-
 .search-form-field {
   .mat-form-field-wrapper {
     padding-bottom: 0px;
@@ -227,7 +228,7 @@ $darkTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
 }
 
 html, body { height: 100%; }
-body { 
+body {
   margin: 0;
   font-family: Roboto, "Helvetica Neue", sans-serif;
   --primary-color: #004aad;
@@ -236,7 +237,7 @@ body {
   --text-primary-color: #{$light-primary-text};
   --text-primary-lighter-color: #{$dark-primary-text};
   --text-primary-darker-color: #{$light-primary-text};
-  --accent-color: #e2e9f1;
+  --accent-color: $accent-color;
   --accent-lighter-color: #f6f8fb;
   --accent-darker-color: #d6dfeb;
   --text-accent-color: #{$dark-primary-text};
@@ -249,7 +250,15 @@ body {
   --text-warn-lighter-color: #{$dark-primary-text};
   --text-warn-darker-color: #{$light-primary-text};
 }
+
+p {
+  font-weight: 100;
+  line-height: 1.5em;
+}
+
 @import './styles/breakpoints';
 @import './styles/components/home/hero.component';
 @import './styles/components/home/home.component.scss';
+@import './styles/components/home/submit-starter.component.scss';
+@import './styles/components/footer.component.scss';
 @import './styles/components/header.component';

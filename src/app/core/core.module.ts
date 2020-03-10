@@ -6,6 +6,8 @@ import { HeaderButtonsComponent } from './header/header-buttons/header-buttons.c
 import { HeaderComponent } from './header/header.component';
 import { HeroComponent } from './home/hero/hero.component';
 import { HomeComponent } from './home/home.component';
+import { SubmitStarterComponent } from './home/submit-starter/submit-starter.component';
+import { InDevelopmentComponent } from './in-development/in-development.component';
 
 @NgModule({
   declarations: [
@@ -13,7 +15,9 @@ import { HomeComponent } from './home/home.component';
     HeaderComponent,
     HeaderButtonsComponent,
     HomeComponent,
-    HeroComponent
+    HeroComponent,
+    InDevelopmentComponent,
+    SubmitStarterComponent
   ],
   imports: [
     CommonModule,
