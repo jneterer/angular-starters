@@ -2,7 +2,27 @@
 <div class="hero-text-container">
   <h2>{{ heroData.title }}</h2>
   <p [innerHTML]="heroData.subtitle"></p>
-  <button *ngIf="heroData.buttonText && heroData.buttonUrl" mat-raised-button color="primary" class="take-action-button">
-    {{ heroData.buttonText }} <mat-icon *ngIf="heroData.buttonIcon">{{ heroData.buttonIcon }}</mat-icon>
-  </button>
+  <ng-container *ngIf="heroData.internal; else external">
+    <a 
+      *ngIf="heroData.buttonText && heroData.buttonUrl"
+      mat-raised-button
+      [routerLink]="heroData.buttonUrl"
+      color="primary"
+      class="take-action-button"
+    >
+      {{ heroData.buttonText }} <mat-icon *ngIf="heroData.buttonIcon">{{ heroData.buttonIcon }}</mat-icon>
+    </a>
+  </ng-container>
+  <ng-template #external>
+    <a 
+      *ngIf="heroData.buttonText && heroData.buttonUrl"
+      mat-raised-button
+      [href]="heroData.buttonUrl"
+      target="_blank"
+      color="primary"
+      class="take-action-button"
+    >
+      {{ heroData.buttonText }} <mat-icon *ngIf="heroData.buttonIcon">{{ heroData.buttonIcon }}</mat-icon>
+    </a>
+  </ng-template>
 </div>

@@ -21,6 +21,7 @@ export class HomeComponent implements OnInit {
       `Find Angular starter projects built for Headless CMS, Userbase, MongoDB Stitch, Angular Universal, and so much more!`,
       buttonText: 'Explore Starters',
       buttonUrl: '/starters',
+      internal: true,
       buttonIcon: 'arrow_forwards'
     },
     {
@@ -32,6 +33,7 @@ export class HomeComponent implements OnInit {
       `Choose from an amazing collection of pre-built themed Angular projects using some of the best UI frameworks like Angular Material, TailwindCSS, Bootstrap, and more!`,
       buttonText: 'Explore Themes',
       buttonUrl: '/themes',
+      internal: true,
       buttonIcon: 'arrow_forwards'
     },
     {
@@ -43,6 +45,7 @@ export class HomeComponent implements OnInit {
       `Browse featured sites built using a starter or themed project!`,
       buttonText: 'Explore Sites',
       buttonUrl: '/sites',
+      internal: true,
       buttonIcon: 'arrow_forwards'
     }
   ];
@@ -53,6 +56,13 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     // Subscribe to any theme changes.
     this.contentService.currentThemeConfig$.pipe(takeUntil(this.unsubscribe)).subscribe((theme: ITheme) => this.currentTheme = theme);
+  }
+
+  // Smooth scroll to the heroes container
+  scrollToHeroes(): void {
+    document.querySelector('.heroes-container')?.scrollIntoView({
+      behavior: 'smooth'
+    });
   }
 
   ngOnDestroy(): void {

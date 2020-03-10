@@ -25,12 +25,12 @@
       }
     }
     .dark-theme & {
-      &:nth-child(odd) {
+      &:nth-child(even) {
         background-color: $dark-background;
       }
     }
     :not(dark-theme) & {
-      &:nth-child(odd) {
+      &:nth-child(even) {
         background-color: $accent-color;
       }
     }
@@ -80,7 +80,7 @@
         font-size: 1.5em;
       }
     }
-    button {
+    a {
       font-size: 1.5em;
       margin: 1em 0 0;
       padding: .5em 1.5em;

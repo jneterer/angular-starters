@@ -6,5 +6,6 @@ export interface IHeroData {
   subtitle: string;
   buttonText?: string;
   buttonUrl?: string;
+  internal?: boolean;
   buttonIcon?: string;
 }
