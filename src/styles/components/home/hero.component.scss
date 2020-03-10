@@ -24,14 +24,11 @@
         padding: 3em 1em;
       }
     }
-    &:nth-child(odd) {
+    &:nth-child(odd):not(:only-child) {
       background-color: $accent-color;
     }
     .dark-theme & {
-      &:nth-child(odd) {
-        background-color: $dark-bg-lighter-5;
-      }
-      &:nth-child(even) {
+      &:nth-child(odd):not(:only-child) {
         background-color: $dark-background !important;
       }
     }
@@ -72,8 +69,6 @@
       }
     }
     p {
-      font-weight: 100;
-      line-height: 1.5em;
       @include aboveIpad {
         font-size: 2em;
       }

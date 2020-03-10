@@ -1,1 +1,26 @@
-<p>footer works!</p>
+<div class="footer-container">
+  <div class="link-section">
+    <h3>Navigation</h3>
+    <a routerLink="/starters">Starters</a>
+    <a routerLink="/themes">Themes</a>
+    <a routerLink="/sites">Sites</a>
+    <a routerLink="/about">About</a>
+  </div>
+  <div class="link-section">
+    <h3>Resources</h3>
+    <a routerLink="/contributing">Contributing</a>
+  </div>
+  <div class="link-section">
+    <h3>Follow Us</h3>
+    <a href="https://github.com/jneterer/angular-starters" target="_blank">
+      <img [src]="currentTheme.githubIcon" alt="Github Icon">
+    </a>
+    <a href="https://twitter.com/jacobneterer" target="_blank">
+      <img [src]="currentTheme.twitterIcon" alt="Twitter Icon">
+    </a>
+    <a href="https://www.linkedin.com/in/jacobneterer" target="_blank">
+      <img [src]="currentTheme.linkedinIcon" alt="LinkedIn Icon">
+    </a>
+    
+  </div>
+</div>

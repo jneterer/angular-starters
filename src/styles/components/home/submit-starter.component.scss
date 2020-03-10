@@ -1,7 +1,7 @@
 .submit-starter-container {
   background-color: #004aad;
   .dark-theme & {
-    background-color: $dark-background;
+    background-color: black;
   }
   color: white;
   padding: 4em 1em;
@@ -15,8 +15,6 @@
     }
   }
   p {
-    font-weight: 100;
-    line-height: 1.5em;
     @include aboveIpad {
       font-size: 2em;
     }

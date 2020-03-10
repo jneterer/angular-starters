@@ -10,6 +10,7 @@
 // Fonts
 // @import url('https://fonts.googleapis.com/css?family=Roboto:300,400,500');
 
+$primary-color: #004aad;
 $accent-color: #e2e9f1;
      
 $fontConfig: (
@@ -204,12 +205,10 @@ $darkTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   min-width: 3em;
   line-height: 36.4px
 }
-
 .mat-standard-chip {
   padding: .5em .85em;
   min-height: 2.5em;
 }
-
 .search-form-field {
   .mat-form-field-wrapper {
     padding-bottom: 0px;
@@ -251,8 +250,15 @@ body {
   --text-warn-lighter-color: #{$dark-primary-text};
   --text-warn-darker-color: #{$light-primary-text};
 }
+
+p {
+  font-weight: 100;
+  line-height: 1.5em;
+}
+
 @import './styles/breakpoints';
 @import './styles/components/home/hero.component';
 @import './styles/components/home/home.component.scss';
 @import './styles/components/home/submit-starter.component.scss';
+@import './styles/components/footer.component.scss';
 @import './styles/components/header.component';

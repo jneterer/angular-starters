@@ -1,13 +1,13 @@
 .home-container {
   @include aboveTablet {
-    padding: 6em 0;
+    padding: 6em 0 0;
   }
   @include belowTablet {
     @include abovePhone {
-      padding: 4em 0;
+      padding: 4em 0 0;
     }
     @include belowPhone {
-      padding: 2em 0;
+      padding: 2em 0 0;
     }
   }
   .welcome {
@@ -41,8 +41,6 @@
         }
       }
       p {
-        font-weight: 100;
-        line-height: 1.5em;
         margin-bottom: 1.25em;
         @include aboveTablet {
           font-size: 3em;
