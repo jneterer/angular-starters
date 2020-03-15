@@ -10,6 +10,7 @@ export class ContentService {
   public theme$: Observable<ETheme> = this.theme.asObservable();
   private readonly themeConfig: IThemeConfig = {
     0: {
+      theme: 'light',
       logoUrl: '/assets/logo_light_theme.png',
       headerLogoUrl: '/assets/header_logo_light_theme.png',
       themeIcon: 'brightness_3',
@@ -18,6 +19,7 @@ export class ContentService {
       linkedinIcon: '/assets/linkedin_light_theme.png'
     },
     1: {
+      theme: 'dark',
       logoUrl: '/assets/logo_dark_theme.png',
       headerLogoUrl: '/assets/header_logo_dark_theme.png',
       themeIcon: 'wb_sunny',

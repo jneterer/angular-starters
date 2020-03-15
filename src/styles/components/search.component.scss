@@ -1,0 +1,74 @@
+$light-border-color: rgba(0, 0, 0, 0.06);
+
+.hit {
+  color: $primary-color;
+  font-weight: 400;
+  text-decoration: underline;
+  .dark-theme & {
+    color: white !important;
+  }
+}
+.mat-autocomplete-panel {
+  .dark-theme & {
+    background: #373d45 !important;
+  }
+}
+.mat-optgroup-label {
+  color: black;
+  font-weight: 400;
+  font-size: 1.5em;
+  .dark-theme & {
+    color: white !important;
+  }
+}
+.mat-option { 
+  padding: 0 1em !important;
+  .mat-option-text {
+    font-weight: 200;
+  }
+}
+.search-results {
+  .mat-optgroup-label {
+    border-bottom: 1px solid $light-border-color;
+    border-top: 1px solid $light-border-color;
+    .dark-theme & {
+      border-bottom: 1px solid white;
+      border-top: 1px solid white;
+    }
+  }
+  .mat-option {
+    height: auto !important;
+    line-height: 1.25em !important;
+    padding: 0 !important;
+    white-space: normal !important;
+    .mat-option-text {
+      display: flex !important;
+      justify-content: space-between;
+      @include belowIpad {
+        border-bottom: 1px solid $light-border-color;
+        flex-direction: column;
+      }
+      div {
+        &:nth-child(1) {
+          padding: 1em;
+          @include aboveIpad {
+            border-right: 1px solid $light-border-color;
+            width: 40%;
+          }
+          .dark-theme & {
+            border-right: 1px solid white;
+          }
+        }
+        &:nth-child(2) {
+          margin: 1em;
+          @include aboveIpad {
+            width: 55%;
+          }
+        }
+        .dark-theme & {
+          color: rgba(255, 255, 255, 0.733) !important;
+        }
+      }
+    }
+  }
+}

@@ -9,6 +9,7 @@ export interface IThemeConfig {
 }
 
 export interface ITheme {
+  theme: string;
   logoUrl: string;
   headerLogoUrl: string;
   themeIcon: string;

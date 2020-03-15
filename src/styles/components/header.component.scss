@@ -99,8 +99,11 @@ $button-margin-left-below-desktop: .5em;
   }
   .search-form-field {
     font-size: .7em;
-    @include aboveIpad {
-      width: 350px;
+    @include aboveDesktop {
+      width: 600px;
+    }
+    @include belowDesktop {
+      width: 500px;
     }
     @include belowIpad {
       margin: 0 .5em;
