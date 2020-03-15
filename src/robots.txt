@@ -1,0 +1,3 @@
+# Allow all URLs (see https://angularstarters.com/)
+User-agent: *
+Disallow:
