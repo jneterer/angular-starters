@@ -1,10 +1,12 @@
 .footer-container {
   display: flex;
-  justify-content: space-around;
-  padding: 4em;
+  justify-content: space-between;
+  padding: 4em 12em;
+  @include belowDesktop {
+    padding: 4em;
+  }
   @include belowTablet {
     flex-direction: column;
-    justify-content: space-between;
   }
   .link-section {
     display: flex;
