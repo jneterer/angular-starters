@@ -1,6 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { IGlobalSearchResult } from 'src/app/contracts/search/iglobal-search-result';
 import { IPreviousGlobalSearchQueries } from '../../contracts/search/iprevious-global-search-queries';
 import { ITheme } from '../../contracts/shared/theme';
 import { SearchService } from '../../services/search.service';
@@ -27,19 +29,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
       baseUrl: '/site/'
     }
   };
-  previousGlobalSearchQueries: {}[] = []
-  globalSearchResults: {}[] = [];
+  globalSearchResults: IGlobalSearchResult[] = [];
   searchTerm: string = '';
 
-  constructor(private contentService: ContentService,
+  constructor(private router: Router,
+              private contentService: ContentService,
               private searchService: SearchService) { }
 
   ngOnInit(): void {
     // Subscribe to any theme changes.
     this.contentService.currentThemeConfig$.pipe(takeUntil(this.unsubscribe)).subscribe((theme: ITheme) => this.currentTheme = theme);
-    // Get any previous global search queries from the user's local storage.
-    const previousGlobalSearchQueries: { queries: string[] } = this.getPreviousGlobalSearchQueries();
-    this.previousGlobalSearchQueries = (previousGlobalSearchQueries ? previousGlobalSearchQueries.queries : []).reverse();
   }
 
   /**
@@ -51,52 +50,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   /**
-   * Gets the previous global search queries from local storage.
-   * @returns {IPreviousGlobalSearchQueries}
-   */
-  getPreviousGlobalSearchQueries(): IPreviousGlobalSearchQueries {
-    return JSON.parse(localStorage.getItem('previousGlobalSearchQueries'));
-  }
-
-  /**
    * Performs typeahead search.
    * @param {KeyboardEvent} event 
    */
   typeahead(event: KeyboardEvent): void {
-    this.search(this.searchTerm);
-  }
-
-  /**
-   * If a user clicks or presses the enter key on a search result, it will save
-   * their search query in local storage and perform a search.
-   * @param {MouseEvent} event 
-   */
-  saveAndSearch(event: MouseEvent): void {
-    let previousGlobalSearchQueries = [].concat(this.getPreviousGlobalSearchQueries() ? this.getPreviousGlobalSearchQueries().queries : []);
-    if (!previousGlobalSearchQueries.includes(this.searchTerm)) {
-      previousGlobalSearchQueries.push(this.searchTerm);
-    } else {
-      previousGlobalSearchQueries.splice(previousGlobalSearchQueries.indexOf(this.searchTerm), 1);
-      previousGlobalSearchQueries.push(this.searchTerm);
-    }
-    if (previousGlobalSearchQueries.length > 10) {
-      previousGlobalSearchQueries.slice(0, 10);
-    }
-    localStorage.setItem('previousGlobalSearchQueries', JSON.stringify({
-      queries: previousGlobalSearchQueries
-    }));
-    this.previousGlobalSearchQueries = previousGlobalSearchQueries.reverse();
-    this.search(this.searchTerm);
-  }
-
-  /**
-   * Performs a search based on the search term only if the user has provided
-   * more than 3 characters in the search term.
-   * @param {string} searchTerm 
-   */
-  search(searchTerm: string): void {
+    const searchTerm: string = this.searchTerm;
     if (searchTerm.length >= 3) {
-      this.searchService.globalSearch(searchTerm).subscribe((result: {}[]) => {
+      this.searchService.globalSearch(searchTerm).subscribe((result: IGlobalSearchResult[]) => {
         this.globalSearchResults = result;
       }, (error) => {
         console.log(error);
@@ -104,6 +64,43 @@ export class HeaderComponent implements OnInit, OnDestroy {
     } else {
       this.globalSearchResults = [];
     }
+  }
+
+  /**
+   * Navigates to the selected typeahead result.
+   * @param {MouseEvent} event 
+   */
+  navigateToTypeaheadResult(event: MouseEvent): void {
+    const searchTerm: string = this.searchTerm;
+    if (searchTerm) {
+      this.router.navigate(['/search']);
+      this.resetGlobalSearchState();
+    }
+  }
+
+  /**
+   * Performs search when a user presses enter on the input only if there is a search term
+   * but regardless of whether there are typeahead results.
+   * @param {KeyboardEvent} event 
+   */
+  search(event: KeyboardEvent): void {
+    const searchTerm: string = this.searchTerm;
+    if (searchTerm) {
+      this.router.navigate(['/search'], {
+        queryParams: {
+          searchTerm: searchTerm
+        }
+      });
+      this.resetGlobalSearchState();
+    }
+  }
+
+  /**
+   * Resets the search term and current search results.
+   */
+  resetGlobalSearchState(): void {
+    this.searchTerm = '';
+    this.globalSearchResults = [];
   }
 
   ngOnDestroy(): void {

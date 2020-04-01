@@ -11,35 +11,26 @@
     <span class="header-spacer"></span>
     
     <mat-form-field class="search-form-field" appearance="fill">
-      <input matInput placeholder="Search" (input)="typeahead($event)" [(ngModel)]="searchTerm" [matAutocomplete]="searchResultsGroup">
+      <input matInput placeholder="Search" (input)="typeahead($event)" (keyup.enter)="search($event)" [(ngModel)]="searchTerm" [matAutocomplete]="searchResultsGroup">
       <mat-icon matSuffix>search</mat-icon>
-      <mat-autocomplete [ngClass]="{ 'dark-theme': currentTheme.theme === 'dark' }" (optionSelected)="saveAndSearch($event)" #searchResultsGroup="matAutocomplete">
-        <ng-container *ngIf="searchTerm === '' && globalSearchResults.length === 0 && previousGlobalSearchQueries.length > 0; else searching">
-          <mat-optgroup label="Previous Searches">
-            <mat-option *ngFor="let query of previousGlobalSearchQueries"  (click)="saveAndSearch($event)" (key.enter)="saveAndSearch($event)" [value]="query">
-              {{ query }}
-            </mat-option>
-          </mat-optgroup>
-        </ng-container>
-        <ng-template #searching>
-          <mat-optgroup class="search-results" *ngFor="let group of globalSearchResults" [label]="mappedNames[group._id].name">
-            <mat-option *ngFor="let result of group.results" (click)="saveAndSearch($event)" [value]="result.name">
-              <div *ngIf="result.highlights.length === 1">
-                {{ result.name }}
-              </div>
-              <div *ngFor="let highlight of result.highlights">
-                <ng-container *ngFor="let text of highlight.texts">
-                  <ng-container *ngIf="text.type === 'hit'; else noHit">
-                    <span class="hit">{{ text.value }}</span>
-                  </ng-container>
-                  <ng-template #noHit>
-                    {{ text.value }}
-                  </ng-template>
+      <mat-autocomplete [ngClass]="{ 'dark-theme': currentTheme.theme === 'dark' }" (optionSelected)="navigateToTypeaheadResult($event)" #searchResultsGroup="matAutocomplete">
+        <mat-optgroup class="search-results" *ngFor="let group of globalSearchResults" [label]="mappedNames[group._id].name">
+          <mat-option *ngFor="let result of group.results" (click)="navigateToTypeaheadResult($event)" [value]="result.name">
+            <div *ngIf="result.highlights.length === 1">
+              {{ result.name }}
+            </div>
+            <div *ngFor="let highlight of result.highlights">
+              <ng-container *ngFor="let text of highlight.texts">
+                <ng-container *ngIf="text.type === 'hit'; else noHit">
+                  <span class="hit">{{ text.value }}</span>
                 </ng-container>
-              </div>
-            </mat-option>
-          </mat-optgroup>
-        </ng-template>
+                <ng-template #noHit>
+                  {{ text.value }}
+                </ng-template>
+              </ng-container>
+            </div>
+          </mat-option>
+        </mat-optgroup>
       </mat-autocomplete>
     </mat-form-field>
     <button mat-button (click)="toggleTheme($event)" class="theme-icon-button"><mat-icon class="theme-icon">{{ currentTheme.themeIcon }}</mat-icon></button>

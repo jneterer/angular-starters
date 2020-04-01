@@ -1,0 +1,37 @@
+.no-results-container {
+  padding: 0 .5em;
+  @include aboveTablet {
+    margin: 5em 0;
+  }
+  @include belowIpad {
+    @include abovePhone {
+      margin: 3em 0;
+    }
+    @include belowPhone {
+      margin: 2em 0;
+    }
+  }
+  h2 {
+    @include abovePhone {
+      font-size: 3em;
+    }
+    @include belowPhone {
+      font-size: 2.25em;
+    }
+    line-height: 1.5em;
+  }
+  p {
+    margin-bottom: 0;
+    @include abovePhone {
+      font-size: 2em;
+    }
+    @include belowPhone {
+      font-size: 1.5em;
+    }
+    font-weight: 100;
+    line-height: 1.5em;
+  }
+  h2, p {
+    text-align: center;
+  }
+}

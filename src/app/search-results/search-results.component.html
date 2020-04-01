@@ -1,0 +1,9 @@
+<ng-container *ngIf="searchResults.length > 0; else noResults">
+  you have results!
+</ng-container>
+<ng-template #noResults>
+  <div class="no-results-container">
+    <h2>No matching results for <span style="font-weight: bold;">"{{ currentSearchTerm }}"</span>!</h2>
+    <p>Try visiting our <a routerLink="/starters">starters</a>, <a routerLink="/themes">themes</a>, or <a routerLink="/sites">sites</a> pages.</p>
+  </div>
+</ng-template>

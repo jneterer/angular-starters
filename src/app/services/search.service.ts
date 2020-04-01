@@ -26,17 +26,62 @@ export class SearchService {
   }
 
   /**
-   * Performs global search on starters, themes, and sites.
-   * @param {string} query 
+   * Performs a global search on starters, themes, and sites for the search
+   * results page.
+   * @param {string} searchTerm 
    * @returns {Observable<IGlobalSearchResult[]>}
    */
-  globalSearch(query: string): Observable<IGlobalSearchResult[]> {
+  search(searchTerm: string): Observable<IGlobalSearchResult[]> {
+    const pipeline = [
+      {
+        '$searchBeta': {
+          'search': {
+            'query': searchTerm, 
+            'path': [
+              'description', 'name'
+            ]
+          }
+        }
+      }, {
+        '$project': {
+          'type': 1, 
+          'name': 1, 
+          'description': 1, 
+          'score': {
+            '$meta': 'searchScore'
+          }
+        }
+      }, {
+        '$group': {
+          '_id': '$type', 
+          'avgScore': {
+            '$avg': '$score'
+          }, 
+          'results': {
+            '$push': {
+              'name': '$name', 
+              'score': '$score'
+            }
+          }
+        }
+      }
+    ];
+
+    return <Observable<IGlobalSearchResult[]>>from(this.allDataCollection.aggregate(pipeline).toArray());
+  }
+
+  /**
+   * Performs global search on starters, themes, and sites.
+   * @param {searchTerm} query 
+   * @returns {Observable<IGlobalSearchResult[]>}
+   */
+  globalSearch(searchTerm: string): Observable<IGlobalSearchResult[]> {
     // Create the pipeline.
     const pipeline = [
       {
         '$searchBeta': {
           'search': {
-            'query': query, 
+            'query': searchTerm, 
             'path': [
               'description', 'name'
             ]
