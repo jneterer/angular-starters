@@ -256,10 +256,24 @@ p {
   line-height: 1.5em;
 }
 
+a:not(.mat-button-base) {
+  color: $primary-color;
+  &:active, &:visited {
+    color: $primary-color;
+  }
+  .dark-theme & {
+    color: white;
+    &:active, &:visited {
+      color: white;
+    }
+  }
+}
+
 @import './styles/breakpoints';
 @import './styles/components/home/hero.component';
 @import './styles/components/home/home.component.scss';
 @import './styles/components/home/submit-starter.component.scss';
 @import './styles/components/footer.component.scss';
 @import './styles/components/header.component';
+@import './styles/components/search-results.component.scss';
 @import './styles/components/search.component.scss';

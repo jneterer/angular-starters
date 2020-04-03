@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, Router, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ETheme } from '../../contracts/shared/theme';
 import { ContentService } from './content.service';
@@ -9,8 +9,7 @@ import { ContentService } from './content.service';
 })
 export class ContentResolverService implements Resolve<any> {
 
-  constructor(private router: Router,
-              private contentService: ContentService) {}
+  constructor(private contentService: ContentService) {}
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<any> | Observable<never> {
     const currentTheme = this.contentService.getTheme();
