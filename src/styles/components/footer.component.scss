@@ -2,14 +2,7 @@
   display: flex;
   justify-content: space-between;
   padding: 4em 12em;
-  @include belowDesktop {
-    @include abovePhone {
-      padding: 4em;
-    }
-    @include belowPhone {
-      padding: 2em;
-    }
-  }
+  @include container;
   @include belowTablet {
     flex-direction: column;
   }

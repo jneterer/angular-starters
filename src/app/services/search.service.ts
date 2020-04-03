@@ -47,6 +47,8 @@ export class SearchService {
           'type': 1, 
           'name': 1, 
           'description': 1, 
+          'demo_url': 1,
+          'repo_url': 1,
           'score': {
             '$meta': 'searchScore'
           }
@@ -59,7 +61,10 @@ export class SearchService {
           }, 
           'results': {
             '$push': {
-              'name': '$name', 
+              'name': '$name',
+              'description': '$description',
+              'demo_url': "$demo_url",
+              'repo_url': "$repo_url",
               'score': '$score'
             }
           }

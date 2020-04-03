@@ -1,0 +1,6 @@
+<div class="cards-container">
+  <h2 *ngIf="groupTitle">{{ groupTitle }}</h2>
+  <div class="cards">
+    <app-card *ngFor="let searchResult of searchResultGroup.results" [searchResult]="searchResult"></app-card>
+  </div>
+</div>

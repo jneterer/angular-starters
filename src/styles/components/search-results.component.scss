@@ -1,3 +1,45 @@
+.results-container {
+  @include container(0);
+  .heading-container {
+    h1 {
+      line-height: 1.5em;
+      margin: 0;
+      @include abovePhone {
+        font-size: 3em;
+      }
+      @include belowPhone {
+        font-size: 2.25em;
+      }
+    }
+    .results-titles-container {
+      border-left: 2px solid $primary-color;
+      margin-top: 1.5rem;
+      div {
+        padding-top: 1em;
+        &:last-child {
+          padding-bottom: 1em;
+        }
+      }
+      span {
+        cursor: pointer;
+        font-size: 1.5em;
+        font-weight: 100;
+        line-height: 1em;
+        margin-left: 1em;
+      }
+    }
+  }
+  .cards-section {
+    // &:nth-child(n+3) {
+      padding-top: 2.5rem;
+    // }
+    &:last-child {
+      @include belowTablet {
+        padding-bottom: 2.5rem;
+      }
+    }
+  }
+}
 .no-results-container {
   padding: 0 .5em;
   @include aboveTablet {
@@ -11,14 +53,14 @@
       margin: 2em 0;
     }
   }
-  h2 {
+  h1 {
+    line-height: 1.5em;
     @include abovePhone {
       font-size: 3em;
     }
     @include belowPhone {
       font-size: 2.25em;
     }
-    line-height: 1.5em;
   }
   p {
     margin-bottom: 0;
@@ -31,7 +73,7 @@
     font-weight: 100;
     line-height: 1.5em;
   }
-  h2, p {
+  h1, p {
     text-align: center;
   }
 }

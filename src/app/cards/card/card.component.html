@@ -1,0 +1,26 @@
+<mat-card class="card">
+  <a class="image-link-wrapper" [routerLink]="'/starter/' + searchResult.name">
+    <img mat-card-image src="https://cdn.sanity.io/images/zfb9idzl/production/227838b6237c960ad4ca1a13ee501b0d2560534a-3240x1974.png?fm=webp" alt="Photo of a Shiba Inu">
+  </a>
+  <mat-card-content>
+    <p>jrneterer</p>
+    <p><a [routerLink]="'/starter/' + searchResult.name" class="starter-name">{{ searchResult.name }}</a></p>
+    <p class="start-description">{{ searchResult.description }}</p>
+  </mat-card-content>
+  <mat-card-actions>
+    <div>
+      <span class="icon-container">
+        <mat-icon>start</mat-icon>
+      </span> 5
+      <span class="angular-icon">
+        <span aria-label="My icon" [inlineSVG]="'/assets/angular.svg'"></span>
+      </span> v9
+    </div>
+    <div>
+      <a *ngIf="searchResult.repo_url" [href]="searchResult.repo_url" target="_blank">
+        <span class="icon-container" aria-label="My icon" [inlineSVG]="'/assets/github.svg'"></span>
+      </a>
+      <a *ngIf="searchResult.demo_url" class="angular-icon" [href]="searchResult.demo_url" target="_blank"><mat-icon>launch</mat-icon></a>
+    </div>
+  </mat-card-actions>
+</mat-card>

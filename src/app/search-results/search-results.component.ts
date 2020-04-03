@@ -25,6 +25,34 @@ export class SearchResultsComponent implements OnInit {
     });
   }
 
+  /**
+   * Receives the type of starter and returns a readable name for the user.
+   * @param {string} title 
+   * @returns {string}
+   */
+  getTitle(title: string): string {
+    switch (title) {
+      case 'starter':
+        return 'Starters';
+      case 'theme':
+        return 'Themes';
+      case 'site':
+        return 'Sites';
+      default:
+        return 'Starters';
+    }
+  }
+
+  /**
+   * Scrolls to a specific search result group (starter, theme, or site).
+   * @param {string} groupId 
+   */
+  scrollToGroup(groupId: string): void {
+    document.getElementById(groupId).scrollIntoView({
+      behavior: 'smooth'
+    });
+  }
+
   ngOnDestroy(): void {
     this.unsubscribe.next();
     this.unsubscribe.complete();

@@ -1,0 +1,60 @@
+.card {
+  .image-link-wrapper {
+    border-radius: 4px;
+    img {
+      cursor: pointer;
+      margin-bottom: 0px;
+    }
+  }
+  a {
+    color: $dark-primary-text !important;
+    text-decoration: none;
+    transition: all .25s ease;
+    &:hover {
+      color: $primary-color !important;
+      text-decoration: underline;
+      transition: all .25s ease;
+    }
+    .dark-theme & {
+      color: white !important;
+    }
+  }
+  mat-card-content {
+    margin-top: 16px;
+    .starter {
+      &-name {
+        font-weight: bold;
+      }
+      &-description {
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+    }
+  }
+  mat-card-actions {
+    display: flex;
+    justify-content: space-between;
+    padding: 0 .5rem;
+    .angular-icon {
+      margin-left: .5rem;
+    }
+    .icon-container, .angular-icon {
+      vertical-align: middle;
+    }
+    svg {
+      width: 24px;
+    }
+    a {
+      &:hover {
+        color: $dark-primary-text !important;
+        .dark-theme & {
+          color: inherit !important;
+        }
+      }
+      &:not(:first-child) {
+        margin-left: 1rem;
+      }
+    }
+  }
+}

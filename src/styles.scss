@@ -194,6 +194,9 @@ $darkTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   @include angular-material-theme($darkTheme);
   background: $dark-bg-lighter-5;
   color: white;
+  svg {
+    fill: white !important;
+  }
 }
 
 // Specific component overrides, pieces that are not in line with the general theming
@@ -256,6 +259,10 @@ p {
   line-height: 1.5em;
 }
 
+svg {
+  fill: $dark-primary-text !important;
+}
+
 a:not(.mat-button-base) {
   color: $primary-color;
   &:active, &:visited {
@@ -270,6 +277,9 @@ a:not(.mat-button-base) {
 }
 
 @import './styles/breakpoints';
+@import './styles/layout.scss';
+@import './styles/components/cards/card.component.scss';
+@import './styles/components/cards/cards.component.scss';
 @import './styles/components/home/hero.component';
 @import './styles/components/home/home.component.scss';
 @import './styles/components/home/submit-starter.component.scss';

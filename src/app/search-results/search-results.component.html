@@ -1,9 +1,22 @@
 <ng-container *ngIf="searchResults.length > 0; else noResults">
-  you have results!
+  <div class="results-container">
+    <div class="heading-container">
+      <h1>Results for <span style="font-weight: bold;">"{{ currentSearchTerm }}"</span>!</h1>
+      <div class="results-titles-container">
+        <div *ngFor="let searchResultGroup of searchResults">
+          <span (click)="scrollToGroup(searchResultGroup._id)">{{ getTitle(searchResultGroup._id) }}</span>
+        </div>
+      </div>
+    </div>
+    <div *ngFor="let searchResultGroup of searchResults" class="cards-section" [id]="searchResultGroup._id" app-cards [groupTitle]="getTitle(searchResultGroup._id)" [searchResultGroup]="searchResultGroup"></div>
+  </div>
 </ng-container>
 <ng-template #noResults>
   <div class="no-results-container">
-    <h2>No matching results for <span style="font-weight: bold;">"{{ currentSearchTerm }}"</span>!</h2>
-    <p>Try visiting our <a routerLink="/starters">starters</a>, <a routerLink="/themes">themes</a>, or <a routerLink="/sites">sites</a> pages.</p>
+    <h1>No matching results for <span style="font-weight: bold;">"{{ currentSearchTerm }}"</span>!</h1>
+    <p>
+      Try visiting our <a routerLink="/starters">starters</a>, <a routerLink="/themes">themes</a>, or <a routerLink="/sites">sites</a> pages.
+      Or learn how to <a routerLink="/contributing">contribute</a>.
+    </p>
   </div>
 </ng-template>
