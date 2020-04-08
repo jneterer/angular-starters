@@ -29,7 +29,8 @@ const routes: Routes = [
       content: ContentResolverService,
       allData: AllDataResolverService,
       categories: CategoriesResolverService
-    }
+    },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
   { 
     path: 'themes',
@@ -42,7 +43,8 @@ const routes: Routes = [
       content: ContentResolverService,
       allData: AllDataResolverService,
       categories: CategoriesResolverService
-    }
+    },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
   { 
     path: 'sites',
@@ -55,7 +57,8 @@ const routes: Routes = [
       content: ContentResolverService,
       allData: AllDataResolverService,
       categories: CategoriesResolverService
-    }
+    },
+    runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
   { 
     path: 'about',

@@ -1,6 +1,7 @@
 import { MediaMatcher } from '@angular/cdk/layout';
 import { ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { MatCheckboxChange } from '@angular/material/checkbox';
+import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ICategory } from '../contracts/categories/icategory';
@@ -19,13 +20,19 @@ export class AllDataComponent implements OnInit, OnDestroy {
   allData: ISearchResult[];
   categories: ICategory[] = [];
   filterableCategories: {} = {};
+  filteredCategories: string[] = [];
   sidenavOpened: boolean = true;
 
   constructor(private route: ActivatedRoute,
+              private router: Router,
               private mediaMatcher: MediaMatcher,
               private changeDetector: ChangeDetectorRef) { }
 
   ngOnInit(): void {
+    this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe((queryParams: Params) => {
+      this.filteredCategories = queryParams.c ? (<string>queryParams.c).split(',') : [];
+      document.getElementById('sidenav-main-content').scrollTo(0, 0);
+    });
     this.route.data.pipe(takeUntil(this.unsubscribe))
     .subscribe((data: { title: string, allData: ISearchResult[], categories: ICategory[] }) => {
       // Clear the filterable categories for when the data is refreshed/changes.
@@ -74,6 +81,43 @@ export class AllDataComponent implements OnInit, OnDestroy {
    */
   toggleSidenav(): void {
     this.sidenavOpened = !this.sidenavOpened;
+  }
+
+  /**
+   * Determines if the filter is currently active.
+   * @param {string} categoryId 
+   * @returns {boolean}
+   */
+  activeFilter(categoryId: string): boolean {
+    return this.filteredCategories.includes(categoryId);
+  }
+
+  /**
+   * Updates the active version and category filters.
+   * @param {MatCheckboxChange} event 
+   * @param {('angularVersion' | 'category')} filterType 
+   * @param {string} categoryId 
+   */
+  filterChanged(event: MatCheckboxChange, filterType: ('angularVersion' | 'category'), categoryId: string): void {
+    if (this.filteredCategories.includes(categoryId)) {
+      this.filteredCategories.splice(this.filteredCategories.indexOf(categoryId), 1);
+    } else {
+      this.filteredCategories.push(categoryId);
+    }
+    let filter: string = '';
+    this.filteredCategories.forEach((category: string, index) => {
+      filter = filter + (index !== 0 ? `,${category}` : category);
+    });
+    let queryParams: Params = null;
+    if (filter) {
+      queryParams = {
+        c: filter
+      }
+    }
+    this.router.navigate([], {
+      relativeTo: this.route,
+      queryParams: queryParams
+    });
   }
 
   ngOnDestroy(): void {

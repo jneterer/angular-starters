@@ -30,13 +30,22 @@ export class StartersService {
 
   /**
    * Gets all data associated with starters, themes, or sites.
+   * Filters based on categories and version.
    * @param {('starter' | 'theme' | 'site')} type 
+   * @param {string[]} categoryFilters
    * @returns {Observable<ISearchResult[]>}
    */
-  getData(type: ('starter' | 'theme' | 'site')): Observable<ISearchResult[]> {
-    const query = { 
+  getData(type: ('starter' | 'theme' | 'site'), categoryFilters: string[]): Observable<ISearchResult[]> {
+    let query = { 
       status: "active",
-      type: type
+      type: type,
+    };
+    if (categoryFilters) {
+      query['$and'] = categoryFilters.map((category: string) => {
+        return {
+          categories: category
+        }
+      });
     };
     const options = {
       projection: { _id: 0, status: 0 },

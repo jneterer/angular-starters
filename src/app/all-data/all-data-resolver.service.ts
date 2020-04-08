@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
+import { ActivatedRouteSnapshot, Params, Resolve, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs';
 import { ISearchResult } from '../contracts/search/isearch-result';
 import { StartersService } from '../services/starters.service';
@@ -12,17 +12,14 @@ export class AllDataResolverService implements Resolve<any>  {
   constructor(private startersService: StartersService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISearchResult[]> {
-    // Gets page data based on the url.
-    switch (state.url) {
-      case '/starters':
-        return this.startersService.getData('starter');
-      case '/themes':
-        return this.startersService.getData('theme');
-      case '/sites':
-        return this.startersService.getData('site');
-      default:
-        return this.startersService.getData('starter');
+    const queryParams: Params = route.queryParams;
+    const categoryFilters: string[] = queryParams.c ? (<string>queryParams.c).split(',') : null;
+    if (state.url.startsWith('/starter')) {
+      return this.startersService.getData('starter', categoryFilters);
+    } else if (state.url.startsWith('/theme')) {
+      return this.startersService.getData('theme', categoryFilters);
     }
+    return this.startersService.getData('site', categoryFilters);
   }
 
 }

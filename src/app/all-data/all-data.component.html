@@ -23,7 +23,7 @@
           <ng-container *ngFor="let category of categories">
             <ng-container *ngIf="filterableCategories[category.category_id]">
               <div class="category-container">
-                <mat-checkbox class="category-checkbox" color="primary">{{ filterableCategories[category.category_id].name }}</mat-checkbox>
+                <mat-checkbox (change)="filterChanged($event, 'category', category.category_id)" [checked]="activeFilter(category.category_id)" class="category-checkbox" color="primary">{{ filterableCategories[category.category_id].name }}</mat-checkbox>
                 <span class="category-total">{{ filterableCategories[category.category_id].total }}</span>
               </div>
             </ng-container>
@@ -32,7 +32,7 @@
       </mat-expansion-panel>
     </mat-accordion>
   </mat-sidenav>
-  <mat-sidenav-content class="sidenav-main-content">
+  <mat-sidenav-content class="sidenav-main-content" id="sidenav-main-content">
     <div class="relative-container">
       <div class="cards-section" app-cards [groupTitle]="title" [searchResultGroup]="allData"></div>
     </div>
