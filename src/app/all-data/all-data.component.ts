@@ -66,7 +66,7 @@ export class AllDataComponent implements OnInit, OnDestroy {
       this.mediaMatches = false;
       this.sidenavOpened = true;
     }
-    this.mediaQuery.addEventListener('change', this.mediaQueryEvent);
+    this.mediaQuery.addListener(this.mediaQueryEvent);
   }
 
   /**
@@ -80,7 +80,7 @@ export class AllDataComponent implements OnInit, OnDestroy {
     this.unsubscribe.next();
     this.unsubscribe.complete();
     this.changeDetector.detach();
-    this.mediaQuery.removeEventListener('change', this.mediaQueryEvent);
+    this.mediaQuery.removeListener(this.mediaQueryEvent);
   }
 
 }
