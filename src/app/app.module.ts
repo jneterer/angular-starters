@@ -22,7 +22,6 @@ import { SearchResultsComponent } from './search-results/search-results.componen
   imports: [
     BrowserModule,
     HttpClientModule,
-    InlineSVGModule.forRoot(),
     AppRoutingModule,
     BrowserAnimationsModule,
     CoreModule

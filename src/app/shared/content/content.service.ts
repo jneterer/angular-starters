@@ -13,19 +13,13 @@ export class ContentService {
       theme: 'light',
       logoUrl: '/assets/logo_light_theme.png',
       headerLogoUrl: '/assets/header_logo_light_theme.png',
-      themeIcon: 'brightness_3',
-      githubIcon: '/assets/github_light_theme.png',
-      twitterIcon: '/assets/twitter_light_theme.png',
-      linkedinIcon: '/assets/linkedin_light_theme.png'
+      themeIcon: 'brightness_3'
     },
     1: {
       theme: 'dark',
       logoUrl: '/assets/logo_dark_theme.png',
       headerLogoUrl: '/assets/header_logo_dark_theme.png',
-      themeIcon: 'wb_sunny',
-      githubIcon: '/assets/github_dark_theme.png',
-      twitterIcon: '/assets/twitter_dark_theme.png',
-      linkedinIcon: '/assets/linkedin_dark_theme.png'
+      themeIcon: 'wb_sunny'
     }
   };
   private currentThemeConfig: BehaviorSubject<ITheme> = new BehaviorSubject<ITheme>(this.themeConfig[this.getTheme()]);

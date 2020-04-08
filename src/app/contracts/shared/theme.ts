@@ -13,7 +13,4 @@ export interface ITheme {
   logoUrl: string;
   headerLogoUrl: string;
   themeIcon: string;
-  githubIcon: string;
-  twitterIcon: string;
-  linkedinIcon: string;
 }
