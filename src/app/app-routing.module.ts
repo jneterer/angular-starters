@@ -1,5 +1,8 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AllDataResolverService } from './all-data/all-data-resolver.service';
+import { AllDataComponent } from './all-data/all-data.component';
+import { CategoriesResolverService } from './all-data/categories-resolver.service';
 import { HomeComponent } from './core/home/home.component';
 import { InDevelopmentComponent } from './core/in-development/in-development.component';
 import { SearchResultsResolverService } from './search-results/search-results-resolver.service';
@@ -9,32 +12,50 @@ import { ContentResolverService } from './shared/content/content-resolver.servic
 const routes: Routes = [
   { 
     path: '',
+    data: {
+      title: 'Home'
+    },
     component: HomeComponent,
     resolve: [ ContentResolverService ]
   },
   { 
     path: 'starters',
     data: {
-      title: 'Starters'
+      title: 'Starters',
+      starterPage: true
     },
-    component: InDevelopmentComponent,
-    resolve: [ ContentResolverService ]
+    component: AllDataComponent,
+    resolve: {
+      content: ContentResolverService,
+      allData: AllDataResolverService,
+      categories: CategoriesResolverService
+    }
   },
   { 
     path: 'themes',
-    component: InDevelopmentComponent,
+    component: AllDataComponent,
     data: {
-      title: 'Themes'
+      title: 'Themes',
+      starterPage: true
     },
-    resolve: [ ContentResolverService ]
+    resolve: {
+      content: ContentResolverService,
+      allData: AllDataResolverService,
+      categories: CategoriesResolverService
+    }
   },
   { 
     path: 'sites',
-    component: InDevelopmentComponent,
+    component: AllDataComponent,
     data: {
-      title: 'Sites'
+      title: 'Sites',
+      starterPage: true
     },
-    resolve: [ ContentResolverService ]
+    resolve: {
+      content: ContentResolverService,
+      allData: AllDataResolverService,
+      categories: CategoriesResolverService
+    }
   },
   { 
     path: 'about',
@@ -68,6 +89,8 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
   providers: [
+    AllDataResolverService,
+    CategoriesResolverService,
     ContentResolverService,
     SearchResultsResolverService
   ]

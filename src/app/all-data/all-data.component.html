@@ -1,0 +1,42 @@
+<mat-sidenav-container>
+  <mat-sidenav #sidenav mode="side" [opened]="sidenavOpened" class="sidenav-side-container"
+               [fixedInViewport]="true" [fixedTopGap]="mediaMatches ? 110 : 64"
+               [fixedBottomGap]="0">
+    <mat-accordion multi="true" [displayMode]="'flat'">
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Angular Version
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="checkboxes-container">
+          <mat-checkbox *ngFor="let version of [4,5,6,7,8,9]" class="category-checkbox" color="primary">v{{ version }}</mat-checkbox>
+        </div>
+      </mat-expansion-panel>
+      <mat-expansion-panel expanded>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Categories
+          </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="checkboxes-container">
+          <ng-container *ngFor="let category of categories">
+            <ng-container *ngIf="filterableCategories[category.category_id]">
+              <div class="category-container">
+                <mat-checkbox class="category-checkbox" color="primary">{{ filterableCategories[category.category_id].name }}</mat-checkbox>
+                <span class="category-total">{{ filterableCategories[category.category_id].total }}</span>
+              </div>
+            </ng-container>
+          </ng-container>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </mat-sidenav>
+  <mat-sidenav-content class="sidenav-main-content">
+    <div class="relative-container">
+      <div class="cards-section" app-cards [groupTitle]="title" [searchResultGroup]="allData"></div>
+    </div>
+    <button *ngIf="mediaMatches" (click)="toggleSidenav()" class="filter-icon" mat-fab color="primary"><mat-icon>{{ sidenavOpened ? 'close' : 'filter_list' }}</mat-icon></button>
+    <div app-footer class="relative-container"></div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

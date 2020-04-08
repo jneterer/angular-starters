@@ -1,8 +1,6 @@
 .footer-container {
   display: flex;
   justify-content: space-between;
-  padding: 4em 12em;
-  @include container;
   @include belowTablet {
     flex-direction: column;
   }

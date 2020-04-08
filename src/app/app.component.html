@@ -1,3 +1,3 @@
-<app-header></app-header>
+<div [ngClass]="{'fixed-header': starterPage}" app-header></div>
 <router-outlet></router-outlet>
-<app-footer></app-footer>
+<div app-footer *ngIf="!starterPage" class="full-container"></div>

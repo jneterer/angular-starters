@@ -128,7 +128,7 @@ $mat-dark-theme-background: (
   status-bar:               $dark-bg-lighter-20,
   app-bar:                  $dark-bg-lighter-5,
   hover:                    $light-bg-alpha-4,
-  card:                     $dark-bg-lighter-5,
+  card:                     $dark-background,
   dialog:                   $dark-bg-lighter-5,
   disabled-button:          $light-bg-alpha-12,
   raised-button:            $dark-bg-lighter-5,
@@ -229,6 +229,17 @@ $darkTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
     }
   }
 }
+mat-sidenav-content {
+  background-color: white;
+  .dark-theme & {
+    background-color: $dark-bg-lighter-5;
+  }
+}
+.mat-expansion-panel {
+  .dark-theme & {
+    background-color: $dark-bg-lighter-5;
+  }
+}
 
 html, body { height: 100%; }
 body {
@@ -283,6 +294,7 @@ a:not(.mat-button-base) {
 @import './styles/components/home/hero.component';
 @import './styles/components/home/home.component.scss';
 @import './styles/components/home/submit-starter.component.scss';
+@import './styles/components/all-data.component.scss';
 @import './styles/components/footer.component.scss';
 @import './styles/components/header.component';
 @import './styles/components/search-results.component.scss';

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -9,7 +9,7 @@ import { ISearchResultsResolverData } from '../contracts/search/isearch-results-
   selector: 'app-search-results',
   templateUrl: './search-results.component.html'
 })
-export class SearchResultsComponent implements OnInit {
+export class SearchResultsComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any> = new Subject<any>();
   currentSearchTerm: string = '';
   searchResults: IGlobalSearchResult[] = [];

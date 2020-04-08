@@ -36,6 +36,17 @@
     display: flex;
     justify-content: space-between;
     padding: 0 .5rem;
+    .icons-container {
+      display: flex;
+      align-items: center;
+      .icon-container, .angular-icon > span {
+        display: flex;
+        align-items: center;
+      }
+      .angular-icon > span {
+        vertical-align: middle;
+      }
+    }
     .angular-icon {
       margin-left: .5rem;
     }

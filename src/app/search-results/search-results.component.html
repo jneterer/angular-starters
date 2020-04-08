@@ -4,11 +4,11 @@
       <h1>Results for <span style="font-weight: bold;">"{{ currentSearchTerm }}"</span>!</h1>
       <div class="results-titles-container">
         <div *ngFor="let searchResultGroup of searchResults">
-          <span (click)="scrollToGroup(searchResultGroup._id)">{{ getTitle(searchResultGroup._id) }}</span>
+          <span (click)="scrollToGroup(searchResultGroup._id)">{{ getTitle(searchResultGroup._id) }} - {{ searchResultGroup.results.length }}</span>
         </div>
       </div>
     </div>
-    <div *ngFor="let searchResultGroup of searchResults" class="cards-section" [id]="searchResultGroup._id" app-cards [groupTitle]="getTitle(searchResultGroup._id)" [searchResultGroup]="searchResultGroup"></div>
+    <div *ngFor="let searchResultGroup of searchResults" class="cards-section" [id]="searchResultGroup._id" app-cards [groupTitle]="getTitle(searchResultGroup._id)" [searchResultGroup]="searchResultGroup.results"></div>
   </div>
 </ng-container>
 <ng-template #noResults>

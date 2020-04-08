@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { IGlobalSearchResult } from '../contracts/search/iglobal-search-result';
+import { ISearchResult } from '../contracts/search/isearch-result';
 
 @Component({
   selector: '[app-cards]',
@@ -7,7 +7,7 @@ import { IGlobalSearchResult } from '../contracts/search/iglobal-search-result';
 })
 export class CardsComponent implements OnInit {
   @Input() groupTitle: string;
-  @Input() searchResultGroup: IGlobalSearchResult;
+  @Input() searchResultGroup: ISearchResult[];
 
   constructor() { }
 

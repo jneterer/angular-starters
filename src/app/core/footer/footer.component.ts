@@ -5,7 +5,7 @@ import { ITheme } from '../../contracts/shared/theme';
 import { ContentService } from '../../shared/content/content.service';
 
 @Component({
-  selector: 'app-footer',
+  selector: '[app-footer]',
   templateUrl: './footer.component.html'
 })
 export class FooterComponent implements OnInit, OnDestroy {

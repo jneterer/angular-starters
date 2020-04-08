@@ -3,13 +3,12 @@ import { Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { IGlobalSearchResult } from 'src/app/contracts/search/iglobal-search-result';
-import { IPreviousGlobalSearchQueries } from '../../contracts/search/iprevious-global-search-queries';
 import { ITheme } from '../../contracts/shared/theme';
 import { SearchService } from '../../services/search.service';
 import { ContentService } from '../../shared/content/content.service';
 
 @Component({
-  selector: 'app-header',
+  selector: '[app-header]',
   templateUrl: './header.component.html'
 })
 export class HeaderComponent implements OnInit, OnDestroy {
