@@ -195,6 +195,9 @@ $darkTheme: mat-dark-theme($theme-primary, $theme-accent, $theme-warn);
   @include angular-material-theme($darkTheme);
   background: $dark-bg-lighter-5;
   color: white;
+  svg {
+    fill: white !important;
+  }
 }
 
 // Specific component overrides, pieces that are not in line with the general theming
