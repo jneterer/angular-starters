@@ -1,6 +1,8 @@
 <mat-card class="card">
   <a class="image-link-wrapper" [routerLink]="'/starter/' + searchResult.name">
-    <img mat-card-image src="https://cdn.sanity.io/images/zfb9idzl/production/227838b6237c960ad4ca1a13ee501b0d2560534a-3240x1974.png" alt="Photo of a Shiba Inu">
+    <cl-image public-id="angular-starters.png" secure="true" [attr.class]="'mat-card-image'">
+      <cl-placeholder></cl-placeholder>
+    </cl-image>
   </a>
   <mat-card-content>
     <p>jrneterer</p>
