@@ -16,7 +16,7 @@
       </mat-form-field><br>
       <button mat-raised-button color="primary" type="submit">Subscribe</button>
     </form>
-    <p *ngIf="statusCode" class="{{ statusCode === 200 ? '_success' : '_error'  }}">
+    <p *ngIf="statusCode" class="{{ statusCode === 202 ? '_success' : '_error'  }}">
       <ng-container *ngIf="statusCode === 200; else error">
         Success! Be on the lookout for updates!
       </ng-container>
