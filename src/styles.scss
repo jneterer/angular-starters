@@ -12,6 +12,7 @@
 
 $primary-color: #004aad;
 $accent-color: #e2e9f1;
+$warn-color: #ff0000;
      
 $fontConfig: (
   display-4: mat-typography-level(112px, 112px, 300, 'Roboto', -0.0134em),
@@ -269,10 +270,18 @@ a:not(.mat-button-base) {
   }
 }
 
+._success {
+  color: green;
+}
+._error {
+  color: $warn-color;
+}
+
 @import './styles/breakpoints';
 @import './styles/components/home/hero.component';
 @import './styles/components/home/home.component.scss';
 @import './styles/components/home/submit-starter.component.scss';
+@import './styles/components/home/welcome.component.scss';
 @import './styles/components/footer.component.scss';
 @import './styles/components/header.component';
 @import './styles/components/search-results.component.scss';

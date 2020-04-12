@@ -1,10 +1,5 @@
 <div class="home-container">
-  <div class="welcome-text">
-    <img [src]="currentTheme.logoUrl" alt="Angular Rocket" class="welcome-logo">
-    <h1>Angular Starters</h1>
-    <p>Get your web apps off the ground in minutes with <strong>Open Source</strong> Angular starter projects!</p>
-    <button mat-raised-button color="primary" (click)="scrollToHeroes()">Read More <mat-icon>arrow_downwards</mat-icon></button>
-  </div>
+  <app-welcome></app-welcome>
   <div class="heroes-container">
     <div app-hero *ngFor="let hero of heroData" [heroData]="hero" class="hero-container" [class.reversed]="hero.reversed"></div>
   </div>

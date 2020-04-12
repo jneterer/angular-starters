@@ -1,16 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ITheme } from 'src/app/contracts/shared/theme';
 import { IHeroData } from '../../contracts/components/hero/ihero-data';
-import { ContentService } from '../../shared/content/content.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html'
 })
 export class HomeComponent implements OnInit {
-  private unsubscribe: Subject<any> = new Subject<any>();
   readonly heroData: IHeroData[] = [
     {
       imgUrl: '../../../assets/undraw_software_engineer_lvl5.svg',
@@ -49,25 +44,9 @@ export class HomeComponent implements OnInit {
       buttonIcon: 'arrow_forwards'
     }
   ];
-  currentTheme: ITheme;
 
-  constructor(private contentService: ContentService) { }
+  constructor() { }
 
-  ngOnInit(): void {
-    // Subscribe to any theme changes.
-    this.contentService.currentThemeConfig$.pipe(takeUntil(this.unsubscribe)).subscribe((theme: ITheme) => this.currentTheme = theme);
-  }
-
-  // Smooth scroll to the heroes container
-  scrollToHeroes(): void {
-    document.querySelector('.heroes-container')?.scrollIntoView({
-      behavior: 'smooth'
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.unsubscribe.next();
-    this.unsubscribe.complete();
-  }
+  ngOnInit(): void { }
 
 }
