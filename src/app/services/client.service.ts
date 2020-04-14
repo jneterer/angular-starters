@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { AnonymousCredential, RemoteMongoClient, Stitch, StitchAppClient } from 'mongodb-stitch-browser-sdk';
 import { environment } from '../../environments/environment';
+import { from, Observable } from 'rxjs';
 
 
 @Injectable({
@@ -31,6 +32,16 @@ export class ClientService {
    */
   get getMongoDB(): RemoteMongoClient {
     return this.mongodb;
+  }
+
+  /**
+   * Subscribes the user to our email.
+   * @param {string} email 
+   * @param {string} name 
+   * @returns {Observable<{statusCode: number}>}
+   */
+  subscribe(email: string, name: string): Observable<{statusCode: number}> {
+    return from(this.client.callFunction('subscribe_signup', [email, name]));
   }
   
 }

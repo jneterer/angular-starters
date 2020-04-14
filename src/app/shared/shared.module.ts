@@ -1,6 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
 import * as Cloudinary from 'cloudinary-core';
@@ -14,6 +14,7 @@ import { MaterialModule } from './material.module';
   imports: [
     CommonModule,
     FormsModule,
+    ReactiveFormsModule,
     InlineSVGModule.forRoot(),
     CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'angular-starters'}),
     MaterialModule,
@@ -23,8 +24,9 @@ import { MaterialModule } from './material.module';
     InlineSVGModule,
     CloudinaryModule,
     FormsModule,
+    ReactiveFormsModule,
     MaterialModule,
-    RouterModule,
+    RouterModule
   ],
   providers: [
     ClientService,

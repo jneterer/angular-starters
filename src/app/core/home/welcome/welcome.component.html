@@ -1,0 +1,32 @@
+<div class="welcome-container">
+  <div class="welcome-text">
+    <img [src]="currentTheme.logoUrl" alt="Angular Rocket" class="welcome-logo">
+    <h1>Angular Starters</h1>
+    <p>Get your web apps off the ground in minutes with <strong>Open Source</strong> Angular starter projects!</p>
+  </div>
+  <mat-card class="subscribe-container">
+    <h2>Sign up to receive updates!</h2>
+    <form [formGroup]="subscribeForm" (ngSubmit)="subscribe()">
+      <mat-form-field>
+        <input matInput placeholder="Your Name" formControlName="name">
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Your Email" formControlName="email" required>
+        <mat-error>This field is required.</mat-error>
+      </mat-form-field><br>
+      <button mat-raised-button color="primary" type="submit">Subscribe</button>
+    </form>
+    <p *ngIf="statusCode" class="{{ statusCode === 202 ? '_success' : '_error'  }}">
+      <ng-container *ngIf="statusCode === 202; else error">
+        Success! Be on the lookout for updates!
+      </ng-container>
+      <ng-template #error>
+        There was an error, please <a href="mailto:contact@angularstarters.com">email</a> us for assistance or try again later.
+      </ng-template>
+    </p>
+    <p>
+      We won't send you spam, only updates on our progress.
+      <br>
+      You can unsubscribe anytime.</p>
+  </mat-card>
+</div>
