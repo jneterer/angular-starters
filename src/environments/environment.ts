@@ -4,11 +4,11 @@
 
 export const environment = {
   production: false,
-  stitchClientName: 'angular_starters-lvzjv',
-  stitchServiceName: 'angular-starters',
-  startersDB: 'starters',
-  allDataCollection: 'all-data',
-  categoriesCollection: 'categories'
+  stitchClientName: 'angular-starters-dev-qoncd',
+  stitchServiceName: 'mongodb-atlas',
+  startersDB: 'starters-dev',
+  allDataCollection: 'all-data-dev',
+  categoriesCollection: 'categories-dev'
 };
 
 /*

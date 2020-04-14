@@ -1,8 +1,8 @@
 export const environment = {
   production: true,
-  stitchClientName: 'angular_starters-lvzjv',
-  stitchServiceName: 'angular-starters',
-  startersDB: 'starters',
-  allDataCollection: 'all-data',
-  categoriesCollection: 'categories'
+  stitchClientName: 'angular-starters-prod-wurwy',
+  stitchServiceName: 'mongodb-atlas',
+  startersDB: 'starters-prod',
+  allDataCollection: 'all-data-prod',
+  categoriesCollection: 'categories-prod'
 };
