@@ -13,7 +13,7 @@ export class HomeComponent implements OnInit {
   private unsubscribe: Subject<any> = new Subject<any>();
   readonly heroData: IHeroData[] = [
     {
-      imgUrl: '../../../assets/undraw_software_engineer_lvl5.svg',
+      imgName: 'v1/undraw_software_engineer_lvl5.svg',
       imgAlt: 'Woman With Access To Many Angular Starters',
       reversed: false,
       title: 'Starters',
@@ -25,7 +25,7 @@ export class HomeComponent implements OnInit {
       buttonIcon: 'arrow_forwards'
     },
     {
-      imgUrl: '../../../assets/undraw_mobile_wireframe_euf4.svg',
+      imgName: 'v1/undraw_mobile_wireframe_euf4.svg',
       imgAlt: 'Woman and Man Presenting Responsive Wireframes for Website',
       reversed: true,
       title: 'Themes',
@@ -37,7 +37,7 @@ export class HomeComponent implements OnInit {
       buttonIcon: 'arrow_forwards'
     },
     {
-      imgUrl: '../../../assets/undraw_done_a34v.svg',
+      imgName: 'v1/undraw_done_a34v.svg',
       imgAlt: 'Man Showing His Built Site',
       reversed: false,
       title: 'Sites',

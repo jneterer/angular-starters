@@ -1,7 +1,7 @@
 <mat-card class="card">
   <a class="image-link-wrapper" [routerLink]="'/starter/' + searchResult.name">
-    <cl-image public-id="angular-starters.png" secure="true" [attr.class]="'mat-card-image'">
-      <cl-placeholder></cl-placeholder>
+    <cl-image [public-id]="'starter-screenshots/' + searchResult.name + '.png'" loading="lazy" secure="true" [attr.class]="'mat-card-image'">
+      <cl-placeholder type="blur"></cl-placeholder>
     </cl-image>
   </a>
   <mat-card-content>

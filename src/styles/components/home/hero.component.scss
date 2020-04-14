@@ -51,6 +51,9 @@
         width: 100% !important;
       }
     }
+    img {
+      width: 100%;
+    }
   }
   &-text-container {
     @include aboveIpad {

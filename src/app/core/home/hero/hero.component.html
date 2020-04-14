@@ -1,4 +1,8 @@
-<img [src]="heroData.imgUrl" [alt]="heroData.imgAlt" class="hero-image">
+<div class="hero-image">
+  <cl-image [public-id]="heroData.imgName" loading="lazy" secure="true">
+    <cl-placeholder type="blur"></cl-placeholder>
+  </cl-image>
+</div>
 <div class="hero-text-container">
   <h2>{{ heroData.title }}</h2>
   <p [innerHTML]="heroData.subtitle"></p>

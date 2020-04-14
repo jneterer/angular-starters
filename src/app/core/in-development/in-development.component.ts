@@ -10,7 +10,7 @@ import { IHeroData } from 'src/app/contracts/components/hero/ihero-data';
 })
 export class InDevelopmentComponent implements OnInit {
   hero: IHeroData = {
-    imgUrl: '../../../assets/undraw_programming_2svr.svg',
+    imgName: 'v1/undraw_programming_2svr.svg',
     imgAlt: 'Man Programming',
     reversed: false,
     title: 'In Developmnent',

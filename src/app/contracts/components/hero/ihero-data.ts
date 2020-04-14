@@ -1,5 +1,5 @@
 export interface IHeroData {
-  imgUrl: string;
+  imgName: string;
   imgAlt: string;
   reversed: boolean;
   title: string;
