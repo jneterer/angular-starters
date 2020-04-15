@@ -13,7 +13,7 @@ export class InDevelopmentComponent implements OnInit {
     imgUrl: '../../../assets/undraw_programming_2svr.svg',
     imgAlt: 'Man Programming',
     reversed: false,
-    title: 'In Developmnent',
+    title: 'In Development',
     subtitle: 'is currently in development. Check back frequently for changes or visit our Github repo for more updates!',
     buttonText: 'Github',
     buttonUrl: 'https://github.com/jneterer/angular-starters',
