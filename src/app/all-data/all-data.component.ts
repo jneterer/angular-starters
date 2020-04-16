@@ -18,6 +18,10 @@ export class AllDataComponent implements OnInit, OnDestroy {
   mediaMatches: boolean = false;
   title: string;
   allData: ISearchResult[];
+  queryParams: object = {};
+  readonly angularVersions: string[] = ['4','5','6','7','8','9'];
+  filterableAngularVersions: object = {};
+  filteredAngularVersion: string = null;
   categories: ICategory[] = [];
   filterableCategories: {} = {};
   filteredCategories: string[] = [];
@@ -30,13 +34,16 @@ export class AllDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe((queryParams: Params) => {
+      this.queryParams = queryParams;
       this.filteredCategories = queryParams.c ? (<string>queryParams.c).split(',') : [];
+      this.filteredAngularVersion = queryParams.v ? (<string>queryParams.v) : null;
       document.getElementById('sidenav-main-content').scrollTo(0, 0);
     });
     this.route.data.pipe(takeUntil(this.unsubscribe))
     .subscribe((data: { title: string, allData: ISearchResult[], categories: ICategory[] }) => {
-      // Clear the filterable categories for when the data is refreshed/changes.
+      // Clear the filterable categories and filterable versions for when the data is refreshed/changes.
       this.filterableCategories = {};
+      this.filterableAngularVersions = {};
       this.title = data.title;
       this.allData = data.allData;
       this.categories = data.categories;
@@ -50,11 +57,20 @@ export class AllDataComponent implements OnInit, OnDestroy {
             this.filterableCategories[category].total = this.filterableCategories[category].total + 1;
           } else {
             this.filterableCategories[category] = {
-              total: 1,
-              name: this.categories.find((categoryObject: {}) => categoryObject['category_id'] === category)['name']
-            }
+              total: 1
+            };
           }
         });
+        // Add the angular version to the filterable versions object and set the total number of starters
+        // that include this version and its name.
+        const angularVersion: string = result.angular_version;
+        if (this.filterableAngularVersions[angularVersion]) {
+          this.filterableAngularVersions[angularVersion].total = this.filterableAngularVersions[angularVersion].total + 1;
+        } else {
+          this.filterableAngularVersions[angularVersion] = {
+            total: 1
+          };
+        }
       });
     });
     // Listen for when the viewport changes between below and above an iPad. This helps
@@ -85,35 +101,56 @@ export class AllDataComponent implements OnInit, OnDestroy {
 
   /**
    * Determines if the filter is currently active.
-   * @param {string} categoryId 
+   * @param {('angularVersion' | 'category')} filterType 
+   * @param {string} filterId 
    * @returns {boolean}
    */
-  activeFilter(categoryId: string): boolean {
-    return this.filteredCategories.includes(categoryId);
+  activeFilter(filterType: ('angularVersion' | 'category'), filterId: string): boolean {
+    return filterType === 'angularVersion' ? 
+      (this.filteredAngularVersion === filterId) 
+      :
+      this.filteredCategories.includes(filterId);
   }
 
   /**
    * Updates the active version and category filters.
    * @param {MatCheckboxChange} event 
    * @param {('angularVersion' | 'category')} filterType 
-   * @param {string} categoryId 
+   * @param {string} filterId 
    */
-  filterChanged(event: MatCheckboxChange, filterType: ('angularVersion' | 'category'), categoryId: string): void {
-    if (this.filteredCategories.includes(categoryId)) {
-      this.filteredCategories.splice(this.filteredCategories.indexOf(categoryId), 1);
+  filterChanged(event: MatCheckboxChange, filterType: ('angularVersion' | 'category'), filterId: string): void {
+    let queryParams: {} = Object.assign({}, this.queryParams);
+    console.log(queryParams);
+    if (filterType === 'angularVersion') {
+      console.log('filteredAngularVersion: ', this.filteredAngularVersion);
+      if (this.filteredAngularVersion === filterId) {
+        console.log('includes: ', filterId);
+        this.filteredAngularVersion = null;
+      } else {
+        this.filteredAngularVersion = filterId;
+      }
+      console.log('filteredAngularVersions: ', this.filteredAngularVersion);
+      if (this.filteredAngularVersion) {
+        queryParams['v'] = this.filteredAngularVersion;
+      }
     } else {
-      this.filteredCategories.push(categoryId);
-    }
-    let filter: string = '';
-    this.filteredCategories.forEach((category: string, index) => {
-      filter = filter + (index !== 0 ? `,${category}` : category);
-    });
-    let queryParams: Params = null;
-    if (filter) {
-      queryParams = {
-        c: filter
+      console.log('filteredCategories: ', this.filteredCategories);
+      if (this.filteredCategories.includes(filterId)) {
+        this.filteredCategories.splice(this.filteredCategories.indexOf(filterId), 1);
+      } else {
+        this.filteredCategories.push(filterId);
+      }
+      console.log('filteredCategories: ', this.filteredCategories);
+      let filter: string = '';
+      this.filteredCategories.forEach((category: string, index) => {
+        filter = filter + (index !== 0 ? `,${category}` : category);
+      });
+      queryParams['c'] = filter;
+      if (!queryParams['c']) {
+        delete queryParams['c'];
       }
     }
+    console.log('queryParams: ', queryParams);
     this.router.navigate([], {
       relativeTo: this.route,
       queryParams: queryParams

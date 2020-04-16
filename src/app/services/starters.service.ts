@@ -35,11 +35,18 @@ export class StartersService {
    * @param {string[]} categoryFilters
    * @returns {Observable<ISearchResult[]>}
    */
-  getData(type: ('starter' | 'theme' | 'site'), categoryFilters: string[]): Observable<ISearchResult[]> {
+  getData(type: ('starter' | 'theme' | 'site'), angularVersionFilters: string[], categoryFilters: string[]): Observable<ISearchResult[]> {
     let query = { 
       status: "active",
       type: type,
     };
+    if (angularVersionFilters) {
+      query['$and'] = angularVersionFilters.map((angularVersion: string) => {
+        return {
+          angular_version: angularVersion
+        }
+      });
+    }
     if (categoryFilters) {
       query['$and'] = categoryFilters.map((category: string) => {
         return {

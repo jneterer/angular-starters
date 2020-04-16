@@ -1,11 +1,12 @@
 import { IHighlight } from './ihighlight';
 
 export interface ISearchResult {
-  name: string;
-  description?: string;
+  angular_version: string;
   categories?: string[];
   demo_url?: 1,
+  description?: string;
+  highlights?: IHighlight[];
+  name: string;
   repo_url?: 1,
   score: number;
-  highlights?: IHighlight[];
 }
