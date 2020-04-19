@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { take } from 'rxjs/operators';
 import { IHeroData } from 'src/app/contracts/components/hero/ihero-data';
 
@@ -21,8 +21,7 @@ export class InDevelopmentComponent implements OnInit {
     buttonIcon: 'launch'
   };
 
-  constructor(private router: Router,
-              private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     // Get the title from the route.
@@ -32,7 +31,8 @@ export class InDevelopmentComponent implements OnInit {
       // Prefix the subtitle with the page title.
       this.hero = {
         ...this.hero,
-        subtitle: (pageTitle? pageTitle : 'This page') + ' ' + this.hero.subtitle
+        subtitle: (pageTitle ? pageTitle : 'This page') + ' ' + this.hero.subtitle,
+        location: ((pageTitle ? pageTitle : 'In Development') + ' - In Development')
       };
     });
   }

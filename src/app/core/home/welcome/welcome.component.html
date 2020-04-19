@@ -21,7 +21,7 @@
         Success! Be on the lookout for updates!
       </ng-container>
       <ng-template #error>
-        There was an error, please <a href="mailto:contact@angularstarters.com">email</a> us for assistance or try again later.
+        There was an error, please <a href="mailto:contact@angularstarters.com" [linkTracker]='{"type":"mailto","location":"Home - Welcome"}'>email</a> us for assistance or try again later.
       </ng-template>
     </p>
     <p>

@@ -6,6 +6,7 @@ import { ClientService } from '../services/client.service';
 import { SearchService } from '../services/search.service';
 import { LinkTrackerDirective } from './directives/link-tracker.directive';
 import { MaterialModule } from './material.module';
+import { GoogleAnalyticsService } from './services/google-analytics.service';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MaterialModule } from './material.module';
   ],
   providers: [
     ClientService,
-    SearchService
+    SearchService,
+    GoogleAnalyticsService
   ]
 })
 export class SharedModule { }

@@ -17,7 +17,8 @@ export class HomeComponent implements OnInit {
       buttonText: 'Explore Starters',
       buttonUrl: '/starters',
       internal: true,
-      buttonIcon: 'arrow_forwards'
+      buttonIcon: 'arrow_forwards',
+      location: 'Home - Hero'
     },
     {
       imgUrl: '../../../assets/undraw_mobile_wireframe_euf4.svg',
@@ -29,7 +30,8 @@ export class HomeComponent implements OnInit {
       buttonText: 'Explore Themes',
       buttonUrl: '/themes',
       internal: true,
-      buttonIcon: 'arrow_forwards'
+      buttonIcon: 'arrow_forwards',
+      location: 'Home - Hero',
     },
     {
       imgUrl: '../../../assets/undraw_done_a34v.svg',
@@ -41,7 +43,8 @@ export class HomeComponent implements OnInit {
       buttonText: 'Explore Sites',
       buttonUrl: '/sites',
       internal: true,
-      buttonIcon: 'arrow_forwards'
+      buttonIcon: 'arrow_forwards',
+      location: 'Home - Hero'
     }
   ];
 

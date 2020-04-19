@@ -1,7 +1,7 @@
 import { Directive, HostListener, Input } from '@angular/core';
 
 export interface ILink {
-  type: ('internal' | 'external');
+  type: ('internal' | 'external' | 'mailto');
   location: ('Header');
 };
 
@@ -16,8 +16,16 @@ export class LinkTrackerDirective {
   @Input('href') href: string;
 
   @HostListener('click', ['$event']) onClick(event) {
+    let type: string = '';
+    if (this.option.type === 'internal') {
+      type = 'Internal Link Click';
+    } else if (this.option.type === 'external') {
+      type = 'Outbound Link Click';
+    } else {
+      type = 'Mailto Link Click'
+    }
     try {
-      (<any>window).gtag('event', this.option.type === 'internal' ? 'Internal Link Click' : 'Outbound Link Click', {
+      (<any>window).gtag('event', type, {
         'event_category': this.option.location,
         'event_label': this.option.type === 'internal' ? this.routerLink : this.href,
       })
