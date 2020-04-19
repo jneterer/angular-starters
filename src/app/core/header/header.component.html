@@ -1,6 +1,6 @@
 <mat-toolbar class="header">
   <div class="header-container">
-    <a mat-flat-button routerLink="/">
+    <a mat-flat-button routerLink="/" [linkTracker]='{"type":"internal","location":"Header"}'>
       <img class="header-logo" [src]="currentTheme.headerLogoUrl" alt="Angular Starters Logo">
       <span class="header-name">
         Angular Starters
