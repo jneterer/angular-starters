@@ -3,5 +3,6 @@ export const environment = {
   stitchClientName: 'angular_starters-lvzjv',
   stitchServiceName: 'angular-starters',
   startersDB: 'starters',
-  allDataCollection: 'all-data'
+  allDataCollection: 'all-data',
+  gaId: 'UA-145895649-3'
 };
