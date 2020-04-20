@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { CloudinaryModule } from '@cloudinary/angular-5.x';
 import * as Cloudinary from 'cloudinary-core';
 import { InlineSVGModule } from 'ng-inline-svg';
+import { environment } from '../../environments/environment';
 import { ClientService } from '../services/client.service';
 import { SearchService } from '../services/search.service';
 import { LinkTrackerDirective } from './directives/link-tracker.directive';
@@ -20,7 +21,7 @@ import { GoogleAnalyticsService } from './services/google-analytics.service';
     FormsModule,
     ReactiveFormsModule,
     InlineSVGModule.forRoot(),
-    CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'angular-starters'}),
+    CloudinaryModule.forRoot(Cloudinary, { cloud_name: environment.cloudinaryId }),
     MaterialModule,
     RouterModule
   ],

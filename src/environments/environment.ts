@@ -9,7 +9,8 @@ export const environment = {
   startersDB: 'starters-dev',
   allDataCollection: 'all-data-dev',
   categoriesCollection: 'categories-dev',
-  gaId: 'UA-145895649-4'
+  gaId: 'UA-145895649-4',
+  cloudinaryId: 'angular-starters-dev'
 };
 
 /*
