@@ -7,10 +7,14 @@ import * as Cloudinary from 'cloudinary-core';
 import { InlineSVGModule } from 'ng-inline-svg';
 import { ClientService } from '../services/client.service';
 import { SearchService } from '../services/search.service';
+import { LinkTrackerDirective } from './directives/link-tracker.directive';
 import { MaterialModule } from './material.module';
+import { GoogleAnalyticsService } from './services/google-analytics.service';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    LinkTrackerDirective
+  ],
   imports: [
     CommonModule,
     FormsModule,
@@ -18,19 +22,21 @@ import { MaterialModule } from './material.module';
     InlineSVGModule.forRoot(),
     CloudinaryModule.forRoot(Cloudinary, { cloud_name: 'angular-starters'}),
     MaterialModule,
-    RouterModule,
+    RouterModule
   ],
   exports: [
     InlineSVGModule,
     CloudinaryModule,
     FormsModule,
     ReactiveFormsModule,
+    LinkTrackerDirective,
     MaterialModule,
     RouterModule
   ],
   providers: [
     ClientService,
-    SearchService
+    SearchService,
+    GoogleAnalyticsService
   ]
 })
 export class SharedModule { }

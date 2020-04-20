@@ -8,4 +8,5 @@ export interface IHeroData {
   buttonUrl?: string;
   internal?: boolean;
   buttonIcon?: string;
+  location?: string;
 }
