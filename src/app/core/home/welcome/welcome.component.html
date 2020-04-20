@@ -1,6 +1,8 @@
 <div class="welcome-container">
   <div class="welcome-text">
-    <img [src]="currentTheme.logoUrl" alt="Angular Rocket" class="welcome-logo">
+    <cl-image [public-id]="'logo'" loading="lazy" secure="true" [attr.class]="'welcome-logo'">
+      <cl-placeholder type="blur"></cl-placeholder>
+    </cl-image>
     <h1>Angular Starters</h1>
     <p>Get your web apps off the ground in minutes with <strong>Open Source</strong> Angular starter projects!</p>
   </div>
