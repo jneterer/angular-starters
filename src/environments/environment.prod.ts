@@ -4,5 +4,7 @@ export const environment = {
   stitchServiceName: 'mongodb-atlas',
   startersDB: 'starters-prod',
   allDataCollection: 'all-data-prod',
-  categoriesCollection: 'categories-prod'
+  categoriesCollection: 'categories-prod',
+  gaId: 'UA-145895649-3',
+  cloudinaryId: 'angular-starters-prod'
 };

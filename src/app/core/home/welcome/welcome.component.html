@@ -1,6 +1,8 @@
 <div class="welcome-container">
   <div class="welcome-text">
-    <img [src]="currentTheme.logoUrl" alt="Angular Rocket" class="welcome-logo">
+    <cl-image [public-id]="'logo'" loading="lazy" secure="true" [attr.class]="'welcome-logo'">
+      <cl-placeholder type="blur"></cl-placeholder>
+    </cl-image>
     <h1>Angular Starters</h1>
     <p>Get your web apps off the ground in minutes with <strong>Open Source</strong> Angular starter projects!</p>
   </div>
@@ -19,9 +21,11 @@
     <p *ngIf="statusCode" class="{{ statusCode === 202 ? '_success' : '_error'  }}">
       <ng-container *ngIf="statusCode === 202; else error">
         Success! Be on the lookout for updates!
+        <br>
+        If you can't find the email, check out your focused inbox/spam folders.
       </ng-container>
       <ng-template #error>
-        There was an error, please <a href="mailto:contact@angularstarters.com">email</a> us for assistance or try again later.
+        There was an error, please <a href="mailto:contact@angularstarters.com" [linkTracker]='{"type":"mailto","location":"Home - Welcome"}'>email</a> us for assistance or try again later.
       </ng-template>
     </p>
     <p>

@@ -23,9 +23,12 @@ $button-margin-left-below-desktop: .5em;
     }
   }
   &-logo {
-    width: 40px;
-    @include aboveIpad {
-      margin: 0 4px 3px 0;
+    vertical-align: middle;
+    img {
+      width: 40px;
+      @include aboveIpad {
+        margin: 0 4px 3px 0;
+      }
     }
   }
   &-name {

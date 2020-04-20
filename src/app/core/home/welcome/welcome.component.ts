@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 import { ITheme } from 'src/app/contracts/shared/theme';
 import { ClientService } from 'src/app/services/client.service';
 import { ContentService } from 'src/app/shared/content/content.service';
+import { GoogleAnalyticsService } from 'src/app/shared/services/google-analytics.service';
 
 @Component({
   selector: 'app-welcome',
@@ -18,7 +19,8 @@ export class WelcomeComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder,
               private contentService: ContentService,
-              private clientService: ClientService) { }
+              private clientService: ClientService,
+              private gaService: GoogleAnalyticsService) { }
 
   ngOnInit(): void {
     // Subscribe to any theme changes.
@@ -48,6 +50,11 @@ export class WelcomeComponent implements OnInit, OnDestroy {
       this.clientService.subscribe(email, name)
       .subscribe((response: { statusCode: number}) => {
         this.statusCode = response.statusCode;
+        if (response.statusCode === 202) {
+          this.gaService.sendEvent('Form Submit', 'Home - Email Subscribe', 'Success')
+        } else {
+          this.gaService.sendEvent('Form Submit', 'Home - Email Subscribe', 'Failure')
+        }
       });
     }
   }

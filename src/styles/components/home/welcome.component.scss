@@ -29,10 +29,12 @@
         padding: 0 .5em 2em;
       }
       .welcome-logo {
-        width: 200px;
-        &:hover {
-          animation: shake 0.5s;
-          animation-iteration-count: infinite;
+        img {
+          width: 200px;
+          &:hover {
+            animation: shake 0.5s;
+            animation-iteration-count: infinite;
+          }
         }
       }
       h1 {

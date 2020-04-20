@@ -6,7 +6,7 @@ import { HeaderButtonsComponent } from './header/header-buttons/header-buttons.c
 import { HeaderComponent } from './header/header.component';
 import { HeroComponent } from './home/hero/hero.component';
 import { HomeComponent } from './home/home.component';
-import { SubmitStarterComponent } from './home/submit-starter/submit-starter.component';
+import { MessageBannerComponent } from './home/message-banner/message-banner.component';
 import { WelcomeComponent } from './home/welcome/welcome.component';
 import { InDevelopmentComponent } from './in-development/in-development.component';
 
@@ -18,7 +18,7 @@ import { InDevelopmentComponent } from './in-development/in-development.componen
     HomeComponent,
     HeroComponent,
     InDevelopmentComponent,
-    SubmitStarterComponent,
+    MessageBannerComponent,
     WelcomeComponent
   ],
   imports: [

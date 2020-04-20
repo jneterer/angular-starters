@@ -1,7 +1,9 @@
 <mat-toolbar class="header">
   <div class="header-container">
-    <a mat-flat-button routerLink="/">
-      <img class="header-logo" [src]="currentTheme.headerLogoUrl" alt="Angular Starters Logo">
+    <a mat-flat-button routerLink="/" [linkTracker]='{"type":"internal","location":"Header"}'>
+      <cl-image [public-id]="'header_logo'" loading="lazy" secure="true" [attr.class]="'header-logo'">
+        <cl-placeholder type="blur"></cl-placeholder>
+      </cl-image>
       <span class="header-name">
         Angular Starters
       </span>
