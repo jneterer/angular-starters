@@ -1,4 +1,4 @@
-# Angular Starters [![Netlify Status](https://api.netlify.com/api/v1/badges/7d62b101-725a-42bf-b894-c3e05d9a0f29/deploy-status)](https://app.netlify.com/sites/angular-starters-d/deploys)
+# Angular Starters [![Netlify Status](https://api.netlify.com/api/v1/badges/7d62b101-725a-42bf-b894-c3e05d9a0f29/deploy-status)](https://app.netlify.com/sites/angular-starters-d/deploys) [![Gitter](https://badges.gitter.im/angular-starters/community.svg)](https://gitter.im/angular-starters/community?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
 
 Angular Starters is an Angular web app built to connect web developers with **Open Source** starter and themed projects to help get their own Angular projects off the ground and running! 
 
