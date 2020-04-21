@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, Resolve, RouterStateSnapshot } from '@angular/router';
-import { Observable } from 'rxjs';
-import { StartersService } from '../services/starters.service';
+import { Observable, of } from 'rxjs';
 import { ICategory } from '../contracts/categories/icategory';
+import { StartersService } from '../services/starters.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,8 @@ export class CategoriesResolverService implements Resolve<any> {
   constructor(private startersService: StartersService) { }
 
   resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICategory[]> {
-    return this.startersService.getCategories();
+    const filterableCategories: ICategory[] = this.startersService.filterableCategories;
+    return filterableCategories.length > 0 ? of(filterableCategories) : this.startersService.getCategories();
   }
 
 }
