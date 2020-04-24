@@ -10,7 +10,14 @@
           </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="checkboxes-container">
-          <mat-checkbox *ngFor="let version of [4,5,6,7,8,9]" class="category-checkbox" color="primary">v{{ version }}</mat-checkbox>
+          <ng-container *ngFor="let version of angularVersions">
+            <ng-container *ngIf="filterableAngularVersions[version._id]">
+              <div class="category-container">
+                <mat-checkbox (change)="filterChanged($event, 'angularVersion', version._id)" [checked]="angularVersions.length === 1 ? true : (filteredAngularVersion === version._id)" [disabled]="angularVersions.length === 1" class="category-checkbox" color="primary">v{{ version._id }}</mat-checkbox>
+                <span class="category-total">{{ version.total }}</span>
+              </div>
+            </ng-container>
+          </ng-container>
         </div>
       </mat-expansion-panel>
       <mat-expansion-panel expanded>
@@ -23,7 +30,7 @@
           <ng-container *ngFor="let category of categories">
             <ng-container *ngIf="filterableCategories[category.category_id]">
               <div class="category-container">
-                <mat-checkbox (change)="filterChanged($event, 'category', category.category_id)" [checked]="activeFilter(category.category_id)" class="category-checkbox" color="primary">{{ filterableCategories[category.category_id].name }}</mat-checkbox>
+                <mat-checkbox (change)="filterChanged($event, 'category', category.category_id)" [checked]="filterableCategoriesLength() === 1 ? true : activeFilter('category', category.category_id)" [disabled]="filterableCategoriesLength() === 1" class="category-checkbox" color="primary">{{ category.name }}</mat-checkbox>
                 <span class="category-total">{{ filterableCategories[category.category_id].total }}</span>
               </div>
             </ng-container>

@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
-import { AnonymousCredential, RemoteMongoClient, Stitch, StitchAppClient } from 'mongodb-stitch-browser-sdk';
+import { AnonymousCredential, RemoteMongoClient, Stitch, StitchAppClient, StitchUser } from 'mongodb-stitch-browser-sdk';
 import { environment } from '../../environments/environment';
-import { from, Observable } from 'rxjs';
+import { from, Observable, of } from 'rxjs';
+import { map, catchError } from 'rxjs/operators';
 
 
 @Injectable({
@@ -12,10 +13,23 @@ export class ClientService {
   protected readonly client: StitchAppClient = Stitch.initializeDefaultAppClient(environment.stitchClientName);
   // MongoDB variable used for accessing collections from a database.
   protected readonly mongodb: RemoteMongoClient = this.client.getServiceClient(RemoteMongoClient.factory, environment.stitchServiceName);
+  // Boolean variable that holds whether the app has been initialized or not.
+  initialized: boolean = false;
 
-  constructor() {
-    // By default log the user in anonymously.
-    Stitch.defaultAppClient.auth.loginWithCredential(new AnonymousCredential()).catch(console.error);
+  /**
+   * Initializes the stitch application.
+   * @returns {Observable<boolean>}
+   */
+  initializeStitch(): Observable<boolean> {
+    return from(Stitch.defaultAppClient.auth.loginWithCredential(new AnonymousCredential()))
+    .pipe(
+      map((user: StitchUser) => {
+        this.initialized = true;
+        return true;
+      }), catchError((error) => {
+        return of(false);
+      })
+    );
   }
 
   /**

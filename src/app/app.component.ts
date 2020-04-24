@@ -17,7 +17,7 @@ export class AppComponent implements OnInit {
 
   constructor(private router: Router,
               private route: ActivatedRoute,
-              private contentService: ContentService,) { }
+              private contentService: ContentService) { }
 
   ngOnInit(): void {
     // Subscribe to router events and filter by navigation end events.

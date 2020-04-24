@@ -4,6 +4,7 @@ import { MatCheckboxChange } from '@angular/material/checkbox';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { IAngularVersion } from '../contracts/angular-versions/iangular-version';
 import { ICategory } from '../contracts/categories/icategory';
 import { ISearchResult } from '../contracts/search/isearch-result';
 
@@ -18,6 +19,10 @@ export class AllDataComponent implements OnInit, OnDestroy {
   mediaMatches: boolean = false;
   title: string;
   allData: ISearchResult[];
+  queryParams: object = {};
+  angularVersions: IAngularVersion[] = [];
+  filterableAngularVersions: {} = {};
+  filteredAngularVersion: string = null;
   categories: ICategory[] = [];
   filterableCategories: {} = {};
   filteredCategories: string[] = [];
@@ -30,15 +35,19 @@ export class AllDataComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.route.queryParams.pipe(takeUntil(this.unsubscribe)).subscribe((queryParams: Params) => {
+      this.queryParams = queryParams;
       this.filteredCategories = queryParams.c ? (<string>queryParams.c).split(',') : [];
+      this.filteredAngularVersion = queryParams.v ? (<string>queryParams.v) : null;
       document.getElementById('sidenav-main-content').scrollTo(0, 0);
     });
     this.route.data.pipe(takeUntil(this.unsubscribe))
-    .subscribe((data: { title: string, allData: ISearchResult[], categories: ICategory[] }) => {
-      // Clear the filterable categories for when the data is refreshed/changes.
+    .subscribe((data: { title: string, allData: ISearchResult[], angularVersions: IAngularVersion[], categories: ICategory[] }) => {
+      // Clear the filterable categories and angular versions for when the data is refreshed/changes.
       this.filterableCategories = {};
+      this.filterableAngularVersions = {};
       this.title = data.title;
       this.allData = data.allData;
+      this.angularVersions = data.angularVersions;
       this.categories = data.categories;
       // Loop through the data to get the filterable categories. We only want to show the categories
       // that are still filterable based on the data.
@@ -50,11 +59,20 @@ export class AllDataComponent implements OnInit, OnDestroy {
             this.filterableCategories[category].total = this.filterableCategories[category].total + 1;
           } else {
             this.filterableCategories[category] = {
-              total: 1,
-              name: this.categories.find((categoryObject: {}) => categoryObject['category_id'] === category)['name']
-            }
+              total: 1
+            };
           }
         });
+        // Add the angular version to the filterable versions object and set the total number of starters
+        // that include this version and its name.
+        const angularVersion: string = result.angular_version;
+        if (this.filterableAngularVersions[angularVersion]) {
+          this.filterableAngularVersions[angularVersion].total = this.filterableAngularVersions[angularVersion].total + 1;
+        } else {
+          this.filterableAngularVersions[angularVersion] = {
+            total: 1
+          };
+        }
       });
     });
     // Listen for when the viewport changes between below and above an iPad. This helps
@@ -85,33 +103,57 @@ export class AllDataComponent implements OnInit, OnDestroy {
 
   /**
    * Determines if the filter is currently active.
-   * @param {string} categoryId 
+   * @param {('angularVersion' | 'category')} filterType 
+   * @param {string} filterId 
    * @returns {boolean}
    */
-  activeFilter(categoryId: string): boolean {
-    return this.filteredCategories.includes(categoryId);
+  activeFilter(filterType: ('angularVersion' | 'category'), filterId: string): boolean {
+    return filterType === 'angularVersion' ? 
+      (this.filteredAngularVersion === filterId) 
+      :
+      this.filteredCategories.includes(filterId);
+  }
+
+  /**
+   * Returns the number of filterable categories. We use this to determine if only one filterable
+   * category is available to check the single checkbox or not.
+   * @returns {number}
+   */
+  filterableCategoriesLength(): number {
+    return Object.keys(this.filterableCategories).length;
   }
 
   /**
    * Updates the active version and category filters.
    * @param {MatCheckboxChange} event 
    * @param {('angularVersion' | 'category')} filterType 
-   * @param {string} categoryId 
+   * @param {string} filterId 
    */
-  filterChanged(event: MatCheckboxChange, filterType: ('angularVersion' | 'category'), categoryId: string): void {
-    if (this.filteredCategories.includes(categoryId)) {
-      this.filteredCategories.splice(this.filteredCategories.indexOf(categoryId), 1);
+  filterChanged(event: MatCheckboxChange, filterType: ('angularVersion' | 'category'), filterId: string): void {
+    let queryParams: {} = Object.assign({}, this.queryParams);
+    if (filterType === 'angularVersion') {
+      if (this.filteredAngularVersion === filterId) {
+        this.filteredAngularVersion = null;
+      } else {
+        this.filteredAngularVersion = filterId;
+      }
+      queryParams['v'] = this.filteredAngularVersion;
+      if (!queryParams['v']) {
+        delete queryParams['v'];
+      }
     } else {
-      this.filteredCategories.push(categoryId);
-    }
-    let filter: string = '';
-    this.filteredCategories.forEach((category: string, index) => {
-      filter = filter + (index !== 0 ? `,${category}` : category);
-    });
-    let queryParams: Params = null;
-    if (filter) {
-      queryParams = {
-        c: filter
+      if (this.filteredCategories.includes(filterId)) {
+        this.filteredCategories.splice(this.filteredCategories.indexOf(filterId), 1);
+      } else {
+        this.filteredCategories.push(filterId);
+      }
+      let filter: string = '';
+      this.filteredCategories.forEach((category: string, index) => {
+        filter = filter + (index !== 0 ? `,${category}` : category);
+      });
+      queryParams['c'] = filter;
+      if (!queryParams['c']) {
+        delete queryParams['c'];
       }
     }
     this.router.navigate([], {
