@@ -47,7 +47,6 @@ export class StartersService {
    * @returns {Observable<ISearchResult[]>}
    */
   getData(type: ('starter' | 'theme' | 'site'), angularVersionFilters: string[], categoryFilters: string[]): Observable<ISearchResult[]> {
-    console.log('getting stuff');
     let query = { 
       status: "active",
       type: type

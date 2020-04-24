@@ -32,7 +32,7 @@
     padding: $topBottomPadding 5em;
   }
   @else {
-    padding: 2em 5em;
+    padding: 2em 3em;
   }
   @include belowDesktop {
     @include abovePhone {
