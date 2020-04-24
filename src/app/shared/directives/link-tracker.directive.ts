@@ -6,8 +6,7 @@ export interface ILink {
 };
 
 @Directive({
-  selector: '[linkTracker]',
-  jit: true
+  selector: '[linkTracker]'
 })
 export class LinkTrackerDirective {
 
