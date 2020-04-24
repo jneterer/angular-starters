@@ -1,10 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
-import { ITheme } from 'src/app/contracts/shared/theme';
 import { ClientService } from 'src/app/services/client.service';
-import { ContentService } from 'src/app/shared/content/content.service';
 import { GoogleAnalyticsService } from 'src/app/shared/services/google-analytics.service';
 
 @Component({
@@ -14,17 +11,13 @@ import { GoogleAnalyticsService } from 'src/app/shared/services/google-analytics
 export class WelcomeComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any> = new Subject<any>();
   subscribeForm: FormGroup;
-  currentTheme: ITheme;
   statusCode: number = null;
 
   constructor(private formBuilder: FormBuilder,
-              private contentService: ContentService,
               private clientService: ClientService,
               private gaService: GoogleAnalyticsService) { }
 
   ngOnInit(): void {
-    // Subscribe to any theme changes.
-    this.contentService.currentThemeConfig$.pipe(takeUntil(this.unsubscribe)).subscribe((theme: ITheme) => this.currentTheme = theme);
     this.subscribeForm = this.formBuilder.group({
       name: '',
       email: ['', [Validators.email, Validators.required]]
