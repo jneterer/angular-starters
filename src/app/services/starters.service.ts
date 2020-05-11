@@ -46,7 +46,7 @@ export class StartersService {
    * @param {string[]} categoryFilters
    * @returns {Observable<ISearchResult[]>}
    */
-  getData(type: ('starter' | 'theme' | 'site'), angularVersionFilters: string[], categoryFilters: string[]): Observable<ISearchResult[]> {
+  getAllData(type: ('starter' | 'theme' | 'site'), angularVersionFilters: string[], categoryFilters: string[]): Observable<ISearchResult[]> {
     let query = { 
       status: "active",
       type: type
@@ -75,6 +75,28 @@ export class StartersService {
       sort: { name: 1 }
     };
     return <Observable<ISearchResult[]>>from(this.allDataCollection.find(query, options).toArray());
+  }
+
+  /**
+   * Gets data by type, name, and optionally owner (when type is not site).
+   * @param {'starter' | 'theme' | 'site'} type 
+   * @param {string} name 
+   * @param {string} owner 
+   * @returns {Observable<ISearchResult>}
+   */
+  getData(type: ('starter' | 'theme' | 'site'), name: string, owner?: string): Observable<ISearchResult> {
+    let query = { 
+      type: type, 
+      name: name
+    };
+    if (owner) {
+      query['owner'] = owner;
+    }
+    const options = {
+      projection: { _id: 0, status: 0 }
+    };
+
+    return <Observable<ISearchResult>>from(this.allDataCollection.findOne(query, options));
   }
 
   /**

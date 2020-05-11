@@ -1,0 +1,84 @@
+.starter-container {
+  @include mediumContainer(2em);
+  img {
+    width: 100%;
+  }
+  .starter-subheader {
+    display: flex;
+    justify-content: space-between;
+    padding: .5em 0;
+    @include belowPhone {
+      padding: 1em 0;
+    }
+    a {
+      &:nth-child(2) {
+        margin-left: 1em;
+      }
+      .mat-button-wrapper {
+        @include aboveDesktop {
+          padding: 0;
+        }
+      }
+      &.github-button {
+        svg {
+          .dark-theme & {
+            fill: rgba(22, 27, 34, 0.87) !important;
+          }
+        }
+      }
+      &.demo-button {
+        svg {
+          fill: white !important;
+        }
+      }
+      svg {
+        width: 22px;
+        height: 22px;
+      }
+    }
+  }
+  .project-name {
+    margin: 0;
+    padding: 0 0 .5em;
+  }
+  .project-owner {
+    font-size: 1.25em;
+  }
+  .clone-project-section {
+    .clone-project-container {
+      background-color: #f5f5f5;
+      overflow-y: hidden;
+      padding: .75em;
+      white-space: nowrap;
+      button {
+        margin-right: 1em;
+      }
+      .dark-theme & {
+        background-color: $dark-background;
+      }
+    }
+  }
+  .content-sections {
+    margin-top: 2em;
+    .content-section {
+      font-size: 1.25em;
+      @include abovePhone {
+        display: flex;
+      }
+      .label {
+        font-weight: 400;
+        @include abovePhone {
+          width: 15%;
+        }
+      }
+      ul {
+        margin-top: 0;
+        padding-left: 1em;
+        li {
+          font-weight: 100;
+          line-height: 2em;
+        }
+      }
+    }
+  }
+}

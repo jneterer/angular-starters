@@ -1,0 +1,52 @@
+<div class="starter-container">
+  <cl-image [public-id]="'starter-screenshots/' + data.name + '.png'" loading="lazy" secure="true">
+    <cl-placeholder type="blur"></cl-placeholder>
+  </cl-image>
+  <div class="starter-subheader">
+    <div class="icons-container">
+      <span class="icon-container">
+        <mat-icon>star</mat-icon>
+      </span> 5
+      <span class="angular-icon">
+        <span aria-label="Angular Icon" [inlineSVG]="'/assets/angular.svg'"></span>
+      </span> v{{ data.angular_version }}
+    </div>
+    <div>
+      <a *ngIf="data.repo_url" class="github-button" [href]="data.repo_url" target="_blank" mat-raised-button color="accent">
+        Repo <span aria-label="Github Icon" [inlineSVG]="'/assets/github.svg'"></span> 
+      </a>
+      <a *ngIf="data.demo_url" class="demo-button" [href]="data.demo_url" target="_blank" mat-raised-button color="primary">
+        View Demo <span aria-label="Launch Icon" [inlineSVG]="'/assets/launch.svg'"></span> 
+      </a>
+    </div>
+  </div>
+  <h1 class="project-name">{{ data.name }}</h1>
+  <p class="project-owner">Created by: <a [href]="'https://github.com/' + data.owner" target="_blank">{{ data.owner }}</a></p>
+  <div class="clone-project-section">
+    <p>Clone the project:</p>
+    <p class="clone-project-container">
+      <button mat-button color="primary" (click)="copyText()">Copy</button>
+      <span id="copyCloneText">git clone {{ data.repo_url }}</span>
+    </p>
+  </div>
+  <div class="content-sections">
+    <div class="content-section" *ngIf="data.categories?.length > 0">
+      <p class="label">Categories</p>
+      <p class="main-content">
+        <ng-container *ngFor="let categoryId of data.categories; let i = index">
+          {{ getCategoryName(categoryId) }}{{ i !== (data.categories.length-1) ? ', ' : ''}}
+        </ng-container>
+      </p>
+    </div>
+    <div class="content-section" *ngIf="data.description">
+      <p class="label">Description</p>
+      <p class="main-content">{{ data.description }}</p>
+    </div>
+    <div class="content-section" *ngIf="data.features?.length > 0">
+      <p class="label">Features</p>
+      <ul class="main-content">
+        <li *ngFor="let feature of data?.features">{{ feature }}</li>
+      </ul>
+    </div>
+  </div>
+</div>

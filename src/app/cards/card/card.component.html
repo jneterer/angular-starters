@@ -1,28 +1,30 @@
 <mat-card class="card">
-  <a class="image-link-wrapper" [routerLink]="'/starter/' + searchResult.name">
+  <a class="image-link-wrapper" [routerLink]="getUrl()">
     <cl-image [public-id]="'starter-screenshots/' + searchResult.name + '.png'" loading="lazy" secure="true" [attr.class]="'mat-card-image'">
       <cl-placeholder type="blur"></cl-placeholder>
     </cl-image>
   </a>
   <mat-card-content>
     <p>jrneterer</p>
-    <p><a [routerLink]="'/starter/' + searchResult.name" class="starter-name">{{ searchResult.name }}</a></p>
+    <p><a [routerLink]="getUrl()" class="starter-name">{{ searchResult.name }}</a></p>
     <p class="starter-description">{{ searchResult.description }}</p>
   </mat-card-content>
   <mat-card-actions>
     <div class="icons-container">
       <span class="icon-container">
-        <mat-icon>start</mat-icon>
+        <mat-icon>star</mat-icon>
       </span> 5
       <span class="angular-icon">
-        <span aria-label="My icon" [inlineSVG]="'/assets/angular.svg'"></span>
+        <span aria-label="Angular Icon" [inlineSVG]="'/assets/angular.svg'"></span>
       </span> v{{ searchResult.angular_version }}
     </div>
     <div>
       <a *ngIf="searchResult.repo_url" [href]="searchResult.repo_url" target="_blank">
-        <span class="icon-container" aria-label="Github Icon" [inlineSVG]="'/assets/github.svg'"></span>
+        <span class="icon-container github-icon" aria-label="Github Icon" [inlineSVG]="'/assets/github.svg'"></span>
       </a>
-      <a *ngIf="searchResult.demo_url" class="angular-icon" [href]="searchResult.demo_url" target="_blank"><mat-icon>launch</mat-icon></a>
+      <a *ngIf="searchResult.demo_url" class="angular-icon" [href]="searchResult.demo_url" target="_blank">
+        <span class="icon-container" aria-label="Launch Icon" [inlineSVG]="'/assets/launch.svg'"></span>
+      </a>
     </div>
   </mat-card-actions>
 </mat-card>

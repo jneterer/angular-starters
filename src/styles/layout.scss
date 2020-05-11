@@ -1,4 +1,30 @@
-@mixin fullContainer($topBottomPadding: false) {
+@mixin mediumContainer($topBottomPadding: false) {
+  @if $topBottomPadding {
+    padding: $topBottomPadding 24em;
+  }
+  @else {
+    padding: 4em 24em;
+  }
+  @include belowDesktop {
+    @include abovePhone {
+      @if $topBottomPadding {
+        padding: $topBottomPadding 4em;
+      }
+      @else {
+        padding: 4em;
+      }
+    }
+    @include belowPhone {
+      @if $topBottomPadding {
+        padding: $topBottomPadding 2em;
+      }
+      @else {
+        padding: 2em;
+      }
+    }
+  }
+}
+@mixin largeContainer($topBottomPadding: false) {
   @if $topBottomPadding {
     padding: $topBottomPadding 12em;
   }
@@ -24,8 +50,8 @@
     }
   }
 }
-.full-container {
-  @include fullContainer();
+.large-container {
+  @include largeContainer();
 }
 @mixin relativeContainer($topBottomPadding: false) {
   @if $topBottomPadding {

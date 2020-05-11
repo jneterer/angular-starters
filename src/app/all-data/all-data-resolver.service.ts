@@ -16,11 +16,11 @@ export class AllDataResolverService implements Resolve<any>  {
     const categoryFilters: string[] = queryParams.c ? (<string>queryParams.c).split(',') : null;
     const angularVersionFilters: string[] = queryParams.v ? (<string>queryParams.v).split(',') : null;
     if (state.url.startsWith('/starter')) {
-      return this.startersService.getData('starter', angularVersionFilters, categoryFilters);
+      return this.startersService.getAllData('starter', angularVersionFilters, categoryFilters);
     } else if (state.url.startsWith('/theme')) {
-      return this.startersService.getData('theme', angularVersionFilters, categoryFilters);
+      return this.startersService.getAllData('theme', angularVersionFilters, categoryFilters);
     }
-    return this.startersService.getData('site', angularVersionFilters, categoryFilters);
+    return this.startersService.getAllData('site', angularVersionFilters, categoryFilters);
   }
 
 }

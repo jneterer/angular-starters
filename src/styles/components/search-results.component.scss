@@ -1,5 +1,5 @@
 .results-container {
-  @include fullContainer(0);
+  @include largeContainer(0);
   .heading-container {
     h1 {
       line-height: 1.5em;

@@ -3,13 +3,15 @@ import { RouterModule, Routes } from '@angular/router';
 import { AllDataResolverService } from './all-data/all-data-resolver.service';
 import { AllDataComponent } from './all-data/all-data.component';
 import { AngularVersionsResolverService } from './all-data/angular-versions-resolver.service';
-import { CategoriesResolverService } from './all-data/categories-resolver.service';
+import { CategoriesResolverService } from './shared/resolvers/categories-resolver.service';
 import { HomeComponent } from './core/home/home.component';
 import { InDevelopmentComponent } from './core/in-development/in-development.component';
 import { SearchResultsResolverService } from './search-results/search-results-resolver.service';
 import { SearchResultsComponent } from './search-results/search-results.component';
 import { ClientGuard } from './services/client.guard';
 import { ContentResolverService } from './shared/content/content-resolver.service';
+import { StarterResolverService } from './starter/starter-resolver.service';
+import { StarterComponent } from './starter/starter.component';
 
 const routes: Routes = [
   { 
@@ -37,6 +39,16 @@ const routes: Routes = [
     },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
+  {
+    path: 'starter/:owner/:name',
+    component: StarterComponent,
+    canActivate: [ ClientGuard ],
+    resolve: {
+      content: ContentResolverService,
+      data: StarterResolverService,
+      categories: CategoriesResolverService
+    }
+  },
   { 
     path: 'themes',
     component: AllDataComponent,
@@ -53,6 +65,16 @@ const routes: Routes = [
     },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
   },
+  {
+    path: 'theme/:owner/:name',
+    component: StarterComponent,
+    canActivate: [ ClientGuard ],
+    resolve: {
+      content: ContentResolverService,
+      data: StarterResolverService,
+      categories: CategoriesResolverService
+    }
+  },
   { 
     path: 'sites',
     component: AllDataComponent,
@@ -68,6 +90,16 @@ const routes: Routes = [
       categories: CategoriesResolverService
     },
     runGuardsAndResolvers: 'paramsOrQueryParamsChange'
+  },
+  {
+    path: 'site/:name',
+    component: StarterComponent,
+    canActivate: [ ClientGuard ],
+    resolve: {
+      content: ContentResolverService,
+      data: StarterResolverService,
+      categories: CategoriesResolverService
+    }
   },
   { 
     path: 'about',
@@ -108,7 +140,8 @@ const routes: Routes = [
     CategoriesResolverService,
     ClientGuard,
     ContentResolverService,
-    SearchResultsResolverService
+    SearchResultsResolverService,
+    StarterResolverService
   ]
 })
 export class AppRoutingModule { }

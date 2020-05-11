@@ -12,4 +12,15 @@ export class CardComponent implements OnInit {
 
   ngOnInit(): void { }
 
+  /**
+   * Creates the url to the starter, theme, or site page.
+   * @returns {string}
+   */
+  getUrl(): string {
+    if (this.searchResult.type === 'site') {
+      return `/site/${this.searchResult.name}`;
+    }
+    return `/${this.searchResult.type}/${this.searchResult.owner}/${this.searchResult.name}`;
+  }
+
 }

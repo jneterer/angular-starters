@@ -273,6 +273,7 @@ p {
 
 svg {
   fill: $dark-primary-text !important;
+  vertical-align: middle;
 }
 
 a:not(.mat-button-base) {
@@ -286,6 +287,27 @@ a:not(.mat-button-base) {
       color: white;
     }
   }
+}
+
+.icons-container {
+  display: flex;
+  align-items: center;
+  .icon-container, .angular-icon > span {
+    display: flex;
+    align-items: center;
+  }
+  .angular-icon > span {
+    vertical-align: middle;
+  }
+  .angular-icon {
+    margin-left: .5rem;
+  }
+  svg {
+    width: 24px;
+  }
+}
+.icon-container, .angular-icon {
+  vertical-align: middle;
 }
 
 ._success {
@@ -308,3 +330,4 @@ a:not(.mat-button-base) {
 @import './styles/components/header.component';
 @import './styles/components/search-results.component.scss';
 @import './styles/components/search.component.scss';
+@import './styles/components/starter.component.scss';
