@@ -1,0 +1,39 @@
+{
+  "starters": [
+    {
+      "categories": [],
+      "demo_url": "",
+      "description": "",
+      "features": [],
+      "name": "",
+      "package-json-loc": "",
+      "repo_url": "",
+      "type": ""
+    }
+  ],
+  "themes": [
+    {
+      "categories": [],
+      "demo_url": "",
+      "description": "",
+      "features": [],
+      "name": "",
+      "package-json-loc": "",
+      "repo_url": "",
+      "type": ""
+    }
+  ],
+  "sites": [
+    {
+      "categories": [],
+      "demo_url": "",
+      "description": "",
+      "features": [],
+      "name": "",
+      "package-json-loc": "",
+      "repo_url": "",
+      "starter_url": "",
+      "type": ""
+    }
+  ]
+}
