@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { PrivateGuard } from 'shared/guards/private/private.guard';
-import { DashboardComponent } from './dashboard/dashboard.component';
 import { PrivateComponent } from './private.component';
+import { SitesComponent } from './sites/sites.component';
+import { StartersComponent } from './starters/starters.component';
 
 const routes: Routes = [
   {
@@ -13,11 +14,16 @@ const routes: Routes = [
       {
         path: '',
         pathMatch: 'full',
-        redirectTo: '/app/dashboard'
+        redirectTo: '/app/starters'
       },
       {
-        path: 'dashboard',
-        component: DashboardComponent,
+        path: 'starters',
+        component: StartersComponent,
+        canActivate: [PrivateGuard]
+      },
+      {
+        path: 'sites',
+        component: SitesComponent,
         canActivate: [PrivateGuard]
       },
     ]

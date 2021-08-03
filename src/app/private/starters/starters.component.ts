@@ -3,11 +3,12 @@ import { Router } from '@angular/router';
 import { SupabaseService } from 'shared/services/supabase/supabase.service';
 
 @Component({
-  selector: 'app-dashboard',
-  templateUrl: './dashboard.component.html',
-  styleUrls: ['./dashboard.component.scss']
+  selector: 'app-starters',
+  templateUrl: './starters.component.html',
+  styleUrls: ['./starters.component.scss']
 })
-export class DashboardComponent implements OnInit {
+export class StartersComponent implements OnInit {
+  starters: {}[] = [];
 
   constructor(
     private router: Router,

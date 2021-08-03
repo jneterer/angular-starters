@@ -32,7 +32,7 @@ export class SignInComponent implements OnInit, OnDestroy {
         return of(null);
       }),
     ).subscribe((session: Session | null) => {
-      if (session) this.router.navigate(['/app/dashboard']);
+      if (session) this.router.navigate(['/app/starters']);
     });
   }
 
