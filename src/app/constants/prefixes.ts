@@ -1,0 +1,1 @@
+export const GITHUB_PREFIX: string = 'https://github.com/';

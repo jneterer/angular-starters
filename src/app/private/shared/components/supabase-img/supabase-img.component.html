@@ -1,0 +1,6 @@
+<ng-container *ngIf="supabaseImageUrl; else noImageUrl">
+  <img *ngIf="supabaseImageUrl" [class]="class" [src]="supabaseImageUrl" [alt]="alt" />
+</ng-container>
+<ng-template #noImageUrl>
+  <div [class]="class"></div>
+</ng-template>

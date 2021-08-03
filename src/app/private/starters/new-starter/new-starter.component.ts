@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { User } from '@supabase/supabase-js';
+import { GITHUB_PREFIX } from 'constants/prefixes';
 import { Starter } from 'contracts/starters/starter';
 import { StartersService } from 'private/shared/services/starters/starters.service';
 import { Subject } from 'rxjs';
@@ -15,7 +16,7 @@ import { SupabaseService } from 'shared/services/supabase/supabase.service';
 })
 export class NewStarterComponent implements OnInit, OnDestroy {
   user: User | null = null;
-  GITHUB_PREFIX: string = 'https://github.com/';
+  GITHUB_PREFIX: string = GITHUB_PREFIX;
   newStarterForm: FormGroup;
   submitted: boolean = false;
   saveStarterError: string | null = null;
@@ -97,10 +98,11 @@ export class NewStarterComponent implements OnInit, OnDestroy {
     this.submitted = true;
     if (this.newStarterForm.valid && this.user) {
       const categories: string[] = this.newStarterForm.value.categories.split(',');
-      const { cover_photo, ...starterFormValues } = this.newStarterForm.value;
+      const { cover_photo, demo_url, ...starterFormValues } = this.newStarterForm.value;
       const imgType: string = cover_photo.substring("data:image/".length, cover_photo.indexOf(";base64"))
       this.startersService.createStarter({
         ...starterFormValues,
+        demo_url: `https://${demo_url}`,
         categories,
         user_id: this.user.id,
         cover_photo: `${starterFormValues.starter_name}.${imgType}`

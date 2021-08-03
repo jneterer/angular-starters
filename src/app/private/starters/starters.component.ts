@@ -1,5 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, Data, Router } from '@angular/router';
+import { GITHUB_PREFIX } from 'constants/prefixes';
+import { Starter } from 'contracts/starters/starter';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { SupabaseService } from 'shared/services/supabase/supabase.service';
 
 @Component({
@@ -7,15 +11,21 @@ import { SupabaseService } from 'shared/services/supabase/supabase.service';
   templateUrl: './starters.component.html',
   styleUrls: ['./starters.component.scss']
 })
-export class StartersComponent implements OnInit {
-  starters: {}[] = [];
+export class StartersComponent implements OnInit, OnDestroy {
+  starters: Starter[] = [];
+  GITHUB_PREFIX: string = GITHUB_PREFIX;
+  private unsubscribe: Subject<any> = new Subject<any>();
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private supabaseService: SupabaseService
   ) { }
 
   ngOnInit(): void {
+    this.route.data.pipe(takeUntil(this.unsubscribe)).subscribe(({ starters }: Data) => {
+      this.starters = starters;
+    });
   }
 
   /**
@@ -26,6 +36,11 @@ export class StartersComponent implements OnInit {
     this.supabaseService.signOut().subscribe(() => { }, () => { }, () => {
       this.router.navigate(['/sign-in']);
     });
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }

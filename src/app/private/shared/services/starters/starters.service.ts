@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { createClient, PostgrestResponse, SupabaseClient } from '@supabase/supabase-js';
+import { decode } from 'base64-arraybuffer';
 import { Starter, StarterDto } from 'contracts/starters/starter';
 import { environment } from 'environment';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
-import { decode } from 'base64-arraybuffer'
 
 @Injectable({
   providedIn: 'root'
@@ -14,6 +14,23 @@ export class StartersService {
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
+  }
+
+  /**
+   * Gets the user's starters.
+   * @returns {Observable<Starter[]>}
+   */
+  getMyStarters(): Observable<Starter[]> {
+    return from(
+      this.supabase.from('starters').select()
+    ).pipe(
+      mergeMap(({ error, data }: PostgrestResponse<Starter>) => {
+        if (error) {
+          return throwError(error);
+        }
+        return of(data || []);
+      }),
+    );
   }
 
   /**

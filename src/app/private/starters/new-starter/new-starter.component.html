@@ -137,7 +137,8 @@
                 run project).</span>
             </label>
             <div class="mt-4" *ngIf="newStarterForm.get('cover_photo')?.value; else noCoverSelected">
-              <img [src]="newStarterForm.get('cover_photo')?.value" class="h-72 w-auto  shadow-xl rounded" />
+              <img [src]="newStarterForm.get('cover_photo')?.value"
+                class="h-64 w-[426px] object-cover shadow-xl rounded" />
               <div class="mt-4 flex items-center">
                 <label for="cover_photo"
                   class="relative focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
