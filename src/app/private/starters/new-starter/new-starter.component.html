@@ -1,0 +1,168 @@
+<main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
+  <div class="py-6">
+    <div class="mx-auto mt-4 px-4 sm:px-6 md:px-8">
+      <nav class="flex" aria-label="Breadcrumb">
+        <ol class="bg-white rounded-md shadow px-6 flex space-x-4">
+          <li class="flex">
+            <div class="flex items-center">
+              <a routerLink="/app/starters" class="flex items-center text-gray-400 hover:text-gray-500">
+                <!-- Heroicon name: outline/template -->
+                <svg class="flex-shrink-0 h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z" />
+                </svg>
+                <span class="ml-4 text-sm font-medium text-gray-500 hover:text-gray-700">Starters</span>
+              </a>
+            </div>
+          </li>
+
+          <li class="flex">
+            <div class="flex items-center">
+              <svg class="flex-shrink-0 w-6 h-full text-gray-200" viewBox="0 0 24 44" preserveAspectRatio="none"
+                fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
+              </svg>
+              <span class="ml-4 text-sm font-medium text-gray-700">New Starter</span>
+            </div>
+          </li>
+        </ol>
+      </nav>
+      <form class="mt-8 max-w-4xl">
+        <div>
+          <h3 class="text-lg leading-6 font-medium text-gray-900">
+            New Starter
+          </h3>
+          <p class="mt-1 text-sm text-gray-500">
+            Once reviewed and approved, this information will be displayed publicly.
+          </p>
+        </div>
+
+        <div class="mt-6 grid grid-cols-1 gap-y-6 gap-x-4 sm:grid-cols-6">
+          <div class="sm:col-span-6">
+            <label for="starter_name" class="block text-sm font-medium text-gray-700">
+              Starter Name
+            </label>
+            <div class="mt-1">
+              <input type="text" name="starter_name" id="starter_name"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+            </div>
+            <p class="mt-2 text-sm text-gray-500">What you would like your starter to be called.</p>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="github_url" class="block text-sm font-medium text-gray-700">
+              GitHub URL
+            </label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+              <span
+                class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                https://github.com/
+              </span>
+              <input type="text" name="github_url" id="github_url"
+                class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300">
+            </div>
+            <p class="mt-2 text-sm text-gray-500">The location of your repository.</p>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="package_json_url" class="block text-sm font-medium text-gray-700">
+              package.json URL
+            </label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+              <span
+                class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                https://github.com/
+              </span>
+              <input type="text" name="package_json_url" id="package_json_url"
+                class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300">
+            </div>
+            <p class="mt-2 text-sm text-gray-500">The location of your repository's package.json file. We use this
+              to parse through the project's dependencies.</p>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="demo_url" class="block text-sm font-medium text-gray-700">
+              Demo URL
+            </label>
+            <div class="mt-1 flex rounded-md shadow-sm">
+              <span
+                class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
+                https://
+              </span>
+              <input type="text" name="demo_url" id="demo_url"
+                class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300">
+            </div>
+            <p class="mt-2 text-sm text-gray-500">The URL of your demo for this starter.</p>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="description" class="block text-sm font-medium text-gray-700">
+              Description
+            </label>
+            <div class="mt-1">
+              <textarea id="description" name="description" rows="3"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
+            </div>
+            <p class="mt-2 text-sm text-gray-500">Describe your starter.</p>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="cover-photo" class="block text-sm font-medium text-gray-700">
+              Cover photo
+              <br>
+              <span class="text-xs mt-2">Include a screenshot of your starter (can be from your demo or even locally
+                run project).</span>
+            </label>
+            <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
+              <div class="space-y-1 text-center">
+                <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48"
+                  aria-hidden="true">
+                  <path
+                    d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                </svg>
+                <div class="flex text-sm text-gray-600">
+                  <label for="file-upload"
+                    class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
+                    <span>Upload a file</span>
+                    <input id="file-upload" name="file-upload" type="file" class="sr-only">
+                  </label>
+                  <p class="pl-1">or drag and drop</p>
+                </div>
+                <p class="text-xs text-gray-500">
+                  PNG, JPG, GIF up to 10MB
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="sm:col-span-6">
+            <label for="categories" class="block text-sm font-medium text-gray-700">
+              Categories
+            </label>
+            <div class="mt-1">
+              <input type="text" name="categories" id="categories"
+                class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
+            </div>
+            <p class="mt-2 text-sm text-gray-500">A comma-separated list of categories your starter falls under.
+              This could include libraries, services, etc.</p>
+          </div>
+        </div>
+
+        <div class="pt-5">
+          <div class="flex justify-end">
+            <button type="button"
+              class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Cancel
+            </button>
+            <button type="submit"
+              class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+              Save
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+</main>
