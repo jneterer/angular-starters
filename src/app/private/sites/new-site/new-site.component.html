@@ -28,7 +28,7 @@
           </li>
         </ol>
       </nav>
-      <form class="mt-8 max-w-4xl">
+      <form [formGroup]="newSiteForm" class="mt-8 max-w-4xl">
         <div>
           <h3 class="text-lg leading-6 font-medium text-gray-900">
             New Starter
@@ -44,7 +44,7 @@
               Site Name
             </label>
             <div class="mt-1">
-              <input type="text" name="site_name" id="site_name"
+              <input type="text" formControlName="site_name" name="site_name" id="site_name"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
             </div>
             <p class="mt-2 text-sm text-gray-500">What you would like your site to be called.</p>
@@ -57,9 +57,9 @@
             <div class="mt-1 flex rounded-md shadow-sm">
               <span
                 class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
-                https://github.com/
+                {{GITHUB_PREFIX}}
               </span>
-              <input type="text" name="github_url" id="github_url"
+              <input type="text" formControlName="github_url" name="github_url" id="github_url"
                 class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300">
             </div>
             <p class="mt-2 text-sm text-gray-500">The location of your repository.</p>
@@ -72,9 +72,9 @@
             <div class="mt-1 flex rounded-md shadow-sm">
               <span
                 class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
-                https://github.com/
+                {{GITHUB_PREFIX}}
               </span>
-              <input type="text" name="package_json_url" id="package_json_url"
+              <input type="text" formControlName="package_json_url" name="package_json_url" id="package_json_url"
                 class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300">
             </div>
             <p class="mt-2 text-sm text-gray-500">The location of your repository's package.json file. We use this
@@ -90,7 +90,7 @@
                 class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
                 https://
               </span>
-              <input type="text" name="site_url" id="site_url"
+              <input type="text" formControlName="site_url" name="site_url" id="site_url"
                 class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300">
             </div>
             <p class="mt-2 text-sm text-gray-500">The URL of your site.</p>
@@ -105,7 +105,7 @@
                 class="inline-flex items-center px-3 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 text-gray-500 sm:text-sm">
                 https://
               </span>
-              <input type="text" name="starter_url" id="starter_url"
+              <input type="text" formControlName="starter_url" name="starter_url" id="starter_url"
                 class="flex-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full min-w-0 rounded-none rounded-r-md sm:text-sm border-gray-300">
             </div>
             <p class="mt-2 text-sm text-gray-500">The URL of the starter you used.</p>
@@ -116,7 +116,7 @@
               Description
             </label>
             <div class="mt-1">
-              <textarea id="description" name="description" rows="3"
+              <textarea formControlName="description" id="description" name="description" rows="3"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
             </div>
             <p class="mt-2 text-sm text-gray-500">Describe your site.</p>
@@ -156,7 +156,7 @@
               Categories
             </label>
             <div class="mt-1">
-              <input type="text" name="categories" id="categories"
+              <input type="text" formControlName="categories" name="categories" id="categories"
                 class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border-gray-300 rounded-md">
             </div>
             <p class="mt-2 text-sm text-gray-500">A comma-separated list of categories your site falls under.
