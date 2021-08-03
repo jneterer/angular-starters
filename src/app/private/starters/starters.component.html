@@ -1,10 +1,10 @@
 <main class="flex-1 relative z-0 overflow-y-auto focus:outline-none">
   <div class="py-6">
-    <div class="mx-auto px-4 sm:px-6 md:px-8">
-      <h1 class="text-2xl font-semibold text-gray-900">Starters</h1>
-    </div>
-    <div class="mx-auto mt-4 px-4 sm:px-6 md:px-8">
-      <ng-container *ngIf="starters.length > 0; else noStarters">
+    <ng-container *ngIf="starters.length > 0; else noStarters">
+      <div class="mx-auto px-4 sm:px-6 md:px-8">
+        <h1 class="text-2xl font-semibold text-gray-900">Starters</h1>
+      </div>
+      <div class="mx-auto mt-4 px-4 sm:px-6 md:px-8">
         <div class="flex flex-col">
           <div class="-my-2 overflow-x-auto sm:-mx-6 lg:-mx-8">
             <div class="py-2 align-middle inline-block min-w-full sm:px-6 lg:px-8">
@@ -77,8 +77,10 @@
             </div>
           </div>
         </div>
-      </ng-container>
-      <ng-template #noStarters>
+      </div>
+    </ng-container>
+    <ng-template #noStarters>
+      <div class="mx-auto mt-4 px-4 sm:px-6 md:px-8">
         <div class="max-w-3xl mx-auto border-2 border-gray-300 border-dashed rounded-lg p-12 text-center">
           <svg class="mx-auto h-12 w-12 text-gray-400" xmlns="http://www.w3.org/2000/svg" fill="none"
             viewBox="0 0 24 24" stroke="currentColor">
@@ -99,11 +101,11 @@
                   d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z"
                   clip-rule="evenodd" />
               </svg>
-              New Project
+              New Starter
             </button>
           </div>
         </div>
-      </ng-template>
-    </div>
+      </div>
+    </ng-template>
   </div>
 </main>
