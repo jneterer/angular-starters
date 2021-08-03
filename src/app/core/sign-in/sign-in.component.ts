@@ -1,31 +1,57 @@
-import { Component, OnInit } from '@angular/core';
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
-import { environment } from 'environment';
-import { from } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { Session } from '@supabase/supabase-js';
+import { of, Subject, timer } from 'rxjs';
+import { delayWhen, takeUntil } from 'rxjs/operators';
+import { SupabaseService } from 'shared/services/supabase/supabase.service';
 
 @Component({
   selector: 'app-sign-in',
   templateUrl: './sign-in.component.html',
   styleUrls: ['./sign-in.component.scss']
 })
-export class SignInComponent implements OnInit {
-  private supabase: SupabaseClient;
+export class SignInComponent implements OnInit, OnDestroy {
+  private unsubscribe: Subject<any> = new Subject<any>();
+  isRedirecting: boolean = false;
 
-  constructor() {
-    this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
-  }
+  constructor(
+    private router: Router,
+    private supabaseService: SupabaseService
+  ) { }
 
   ngOnInit(): void {
+    this.supabaseService.$session.pipe(
+      takeUntil(this.unsubscribe),
+      delayWhen((session: Session | null) => {
+        // If there is a session, return a timer that will wait for the session
+        // to be initialized in local storage.
+        if (!!session) {
+          this.isRedirecting = true;
+          return timer(500);
+        }
+        return of(null);
+      }),
+    ).subscribe((session: Session | null) => {
+      if (session) this.router.navigate(['/app/dashboard']);
+    });
   }
 
+  /**
+   * Logs the user in.
+   * @param {MouseEvent} event
+   */
   handleLogin(event: MouseEvent): void {
-    from(this.supabase.auth.signIn({
-      provider: 'github',
-    })).subscribe(({ user, session, error }) => {
-      console.log('session: ', session);
-      console.log('user: ', user);
-      console.log('error signing in: ', error);
-    });
+    this.supabaseService.signIn().subscribe(
+      () => { },
+      (error: Error) => {
+        console.log('error: ', error);
+      }
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.unsubscribe.next();
+    this.unsubscribe.complete();
   }
 
 }
