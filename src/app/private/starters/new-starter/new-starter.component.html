@@ -127,11 +127,12 @@
                   <label for="cover_photo"
                     class="relative cursor-pointer rounded-md font-medium text-indigo-600 hover:text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500">
                     <span>Upload a file</span>
-                    <input id="cover_photo" name="cover_photo" type="file" class="sr-only">
+                    <input id="cover_photo" name="cover_photo" type="file" accept=".png,.jpg,.jpeg" class="sr-only"
+                      (change)="selectFile($event)">
                   </label>
                 </div>
                 <p class="text-xs text-gray-500 text-center">
-                  PNG, JPG, GIF up to 10MB
+                  PNG, JPG, or JPEG up to 1MB
                 </p>
               </div>
             </div>

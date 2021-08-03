@@ -36,4 +36,29 @@ export class NewSiteComponent implements OnInit {
     }
   }
 
+  /**
+   * When the user selects a file, convert it to a base64 string,
+   * set the file name, and allow the user to upload it.
+   * @param {Event} event 
+   */
+  selectFile(event: Event): void {
+    const files: FileList | null = (<HTMLInputElement>event.target)?.files;
+    if (files?.length) {
+      const reader = new FileReader();
+      const selectedFile: File = files[0];
+      reader.readAsDataURL(selectedFile);
+      let fileName: string = '';
+      let file: string | ArrayBuffer | null = '';
+      let fileType: string = '';
+      reader.onload = () => {
+        fileName = selectedFile.name;
+        file = reader.result;
+        fileType = selectedFile.type.split('/')[1];
+        return;
+      };
+      reader.onerror = (error) => {
+      };
+    }
+  }
+
 }
