@@ -1,6 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { User } from '@supabase/supabase-js';
+import { Starter } from 'contracts/starters/starter';
+import { StartersService } from 'private/shared/services/starters/starters.service';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SupabaseService } from 'shared/services/supabase/supabase.service';
@@ -14,11 +17,15 @@ export class NewStarterComponent implements OnInit, OnDestroy {
   user: User | null = null;
   GITHUB_PREFIX: string = 'https://github.com/';
   newStarterForm: FormGroup;
+  submitted: boolean = false;
+  saveStarterError: string | null = null;
   private unsubscribe: Subject<any> = new Subject<any>();
 
   constructor(
+    private router: Router,
     private formBuilder: FormBuilder,
-    private supabaseService: SupabaseService
+    private supabaseService: SupabaseService,
+    private startersService: StartersService,
   ) {
     this.newStarterForm = this.formBuilder.group({
       starter_name: ['', Validators.required],
@@ -62,18 +69,47 @@ export class NewStarterComponent implements OnInit, OnDestroy {
     if (files?.length) {
       const reader = new FileReader();
       const selectedFile: File = files[0];
-      reader.readAsDataURL(selectedFile);
-      let fileName: string = '';
-      let file: string | ArrayBuffer | null = '';
-      let fileType: string = '';
-      reader.onload = () => {
-        fileName = selectedFile.name;
-        file = reader.result;
-        fileType = selectedFile.type.split('/')[1];
+      if (selectedFile.size > 1e6) {
+        this.newStarterForm.get('cover_photo')?.errors
+        this.newStarterForm.get('cover_photo')?.setErrors({
+          tooLarge: true,
+        });
         return;
+      }
+      reader.readAsDataURL(selectedFile);
+      var that = this;
+      reader.onload = () => {
+        that.newStarterForm.get('cover_photo')?.setValue(reader.result);
+        if (that.newStarterForm.get('cover_photo')?.errors) {
+          that.newStarterForm.get('cover_photo')?.setErrors(null);
+        }
       };
       reader.onerror = (error) => {
       };
+    }
+  }
+
+  /**
+   * Creates a new starter.
+   * @param {Event} event
+   */
+  submitNewStarter(event: Event): void {
+    this.submitted = true;
+    if (this.newStarterForm.valid && this.user) {
+      const categories: string[] = this.newStarterForm.value.categories.split(',');
+      const { cover_photo, ...starterFormValues } = this.newStarterForm.value;
+      const imgType: string = cover_photo.substring("data:image/".length, cover_photo.indexOf(";base64"))
+      this.startersService.createStarter({
+        ...starterFormValues,
+        categories,
+        user_id: this.user.id,
+        cover_photo: `${starterFormValues.starter_name}.${imgType}`
+      }, cover_photo.split(',')[1])
+        .subscribe((result: Starter | null) => {
+          this.router.navigate(['/app/starters']);
+        }, (error: Error) => {
+          this.saveStarterError = error.message;
+        });
     }
   }
 

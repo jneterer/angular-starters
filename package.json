@@ -20,6 +20,7 @@
     "@angular/router": "~12.1.0",
     "@supabase/supabase-js": "^1.21.0",
     "@tailwindcss/forms": "^0.3.3",
+    "base64-arraybuffer": "^0.2.0",
     "rxjs": "~6.6.0",
     "tailwindcss": "^2.2.7",
     "tslib": "^2.2.0",
