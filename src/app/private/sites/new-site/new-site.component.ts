@@ -12,10 +12,11 @@ export class NewSiteComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.newSiteForm = this.formBuilder.group({
-      starter_name: ['', Validators.required],
+      site_name: ['', Validators.required],
       github_url: ['', Validators.required],
       package_json_url: ['', Validators.required],
-      demo_url: [''],
+      site_url: ['', Validators.required],
+      starter_url: ['', Validators.required],
       description: ['', Validators.required],
       cover_photo: ['', Validators.required],
       categories: ['', Validators.required],
