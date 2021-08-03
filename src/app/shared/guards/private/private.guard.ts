@@ -15,13 +15,11 @@ export class PrivateGuard implements CanActivate, CanLoad {
 
   canActivate(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuthenticated: boolean = this.isAuthenticated();
-    console.log('is authenticated: ', isAuthenticated);
     if (isAuthenticated) return true;
     return this.router.parseUrl('/sign-in');
   }
   canLoad(): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     const isAuthenticated: boolean = this.isAuthenticated();
-    console.log('is authenticated: ', isAuthenticated);
     if (isAuthenticated) return true;
     return this.router.parseUrl('/sign-in');
   }
