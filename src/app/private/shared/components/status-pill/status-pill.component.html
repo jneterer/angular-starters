@@ -1,0 +1,4 @@
+<span *ngIf="status !== 'loading'" class="px-2 text-xs leading-5 font-semibold rounded-full block"
+  [ngClass]="{'bg-green-100 text-green-800': status === 'ACTIVE', 'bg-yellow-100 text-yellow-800': status === 'REVIEW', 'bg-blue-100 text-blue-800': status === 'REVISE', 'bg-red-100 text-red-800': status === 'REJECTED'}">
+  {{status}}
+</span>

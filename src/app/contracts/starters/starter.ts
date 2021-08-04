@@ -1,7 +1,7 @@
 export interface Starter {
   id: string;
   created_at: string;
-  status: string;
+  status: 'ACTIVE' | 'REVIEW' | 'REVISE' | 'REJECTED';
   user_id: string;
   starter_name: string;
   github_url: string;

@@ -23,7 +23,10 @@
                 fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
                 <path d="M.293 0l22 22-22 22h1.414l22-22-22-22H.293z" />
               </svg>
-              <span class="ml-4 text-sm font-medium text-gray-700">New Starter</span>
+              <span class="mx-4 text-sm font-medium text-gray-700">{{starter?.starter_name}}</span>
+              <div>
+                <app-status-pill [status]="starter?.status"></app-status-pill>
+              </div>
             </div>
           </li>
         </ol>
