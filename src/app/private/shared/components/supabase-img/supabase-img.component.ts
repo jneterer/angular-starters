@@ -24,7 +24,6 @@ export class SupabaseImgComponent implements OnChanges {
       this.supabaseImageService.downLoadImage(this.bucket, changes.src.currentValue)
         .subscribe((img: Blob) => {
           this.supabaseImageUrl = this.dom.bypassSecurityTrustResourceUrl(URL.createObjectURL(img));
-          console.log('supabaseImageUrl: ', this.supabaseImageUrl);
         }, (error: Error) => {
 
         });
