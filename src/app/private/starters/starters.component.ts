@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { GITHUB_PREFIX } from 'constants/prefixes';
 import { Starter } from 'contracts/starters/starter';
+import { environment } from 'environment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SupabaseService } from 'shared/services/supabase/supabase.service';
@@ -14,6 +15,7 @@ import { SupabaseService } from 'shared/services/supabase/supabase.service';
 export class StartersComponent implements OnInit, OnDestroy {
   starters: Starter[] = [];
   GITHUB_PREFIX: string = GITHUB_PREFIX;
+  starterCoverBucket: string = environment.starterCoverBucket;
   private unsubscribe: Subject<any> = new Subject<any>();
 
   constructor(

@@ -19,5 +19,6 @@ export interface StarterDto {
   package_json_url: string;
   demo_url: string;
   description: string;
+  cover_photo: string;
   categories: string[];
 }
