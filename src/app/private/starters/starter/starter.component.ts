@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { User } from '@supabase/supabase-js';
 import { StarterActivity } from 'contracts/starters/activity';
 import { Starter, StarterStatus } from 'contracts/starters/starter';
+import { UserProfile } from 'contracts/user/profile';
 import { StarterForm } from 'private/shared/components/starter-form/starter-form.component';
+import { StarterActivityService } from 'private/shared/services/starter-activity/starter-activity.service';
 import { StartersService } from 'private/shared/services/starters/starters.service';
 import { of, Subject } from 'rxjs';
 import { mergeMap, takeUntil } from 'rxjs/operators';
@@ -16,9 +19,14 @@ import { SupabaseService } from 'shared/services/supabase/supabase.service';
 })
 export class StarterComponent implements OnInit, OnDestroy {
   user: User | null = null;
+  userProfile: UserProfile | null = null;
   starter: Starter | undefined;
+  starterStatus: StarterStatus = 'ACTIVE';
   starterActivity: StarterActivity[] = [];
   saveStarterError: string = '';
+  updateActivityError: string = '';
+  comment: FormControl = new FormControl('', Validators.required);
+  submitted: boolean = false;
   private unsubscribe: Subject<any> = new Subject<any>();
 
   constructor(
@@ -26,14 +34,19 @@ export class StarterComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private supabaseService: SupabaseService,
     private startersService: StartersService,
+    private starterActivityService: StarterActivityService,
   ) { }
 
   ngOnInit(): void {
     this.supabaseService.$user.pipe(
       takeUntil(this.unsubscribe)
     ).subscribe((user: User | null) => this.user = user);
+    this.supabaseService.$userProfile.pipe(
+      takeUntil(this.unsubscribe)
+    ).subscribe((userProfile: UserProfile | null) => this.userProfile = userProfile);
     this.route.data.pipe(takeUntil(this.unsubscribe)).subscribe(({ starter, starterActivity }: Data) => {
       this.starter = starter;
+      this.starterStatus = starter.status;
       this.starterActivity = starterActivity;
     });
   }
@@ -90,7 +103,50 @@ export class StarterComponent implements OnInit, OnDestroy {
     }
   }
 
-  updateStatus(status: StarterStatus): void {
+  /**
+   * Saves the comment and potentially the status (if updated).
+   * @param {Event} event
+   */
+  save(event: Event): void {
+    this.submitted = true;
+    if (this.comment.valid && this.starter) {
+      if (this.starterStatus !== this.starter.status) {
+        this.startersService.updateStarterStatus(this.starter.id, {
+          starter_id: this.starter.id,
+          user_id: this.starter.user_id,
+          comment: this.comment.value,
+          from_status: this.starter.status,
+          to_status: this.starterStatus,
+        })
+          .subscribe(([starter, activity]: [Starter, StarterActivity]) => {
+            this.submitted = false;
+            this.starterActivity.unshift({
+              ...activity,
+              ...(this.userProfile ? { user: this.userProfile } : {})
+            });
+            this.updateActivityError = '';
+            this.comment.reset();
+          }, (error: Error) => {
+            this.updateActivityError = error.message;
+          });
+      } else {
+        this.starterActivityService.createActivityForStarter({
+          starter_id: this.starter.id,
+          user_id: this.starter.user_id,
+          comment: this.comment.value
+        }).subscribe((activity: StarterActivity) => {
+          this.submitted = false;
+          this.starterActivity.unshift({
+            ...activity,
+            ...(this.userProfile ? { user: this.userProfile } : {})
+          });
+          this.updateActivityError = '';
+          this.comment.reset();
+        }, (error: Error) => {
+          this.updateActivityError = error.message;
+        });
+      }
+    }
   }
 
   ngOnDestroy(): void {

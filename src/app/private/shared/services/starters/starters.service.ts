@@ -1,10 +1,12 @@
 import { Injectable } from '@angular/core';
 import { createClient, PostgrestResponse, SupabaseClient } from '@supabase/supabase-js';
 import { decode } from 'base64-arraybuffer';
+import { StarterActivity, StarterActivityDto } from 'contracts/starters/activity';
 import { Starter, StarterDto } from 'contracts/starters/starter';
 import { environment } from 'environment';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { StarterActivityService } from '../starter-activity/starter-activity.service';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +14,7 @@ import { mergeMap } from 'rxjs/operators';
 export class StartersService {
   private supabase: SupabaseClient;
 
-  constructor() {
+  constructor(private starterActivityService: StarterActivityService) {
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
   }
 
@@ -73,7 +75,17 @@ export class StartersService {
             message: 'No data returned from the server.',
           });
         }
-        const starter: Starter | null = data[0];
+        const starter: Starter = data[0];
+        return forkJoin([
+          of(starter),
+          this.starterActivityService.createActivityForStarter({
+            starter_id: starter.id,
+            user_id: starter.user_id,
+            comment: 'You created the starter.',
+          })
+        ]);
+      }),
+      mergeMap(([starter]: [Starter, StarterActivity]) => {
         return forkJoin([
           of(starter),
           from(this.supabase.storage.from(environment.starterCoverBucket).upload(`${starter.user_id}/${starter.id}/${starter.cover_photo}`, decode(cover)))
@@ -110,6 +122,36 @@ export class StartersService {
       }),
     );
   }
+
+  /**
+   * Updates a starter's status and creates an event for it.
+   * @param {string} starterId
+   * @param {StarterActivityDto} starterActivityDto
+   * @returns {Observable<[Starter, StarterActivity]>}
+   */
+  updateStarterStatus(starterId: string, starterActivityDto: StarterActivityDto): Observable<[Starter, StarterActivity]> {
+    return from(
+      this.supabase.from('starters').update({ status: starterActivityDto.to_status }).eq('id', starterId)
+    ).pipe(
+      mergeMap(({ error, data }: PostgrestResponse<Starter>) => {
+        if (error) {
+          return throwError(error);
+        } else if (!data || data.length === 0) {
+          return throwError({
+            message: 'No data returned from the server.',
+          });
+        }
+        const starter: Starter = data[0];
+        return forkJoin([
+          of(starter),
+          this.starterActivityService.createActivityForStarter(starterActivityDto)
+        ]);
+      }),
+      mergeMap((starterAndStartActivity: [Starter, StarterActivity]) => {
+        return of(starterAndStartActivity);
+      })
+    );
+  };
 
   /**
    * For a starter cover, moves its location ("rename") and updates the image.

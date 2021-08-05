@@ -47,19 +47,19 @@ export class StatusDropdownComponent implements OnInit, OnDestroy {
   filterStatusOptions(user: UserProfile, selectedStatus: StarterStatus): void {
     if (user.role === 'admin') {
       if (selectedStatus === 'REVIEW') {
-        this.statusOptions = this.statusOptions.filter((status: StarterStatuses) => status.value !== 'REVIEW');
+        this.statusOptions = STARTER_STATUSES.filter((status: StarterStatuses) => status.value !== 'REVIEW');
       } else {
-        this.statusOptions = this.statusOptions.filter((status: StarterStatuses) => status.value !== selectedStatus && status.value !== 'REVIEW');
+        this.statusOptions = STARTER_STATUSES.filter((status: StarterStatuses) => status.value !== selectedStatus && status.value !== 'REVIEW');
       }
     } else if (user.role === 'user') {
       if (selectedStatus === 'REVIEW') {
-        this.statusOptions = this.statusOptions.filter((status: StarterStatuses) => status.value === 'REVIEW');
+        this.statusOptions = STARTER_STATUSES.filter((status: StarterStatuses) => status.value === 'REVIEW');
       } else if (selectedStatus === 'ACTIVE') {
-        this.statusOptions = this.statusOptions.filter((status: StarterStatuses) => status.value === 'REVIEW');
+        this.statusOptions = STARTER_STATUSES.filter((status: StarterStatuses) => status.value === 'REVIEW');
       } else if (selectedStatus === 'REJECTED') {
-        this.statusOptions = this.statusOptions.filter((status: StarterStatuses) => status.value === 'REJECTED');
+        this.statusOptions = STARTER_STATUSES.filter((status: StarterStatuses) => status.value === 'REJECTED');
       } else if (selectedStatus === 'REVISE') {
-        this.statusOptions = this.statusOptions.filter((status: StarterStatuses) => status.value === 'REVIEW');
+        this.statusOptions = STARTER_STATUSES.filter((status: StarterStatuses) => status.value === 'REVIEW');
       }
     }
   }

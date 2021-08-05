@@ -1,5 +1,4 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { FormControl } from '@angular/forms';
 import { StarterActivity } from 'contracts/starters/activity';
 
 @Component({
@@ -9,7 +8,6 @@ import { StarterActivity } from 'contracts/starters/activity';
 })
 export class ActivityFeedComponent implements OnInit {
   @Input() activity: StarterActivity[] = [];
-  comment: FormControl = new FormControl('');
 
   constructor() { }
 
