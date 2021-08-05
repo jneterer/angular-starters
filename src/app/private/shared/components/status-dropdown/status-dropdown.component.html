@@ -1,0 +1,70 @@
+<div (clickOutside)="open = false">
+  <label id="listbox-label" class="sr-only">
+    Change status
+  </label>
+  <div class="relative">
+    <div class="inline-flex shadow-sm rounded-md divide-x"
+      [ngClass]="{'divide-green-800': selected === 'ACTIVE', 'divide-yellow-800': selected === 'REVIEW', 'divide-blue-800': selected === 'REVISE', 'divide-red-800': selected === 'REJECTED'}">
+      <div class="relative z-0 inline-flex shadow-sm rounded-md divide-x"
+        [ngClass]="{'divide-green-800': selected === 'ACTIVE', 'divide-yellow-800': selected === 'REVIEW', 'divide-blue-800': selected === 'REVISE', 'divide-red-800': selected === 'REJECTED'}">
+        <div class="relative inline-flex items-center py-2 pl-3 pr-4 border border-transparent rounded-l-md shadow-sm"
+          [ngClass]="{'bg-green-100 text-green-800': selected === 'ACTIVE', 'bg-yellow-100 text-yellow-800': selected === 'REVIEW', 'bg-blue-100 text-blue-800': selected === 'REVISE', 'bg-red-100 text-red-800': selected === 'REJECTED'}">
+          <!-- Heroicon name: solid/check -->
+          <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+            aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+              clip-rule="evenodd" />
+          </svg>
+          <p class="ml-2.5 text-sm font-medium">
+            {{selected}}
+          </p>
+        </div>
+        <button type="button"
+          class="relative inline-flex items-center p-2 rounded-l-none rounded-r-md text-sm font-medium focus:outline-none focus:z-10 focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-50"
+          [ngClass]="{'bg-green-100 hover:bg-green-200 focus:ring-green-800 text-green-800': selected === 'ACTIVE', 'bg-yellow-100 hover:bg-yellow-200 focus:ring-yellow-800 text-yellow-800': selected === 'REVIEW', 'bg-blue-100 hover:bg-blue-200 focus:ring-blue-800 text-blue-800': selected === 'REVISE', 'bg-red-100 hover:bg-red-200 focus:ring-red-800 text-red-800': selected === 'REJECTED'}"
+          aria-haspopup="listbox" aria-expanded="true" aria-labelledby="listbox-label" (click)="open = !open">
+          <span class="sr-only">Change status</span>
+          <!-- Heroicon name: solid/chevron-down -->
+          <svg class="h-5 w-5"
+            [ngClass]="{'text-green-800': selected === 'ACTIVE', 'text-yellow-800': selected === 'REVIEW', 'text-blue-800': selected === 'REVISE', 'text-red-800': selected === 'REJECTED'}"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <path fill-rule="evenodd"
+              d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </button>
+      </div>
+    </div>
+    <ul
+      class="origin-top-right absolute z-10 right-0 mt-2 w-72 rounded-md shadow-lg overflow-hidden bg-white divide-y divide-gray-200 ring-1 ring-black ring-opacity-5 focus:outline-none transition ease-in duration-100"
+      [ngClass]="{'opacity-100': open, 'opacity-0': !open}" tabindex="-1" role="listbox" aria-labelledby="listbox-label"
+      aria-activedescendant="listbox-option-0">
+      <li *ngFor="let statusOption of statusOptions" class="cursor-pointer select-none relative p-4 text-sm"
+        (click)="onSelected(statusOption.value)"
+        [ngClass]="{'hover:bg-green-200 hover:text-green-800': statusOption.value === 'ACTIVE', 'bg-green-100 text-green-800': selected === 'ACTIVE' && selected === statusOption.value, 'hover:bg-yellow-200 hover:text-yellow-800': statusOption.value === 'REVIEW', 'bg-yellow-100 text-yellow-800': selected === 'REVIEW' && selected === statusOption.value, 'hover:bg-blue-200 hover:text-blue-800': statusOption.value === 'REVISE', 'bg-blue-100 text-blue-800': selected === 'REVISE' && selected === statusOption.value, 'hover:bg-red-200 hover:text-red-800': statusOption.value === 'REJECTED', 'bg-red-100 text-red-800': selected === 'REJECTED' && selected === statusOption.value, 'text-gray-900': selected !== statusOption.value}"
+        role="option">
+        <div class="flex flex-col">
+          <div class="flex justify-between">
+            <p
+              [ngClass]="{'font-semibold': selected === statusOption.value, 'font-normal': selected !== statusOption.value }">
+              {{statusOption.label}}
+            </p>
+            <span>
+              <!-- Heroicon name: solid/check -->
+              <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor"
+                aria-hidden="true">
+                <path fill-rule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clip-rule="evenodd" />
+              </svg>
+            </span>
+          </div>
+          <p class="mt-2">
+            {{statusOption.description}}
+          </p>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

@@ -38,7 +38,11 @@
         </div>
         <section aria-labelledby="history-title" class="lg:col-start-3 lg:col-span-1">
           <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
-            <h2 id="history-title" class="text-lg font-medium text-gray-900 mb-4">Activity</h2>
+            <div class="flex justify-between">
+              <h2 id="history-title" class="text-lg font-medium text-gray-900 mb-4">Activity</h2>
+              <app-status-dropdown *ngIf="starter" [selected]="starter.status" (onSelect)="updateStatus($event)">
+              </app-status-dropdown>
+            </div>
             <!-- Activity Feed -->
             <app-activity-feed [activity]="starterActivity"></app-activity-feed>
           </div>

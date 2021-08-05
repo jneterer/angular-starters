@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { User } from '@supabase/supabase-js';
 import { StarterActivity } from 'contracts/starters/activity';
-import { Starter } from 'contracts/starters/starter';
+import { Starter, StarterStatus } from 'contracts/starters/starter';
 import { StarterForm } from 'private/shared/components/starter-form/starter-form.component';
 import { StartersService } from 'private/shared/services/starters/starters.service';
 import { of, Subject } from 'rxjs';
@@ -88,6 +88,9 @@ export class StarterComponent implements OnInit, OnDestroy {
         this.saveStarterError = error.message;
       });
     }
+  }
+
+  updateStatus(status: StarterStatus): void {
   }
 
   ngOnDestroy(): void {

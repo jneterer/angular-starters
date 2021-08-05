@@ -24,3 +24,9 @@ export interface StarterDto {
 }
 
 export type StarterStatus = 'ACTIVE' | 'REVIEW' | 'REVISE' | 'REJECTED';
+
+export interface StarterStatuses {
+  value: StarterStatus;
+  label: StarterStatus;
+  description: string;
+};

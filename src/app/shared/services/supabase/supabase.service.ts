@@ -14,6 +14,8 @@ export class SupabaseService {
   public $session: Observable<Session | null> = this.session.asObservable();
   private user: BehaviorSubject<User | null> = new BehaviorSubject<User | null>(null);
   public $user: Observable<User | null> = this.user.asObservable();
+  private userProfile: BehaviorSubject<UserProfile | null> = new BehaviorSubject<UserProfile | null>(null);
+  public $userProfile: Observable<UserProfile | null> = this.userProfile.asObservable();
 
   constructor() {
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
@@ -75,16 +77,21 @@ export class SupabaseService {
   updateUserProfile(user: User): void {
     // Get the user's current profile. If it hasn't been saved before, or it has been updated from GitHub,
     // then upsert it (save or update).
-    from(this.supabase.from('profiles').select('id, full_name, avatar_url, user_name'))
+    from(this.supabase.from('profiles').select())
       .subscribe(({ data }: PostgrestResponse<UserProfile>) => {
         const userProfile: UserProfile | undefined | null = data ? data.find(({ id }: UserProfile) => id === user.id) : null;
         if (!userProfile || !!userProfile && (userProfile.full_name !== user.user_metadata.full_name || userProfile.avatar_url !== user.user_metadata.avatar_url || userProfile.user_name !== user.user_metadata.user_name)) {
-          from(this.supabase.from('profiles').upsert({
+          const updatedUserProfile = {
             ...user.user_metadata,
             id: user.id,
-          }, {
+          };
+          from(this.supabase.from('profiles').upsert(updatedUserProfile, {
             returning: 'minimal',
-          })).subscribe();
+          })).subscribe(() => {
+            this.userProfile.next(updatedUserProfile as UserProfile);
+          });
+        } else {
+          this.userProfile.next(userProfile);
         }
       });
   }
