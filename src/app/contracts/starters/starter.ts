@@ -1,7 +1,7 @@
 export interface Starter {
   id: string;
   created_at: string;
-  status: 'ACTIVE' | 'REVIEW' | 'REVISE' | 'REJECTED';
+  status: StarterStatus;
   user_id: string;
   starter_name: string;
   github_url: string;
@@ -22,3 +22,5 @@ export interface StarterDto {
   cover_photo: string;
   categories: string[];
 }
+
+export type StarterStatus = 'ACTIVE' | 'REVIEW' | 'REVISE' | 'REJECTED';

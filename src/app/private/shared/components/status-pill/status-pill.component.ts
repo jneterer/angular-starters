@@ -1,5 +1,5 @@
 import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
-import { Starter } from 'contracts/starters/starter';
+import { StarterStatus } from 'contracts/starters/starter';
 
 @Component({
   selector: 'app-status-pill',
@@ -8,7 +8,7 @@ import { Starter } from 'contracts/starters/starter';
   encapsulation: ViewEncapsulation.None,
 })
 export class StatusPillComponent implements OnInit {
-  @Input() status?: Starter['status'] | 'loading' = 'loading';
+  @Input() status?: StarterStatus | 'loading' = 'loading';
 
   constructor() { }
 

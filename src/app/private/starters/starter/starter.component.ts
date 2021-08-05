@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Data, Router } from '@angular/router';
 import { User } from '@supabase/supabase-js';
+import { StarterActivity } from 'contracts/starters/activity';
 import { Starter } from 'contracts/starters/starter';
 import { StarterForm } from 'private/shared/components/starter-form/starter-form.component';
 import { StartersService } from 'private/shared/services/starters/starters.service';
@@ -16,6 +17,7 @@ import { SupabaseService } from 'shared/services/supabase/supabase.service';
 export class StarterComponent implements OnInit, OnDestroy {
   user: User | null = null;
   starter: Starter | undefined;
+  starterActivity: StarterActivity[] = [];
   saveStarterError: string = '';
   private unsubscribe: Subject<any> = new Subject<any>();
 
@@ -30,8 +32,9 @@ export class StarterComponent implements OnInit, OnDestroy {
     this.supabaseService.$user.pipe(
       takeUntil(this.unsubscribe)
     ).subscribe((user: User | null) => this.user = user);
-    this.route.data.pipe(takeUntil(this.unsubscribe)).subscribe(({ starter }: Data) => {
+    this.route.data.pipe(takeUntil(this.unsubscribe)).subscribe(({ starter, starterActivity }: Data) => {
       this.starter = starter;
+      this.starterActivity = starterActivity;
     });
   }
 

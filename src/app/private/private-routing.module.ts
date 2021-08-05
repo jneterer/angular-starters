@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { PrivateGuard } from 'shared/guards/private/private.guard';
 import { PrivateComponent } from './private.component';
 import { MyStartersResolver } from './shared/resolvers/my-starters/my-starters.resolver';
+import { StarterActivityResolver } from './shared/resolvers/starter-activity/starter-activity.resolver';
 import { StarterResolver } from './shared/resolvers/starter/starter.resolver';
 import { NewSiteComponent } from './sites/new-site/new-site.component';
 import { SitesComponent } from './sites/sites.component';
@@ -39,7 +40,8 @@ const routes: Routes = [
         component: StarterComponent,
         canActivate: [PrivateGuard],
         resolve: {
-          starter: StarterResolver
+          starter: StarterResolver,
+          starterActivity: StarterActivityResolver,
         }
       },
       {
@@ -61,6 +63,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [MyStartersResolver, StarterResolver]
+  providers: [MyStartersResolver, StarterResolver, StarterActivityResolver]
 })
 export class PrivateRoutingModule { }
