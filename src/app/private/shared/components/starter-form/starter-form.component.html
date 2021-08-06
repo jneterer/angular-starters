@@ -165,16 +165,42 @@
   </div>
 
   <div class="pt-5">
+    <p class="text-left text-red-500 mb-4" *ngIf="deleteStarterError">{{deleteStarterError}}</p>
     <p class="text-right text-red-500 mb-4" *ngIf="saveStarterError">{{saveStarterError}}</p>
-    <div class="flex justify-end">
-      <a routerLink="/app/starters"
-        class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Cancel
-      </a>
-      <button type="submit"
-        class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-        Save
-      </button>
+    <div class="flex justify-between">
+      <div>
+        <ng-container *ngIf="starter">
+          <ng-container *ngIf="!wantsToDelete; else showDeleteConfirmation">
+            <button type="button"
+              class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              (click)="wantsToDelete = true">
+              Delete
+            </button>
+          </ng-container>
+          <ng-template #showDeleteConfirmation>
+            <button
+              class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              (click)="wantsToDelete = false">
+              No, Cancel
+            </button>
+            <button type="button"
+              class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              (click)="onDeleteStarter($event)">
+              Yes, Delete
+            </button>
+          </ng-template>
+        </ng-container>
+      </div>
+      <div>
+        <button routerLink="/app/starters"
+          class="bg-white py-2 px-4 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Cancel
+        </button>
+        <button type="submit"
+          class="ml-3 inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+          Save
+        </button>
+      </div>
     </div>
   </div>
 </form>

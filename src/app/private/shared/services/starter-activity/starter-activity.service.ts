@@ -58,4 +58,22 @@ export class StarterActivityService {
     );
   }
 
+  /**
+   * Deletes all activity for a starter.
+   * @param {string} starterId
+   * @returns {Observable<undefined>}
+   */
+  deleteStarterActivities(starterId: string): Observable<undefined> {
+    return from(
+      this.supabase.from('starter_activity').delete().eq('starter_id', starterId)
+    ).pipe(
+      mergeMap(({ error }: PostgrestResponse<boolean>) => {
+        if (error) {
+          return throwError(error);
+        }
+        return of(undefined);
+      }),
+    );
+  }
+
 }

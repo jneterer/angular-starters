@@ -34,7 +34,8 @@
       <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-flow-col-dense lg:grid-cols-3">
         <div class="lg:col-start-1 lg:col-span-2">
           <app-starter-form [starter]="starter" [starterRevision]="starterRevision"
-            [saveStarterError]="saveStarterError" (saveStarter)="saveStarter($event)"></app-starter-form>
+            [saveStarterError]="saveStarterError" (saveStarter)="saveStarter($event)"
+            [deleteStarterError]="deleteStarterError" (deleteStarter)="deleteStarter()"></app-starter-form>
         </div>
         <section aria-labelledby="history-title" class="lg:col-start-3 lg:col-span-1">
           <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">

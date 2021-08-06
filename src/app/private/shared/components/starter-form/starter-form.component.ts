@@ -27,7 +27,10 @@ export class StarterFormComponent implements OnInit, OnChanges {
   @Input() starter?: Starter;
   @Input() starterRevision?: StarterRevision;
   @Input() saveStarterError: string = '';
+  @Input() deleteStarterError: string = '';
   @Output() saveStarter: EventEmitter<[StarterForm, boolean]> = new EventEmitter<[StarterForm, boolean]>();
+  @Output() deleteStarter: EventEmitter<any> = new EventEmitter<any>();
+  wantsToDelete: boolean = false;
   GITHUB_PREFIX: string = GITHUB_PREFIX;
   newStarterForm: FormGroup;
   submitted: boolean = false;
@@ -126,6 +129,14 @@ export class StarterFormComponent implements OnInit, OnChanges {
     if (this.newStarterForm.valid) {
       this.saveStarter.emit([this.newStarterForm.value, !!this.newStarterForm.get('cover_photo')?.touched]);
     }
+  }
+
+  /**
+   * When the clicks the delete starter button, pass the data up to the parent.
+   * @param {Event} event
+   */
+  onDeleteStarter(event: Event): void {
+    this.deleteStarter.emit();
   }
 
 }

@@ -25,6 +25,7 @@ export class StarterComponent implements OnInit, OnDestroy {
   starterRevision: StarterRevision | undefined;
   starterStatus: StarterStatus = 'ACTIVE';
   starterActivity: StarterActivity[] = [];
+  deleteStarterError: string = '';
   saveStarterError: string = '';
   updateActivityError: string = '';
   comment: FormControl = new FormControl('', Validators.required);
@@ -65,6 +66,7 @@ export class StarterComponent implements OnInit, OnDestroy {
       const imgType: string = cover_photo.substring("data:image/".length, cover_photo.indexOf(";base64"));
       const coverPhotoName: string = `${starterFormValues.starter_name}${this.starter.has_been_active ? '_REVISION' : ''}.${imgType}`;
       const coverPhotoBase64: string = cover_photo.split(',')[1];
+      // Create or update the starter revision if the starter has been live/active.
       if (this.starter.has_been_active) {
         this.starterRevisionService.createUpdateStarterRevision({
           ...starterFormValues,
@@ -115,6 +117,7 @@ export class StarterComponent implements OnInit, OnDestroy {
           this.saveStarterError = error.message;
         });
       } else {
+        // If the starter hasn't been live/active, just update the starter.
         this.startersService.updateStarter(this.starter.id, {
           ...starterFormValues,
           categories,
@@ -204,6 +207,21 @@ export class StarterComponent implements OnInit, OnDestroy {
           this.updateActivityError = error.message;
         });
       }
+    }
+  }
+
+  /**
+   * Deletes the starter and all its associated data.
+   * @param {Event} event
+   */
+  deleteStarter(): void {
+    if (this.starter) {
+      this.startersService.deleteStarter(this.starter.id, this.starter?.user_id)
+        .subscribe(() => {
+          this.router.navigate([`/starters`]);
+        }, (error: Error) => {
+          this.deleteStarterError = error.message;
+        });
     }
   }
 

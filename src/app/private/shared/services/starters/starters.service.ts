@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
-import { createClient, PostgrestResponse, SupabaseClient } from '@supabase/supabase-js';
+import { createClient, PostgrestResponse, Session, SupabaseClient } from '@supabase/supabase-js';
 import { decode } from 'base64-arraybuffer';
 import { StarterActivity, StarterActivityDto } from 'contracts/starters/activity';
 import { Starter, StarterDto, StarterRevision } from 'contracts/starters/starter';
+import { UserProfile } from 'contracts/user/profile';
 import { environment } from 'environment';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { SupabaseService } from 'shared/services/supabase/supabase.service';
 import { StarterActivityService } from '../starter-activity/starter-activity.service';
 import { StarterRevisionService } from '../starter-revision/starter-revision.service';
 
@@ -16,6 +18,7 @@ export class StartersService {
   private supabase: SupabaseClient;
 
   constructor(
+    private supabaseService: SupabaseService,
     private starterActivityService: StarterActivityService,
     private starterRevisionService: StarterRevisionService
   ) {
@@ -49,16 +52,24 @@ export class StartersService {
    * @returns {Observable<Starter[]>}
    */
   getMyStarters(): Observable<Starter[]> {
-    return from(
-      this.supabase.from('starters').select()
-    ).pipe(
-      mergeMap(({ error, data }: PostgrestResponse<Starter>) => {
-        if (error) {
-          return throwError(error);
-        }
-        return of(data || []);
-      }),
-    );
+    const userSession: Session | null = this.supabaseService.supabaseSession;
+    if (userSession && userSession.user) {
+      return (this.supabaseService.supabaseUserProfile ? of(this.supabaseService.supabaseUserProfile) : this.supabaseService.getUserProfile(userSession.user.id))
+        .pipe(
+          mergeMap((userProfile: UserProfile) => {
+            return from(
+              (<string>userProfile.role) === 'admin' ? this.supabase.from('starters').select() : this.supabase.from('starters').select().eq('user_id', userProfile.id)
+            )
+          }),
+          mergeMap(({ error, data }: PostgrestResponse<Starter>) => {
+            if (error) {
+              return throwError(error);
+            }
+            return of(data || []);
+          })
+        );
+    }
+    return of([]);
   }
 
   /**
@@ -182,6 +193,67 @@ export class StartersService {
   };
 
   /**
+   * Deletes a starter with all its associated data.
+   * @param {string} starterId
+   * @param {string} ownerId
+   * @returns {Observable<undefined>}
+   */
+  deleteStarter(starterId: string, ownerId: string): Observable<undefined> {
+    return forkJoin([
+      // Delete all associated covers.
+      this.findAndDeleteStarterCovers(ownerId, starterId),
+      // Deletes any starter activities.
+      this.starterActivityService.deleteStarterActivities(starterId),
+      // Delete its starter revision.
+      this.starterRevisionService.deleteStarterRevision(starterId),
+    ]).pipe(
+      // Deletes the starter.
+      mergeMap(() => from(this.supabase.from('starters').delete().eq('id', starterId))),
+      mergeMap(({ error }: PostgrestResponse<boolean>) => {
+        if (error) {
+          return throwError(error);
+        }
+        return of(undefined);
+      }),
+    );
+  }
+
+  /**
+   * Finds and deletes all of a starter's covers.
+   * @param {string} starterId
+   * @param {string} ownerId
+   * @returns {Observable<undefined>
+   */
+  private findAndDeleteStarterCovers(starterId: string, ownerId: string): Observable<undefined> {
+    return this.getStarterCovers(ownerId, starterId).pipe(
+      mergeMap((covers: string[]) => this.deleteStarterCovers(
+        covers.map((cover: string) => `${ownerId}/${starterId}/${cover}`)
+      ))
+    );
+  }
+
+
+  /**
+   * Gets all of a starter's covers.
+   * @param {string} starterId
+   * @param {string} ownerId
+   * @returns {Observable<string[]>
+   */
+  private getStarterCovers(starterId: string, ownerId: string): Observable<string[]> {
+    return from(this.supabase.storage.from(environment.starterCoverBucket).list(`${ownerId}/${starterId}`))
+      .pipe(
+        mergeMap(({ data, error }: { data: { name: string }[] | null; error: Error | null; }) => {
+          if (error) {
+            return throwError(error);
+          } if (!data || data.length === 0) {
+            return of([]);
+          }
+          return of(data.map(({ name }: { name: string }) => name));
+        })
+      );
+  }
+
+  /**
    * For a starter cover, moves its location ("rename") and updates the image.
    * @param {string} oldPath
    * @param {string} newPath
@@ -227,6 +299,23 @@ export class StartersService {
     return from(this.supabase.storage.from(environment.starterCoverBucket).upload(path, decode(cover), { upsert: true }))
       .pipe(
         mergeMap(({ data, error }: { data: { Key: string } | null; error: Error | null }) => {
+          if (error) {
+            return throwError(error);
+          }
+          return of(undefined);
+        })
+      );
+  }
+
+  /**
+   * Deletes all of a starter's cover.
+   * @param {string[]} path
+   * @returns {Observable<undefined>}
+   */
+  private deleteStarterCovers(paths: string[]): Observable<undefined> {
+    return from(this.supabase.storage.from(environment.starterCoverBucket).remove(paths))
+      .pipe(
+        mergeMap(({ error }: { error: Error | null; }) => {
           if (error) {
             return throwError(error);
           }

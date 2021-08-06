@@ -69,6 +69,40 @@ export class SupabaseService {
   }
 
   /**
+   * Gets the current user's profile.
+   * @requires {UserProfile | null}
+   */
+  get supabaseUserProfile(): UserProfile | null {
+    return this.userProfile.getValue();
+  }
+
+  /**
+   * Gets the user's profile.
+   * @param {string} userId
+   * @returns {Observable<UserProfile>}
+   */
+  getUserProfile(userId: string): Observable<UserProfile> {
+    return from(this.supabase.from('profiles').select().eq('id', userId))
+      .pipe(
+        mergeMap(({ error, data }: PostgrestResponse<UserProfile>) => {
+          if (error) {
+            return throwError(error);
+          } else if (!data) {
+            return throwError({
+              message: `No user profile found with id: ${userId}`
+            });
+          }
+          const userProfile: UserProfile | undefined = data.find(({ id }: UserProfile) => id === userId);
+          if (!userProfile) {
+            return throwError({
+              message: `No user profile found with id: ${userId}`
+            });
+          }
+          return of(userProfile);
+        }));
+  }
+
+  /**
    * Given the current session's user, determines if the user's profile
    * exists in the DB. If not, it creates it. Otherwise, it determines if
    * the user's profile has been updated from GitHub and updates it in the DB.
@@ -77,10 +111,10 @@ export class SupabaseService {
   updateUserProfile(user: User): void {
     // Get the user's current profile. If it hasn't been saved before, or it has been updated from GitHub,
     // then upsert it (save or update).
-    from(this.supabase.from('profiles').select())
+    from(this.supabase.from('profiles').select().eq('id', user.id))
       .subscribe(({ data }: PostgrestResponse<UserProfile>) => {
         const userProfile: UserProfile | undefined | null = data ? data.find(({ id }: UserProfile) => id === user.id) : null;
-        if (!userProfile || !!userProfile && (userProfile.full_name !== user.user_metadata.full_name || userProfile.avatar_url !== user.user_metadata.avatar_url || userProfile.user_name !== user.user_metadata.user_name)) {
+        if (!userProfile || !!userProfile && userProfile?.role === 'user' && (userProfile.full_name !== user.user_metadata.full_name || userProfile.avatar_url !== user.user_metadata.avatar_url || userProfile.user_name !== user.user_metadata.user_name)) {
           const updatedUserProfile = {
             ...user.user_metadata,
             id: user.id,
