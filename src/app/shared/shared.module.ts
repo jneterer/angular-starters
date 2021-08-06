@@ -2,9 +2,12 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ClickOutsideModule } from 'ng-click-outside';
+import { SupabaseImgComponent } from './components/supabase-img/supabase-img.component';
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SupabaseImgComponent
+  ],
   imports: [
     CommonModule,
     ClickOutsideModule,
@@ -15,6 +18,7 @@ import { ClickOutsideModule } from 'ng-click-outside';
     ClickOutsideModule,
     FormsModule,
     ReactiveFormsModule,
+    SupabaseImgComponent,
   ]
 })
 export class SharedModule { }

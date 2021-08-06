@@ -16,6 +16,30 @@ export class StartersService {
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
   }
 
+  /**
+   * Given a starter id, queries and returns it from the DB.
+   * @param {string} starterId
+   * @returns {Observable<Starter>}
+   */
+  getStarter(starterId: string): Observable<Starter> {
+    return from(
+      this.supabase.from('starters').select(`
+        *,
+        user:user_id ( * )
+      `).eq('id', starterId).eq('has_been_active', true).neq('status', 'REMOVED')
+    ).pipe(
+      mergeMap(({ error, data }: PostgrestResponse<Starter>) => {
+        if (error) {
+          return throwError(error);
+        } else if (!data || data.length === 0) {
+          return throwError({
+            message: `No starter found with id ${starterId}.`,
+          });
+        }
+        return of(data[0]);
+      }),
+    );
+  }
 
   /**
    * Gets the user's starters.

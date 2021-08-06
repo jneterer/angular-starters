@@ -7,7 +7,6 @@ import { ActivityFeedComponent } from './shared/components/activity-feed/activit
 import { StarterFormComponent } from './shared/components/starter-form/starter-form.component';
 import { StatusDropdownComponent } from './shared/components/status-dropdown/status-dropdown.component';
 import { StatusPillComponent } from './shared/components/status-pill/status-pill.component';
-import { SupabaseImgComponent } from './shared/components/supabase-img/supabase-img.component';
 import { NewSiteComponent } from './sites/new-site/new-site.component';
 import { SitesComponent } from './sites/sites.component';
 import { NewStarterComponent } from './starters/new-starter/new-starter.component';
@@ -26,7 +25,6 @@ import { StartersComponent } from './starters/starters.component';
     StarterFormComponent,
     StartersComponent,
     StatusPillComponent,
-    SupabaseImgComponent,
   ],
   imports: [
     CommonModule,

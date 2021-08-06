@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PaginateStartersResponse } from 'contracts/starters/public';
 import { Starter } from 'contracts/starters/starter';
+import { environment } from 'environment';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { StartersService } from 'shared/services/starters/starters.service';
@@ -11,6 +12,7 @@ import { StartersService } from 'shared/services/starters/starters.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  starterCoverBucket: string = `public/${environment.starterCoverBucket}`;
   starters: Starter[] = []
   getStartersError: string = '';
   start: number = 0;
