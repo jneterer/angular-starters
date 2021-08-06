@@ -33,8 +33,8 @@
       </nav>
       <div class="mt-6 grid grid-cols-1 gap-6 lg:grid-flow-col-dense lg:grid-cols-3">
         <div class="lg:col-start-1 lg:col-span-2">
-          <app-starter-form [starter]="starter" [saveStarterError]="saveStarterError"
-            (saveStarter)="submitNewStarter($event)"></app-starter-form>
+          <app-starter-form [starter]="starter" [starterRevision]="starterRevision"
+            [saveStarterError]="saveStarterError" (saveStarter)="saveStarter($event)"></app-starter-form>
         </div>
         <section aria-labelledby="history-title" class="lg:col-start-3 lg:col-span-1">
           <div class="bg-white px-4 py-5 shadow sm:rounded-lg sm:px-6">
@@ -46,7 +46,9 @@
             <div>
               <div class="mt-1">
                 <label for="comment" class="block text-sm font-medium text-gray-700">
-                  <span class="mt-2 text-sm text-gray-500">Leave a comment for the team.</span>
+                  <span class="mt-2 text-sm text-gray-500">
+                    {{userProfile?.role === 'user' ? 'Leave a comment for the team.' : 'Leave a comment for the user.'}}
+                  </span>
                 </label>
                 <textarea [formControl]="comment" id="comment" name="comment" rows="2"
                   class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 block w-full sm:text-sm border border-gray-300 rounded-md"></textarea>
@@ -59,7 +61,7 @@
                 <div class="mt-2 flex justify-end">
                   <button type="button"
                     class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    (click)="save($event)">
+                    (click)="saveCommentAndStatus($event)">
                     Save
                   </button>
                 </div>

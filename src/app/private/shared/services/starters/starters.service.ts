@@ -2,11 +2,12 @@ import { Injectable } from '@angular/core';
 import { createClient, PostgrestResponse, SupabaseClient } from '@supabase/supabase-js';
 import { decode } from 'base64-arraybuffer';
 import { StarterActivity, StarterActivityDto } from 'contracts/starters/activity';
-import { Starter, StarterDto } from 'contracts/starters/starter';
+import { Starter, StarterDto, StarterRevision } from 'contracts/starters/starter';
 import { environment } from 'environment';
 import { forkJoin, from, Observable, of, throwError } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { StarterActivityService } from '../starter-activity/starter-activity.service';
+import { StarterRevisionService } from '../starter-revision/starter-revision.service';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +15,10 @@ import { StarterActivityService } from '../starter-activity/starter-activity.ser
 export class StartersService {
   private supabase: SupabaseClient;
 
-  constructor(private starterActivityService: StarterActivityService) {
+  constructor(
+    private starterActivityService: StarterActivityService,
+    private starterRevisionService: StarterRevisionService
+  ) {
     this.supabase = createClient(environment.supabaseUrl, environment.supbaseKey);
   }
 
@@ -127,11 +131,19 @@ export class StartersService {
    * Updates a starter's status and creates an event for it.
    * @param {string} starterId
    * @param {StarterActivityDto} starterActivityDto
+   * @param {StarterRevision} revision
    * @returns {Observable<[Starter, StarterActivity]>}
    */
-  updateStarterStatus(starterId: string, starterActivityDto: StarterActivityDto): Observable<[Starter, StarterActivity]> {
+  updateStarterStatus(starterId: string, starterActivityDto: StarterActivityDto, revision?: StarterRevision): Observable<[Starter, StarterActivity]> {
     return from(
-      this.supabase.from('starters').update({ status: starterActivityDto.to_status }).eq('id', starterId)
+      this.supabase.from('starters').update({
+        status: starterActivityDto.to_status,
+        ...(starterActivityDto.to_status === 'ACTIVE' && revision ? {
+          has_been_active: true,
+          ...revision,
+          cover_photo: revision.cover_photo.split('_REVISION').filter((part: string) => !part.includes('_REVISION')).join(''),
+        } : {}),
+      }).eq('id', starterId)
     ).pipe(
       mergeMap(({ error, data }: PostgrestResponse<Starter>) => {
         if (error) {
@@ -148,8 +160,24 @@ export class StartersService {
         ]);
       }),
       mergeMap((starterAndStartActivity: [Starter, StarterActivity]) => {
-        return of(starterAndStartActivity);
-      })
+        // If the status is changed to ACTIVE, we need to delete the starter revision,
+        // and update the cover photo name.
+        return forkJoin([
+          of(starterAndStartActivity[0]),
+          of(starterAndStartActivity[1]),
+          starterActivityDto.to_status === 'ACTIVE' ? this.starterRevisionService.deleteStarterRevision(starterId) : of(undefined),
+          (starterActivityDto.to_status === 'ACTIVE' && revision) ? this.moveStarterCover(
+            `${revision.user_id}/${revision.id}/${revision.cover_photo}`,
+            `${revision.user_id}/${revision.id}/${revision.cover_photo.split('_REVISION').filter((part: string) => !part.includes('_REVISION')).join('')}`
+          ) : of(undefined)
+        ]);
+      }),
+      mergeMap((starterAndStartActivity: [Starter, StarterActivity, undefined, undefined]) => {
+        return forkJoin([
+          of(starterAndStartActivity[0]),
+          of(starterAndStartActivity[1]),
+        ]);
+      }),
     );
   };
 
@@ -165,7 +193,7 @@ export class StartersService {
     return this.moveStarterCover(oldPath, newPath)
       .pipe(mergeMap(() => {
         // Lastly, update the cover photo.
-        return this.updateStarterCover(newPath, cover);
+        return this.upsertStarterCover(newPath, cover);
       }));
   }
 
@@ -195,7 +223,7 @@ export class StartersService {
    * @param {string} cover
    * @returns {Observable<undefined>}
    */
-  updateStarterCover(path: string, cover: string): Observable<undefined> {
+  upsertStarterCover(path: string, cover: string): Observable<undefined> {
     return from(this.supabase.storage.from(environment.starterCoverBucket).upload(path, decode(cover), { upsert: true }))
       .pipe(
         mergeMap(({ data, error }: { data: { Key: string } | null; error: Error | null }) => {

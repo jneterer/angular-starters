@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChange
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { encode } from 'base64-arraybuffer';
 import { GITHUB_PREFIX } from 'constants/prefixes';
-import { Starter } from 'contracts/starters/starter';
+import { Starter, StarterRevision } from 'contracts/starters/starter';
 import { environment } from 'environment';
 import { from } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
@@ -25,6 +25,7 @@ export interface StarterForm {
 })
 export class StarterFormComponent implements OnInit, OnChanges {
   @Input() starter?: Starter;
+  @Input() starterRevision?: StarterRevision;
   @Input() saveStarterError: string = '';
   @Output() saveStarter: EventEmitter<[StarterForm, boolean]> = new EventEmitter<[StarterForm, boolean]>();
   GITHUB_PREFIX: string = GITHUB_PREFIX;
@@ -50,13 +51,19 @@ export class StarterFormComponent implements OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void {
-    if (changes.starter && changes.starter.currentValue) {
-      const { cover_photo, categories, ...starterChanges }: Starter = changes.starter.currentValue;
+    let currentStarter: Starter | StarterRevision | undefined;
+    if (changes.starterRevision && changes.starterRevision.currentValue) {
+      currentStarter = changes.starterRevision.currentValue;
+    } else if (changes.starter && changes.starter.currentValue) {
+      currentStarter = changes.starter.currentValue;
+    }
+    if (currentStarter) {
+      const { cover_photo, categories, ...rest }: Starter | StarterRevision = currentStarter;
       this.newStarterForm.patchValue({
-        ...starterChanges,
-        categories: categories.join(', '),
+        ...rest,
+        categories: currentStarter.categories.join(', '),
       });
-      this.supabaseImageService.downLoadImage(`${environment.starterCoverBucket}`, `${starterChanges.user_id}/${starterChanges.id}/${cover_photo}`)
+      this.supabaseImageService.downLoadImage(`public/${environment.starterCoverBucket}`, `${rest.user_id}/${rest.id}/${cover_photo}`)
         .pipe(mergeMap((img: Blob) => {
           return from(img.arrayBuffer());
         })).subscribe((img: ArrayBuffer) => {

@@ -4,6 +4,7 @@ import { PrivateGuard } from 'shared/guards/private/private.guard';
 import { PrivateComponent } from './private.component';
 import { MyStartersResolver } from './shared/resolvers/my-starters/my-starters.resolver';
 import { StarterActivityResolver } from './shared/resolvers/starter-activity/starter-activity.resolver';
+import { StarterRevisionResolver } from './shared/resolvers/starter-revision/starter-revision.resolver';
 import { StarterResolver } from './shared/resolvers/starter/starter.resolver';
 import { NewSiteComponent } from './sites/new-site/new-site.component';
 import { SitesComponent } from './sites/sites.component';
@@ -42,6 +43,7 @@ const routes: Routes = [
         resolve: {
           starter: StarterResolver,
           starterActivity: StarterActivityResolver,
+          starterRevision: StarterRevisionResolver,
         }
       },
       {
@@ -63,6 +65,6 @@ const routes: Routes = [
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
-  providers: [MyStartersResolver, StarterResolver, StarterActivityResolver]
+  providers: [MyStartersResolver, StarterResolver, StarterActivityResolver, StarterRevisionResolver]
 })
 export class PrivateRoutingModule { }
