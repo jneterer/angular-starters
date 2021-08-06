@@ -52,7 +52,7 @@
                     <tr *ngFor="let starter of starters" class="hover:bg-gray-50 cursor-pointer"
                       [routerLink]="['/app/starters/', starter.id]">
                       <td class="px-6 py-4 flex">
-                        <app-supabase-img class="h-10 w-[60px] object-cover rounded shadow flex-shrink-0 bg-gray-100"
+                        <app-supabase-img class="h-10 w-[60px] object-cover rounded shadow flex-shrink-0"
                           [bucket]="starterCoverBucket"
                           [src]="starter.user_id + '/' + starter.id + '/' + starter.cover_photo" alt="">
                         </app-supabase-img>
