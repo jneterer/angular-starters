@@ -149,11 +149,13 @@ export class StartersService {
     return from(
       this.supabase.from('starters').update({
         status: starterActivityDto.to_status,
-        ...(starterActivityDto.to_status === 'ACTIVE' && revision ? {
+        ...(starterActivityDto.to_status === 'ACTIVE' && {
           has_been_active: true,
-          ...revision,
-          cover_photo: revision.cover_photo.split('_REVISION').filter((part: string) => !part.includes('_REVISION')).join(''),
-        } : {}),
+          ...(revision && {
+            ...revision,
+            cover_photo: revision.cover_photo.split('_REVISION').filter((part: string) => !part.includes('_REVISION')).join(''),
+          })
+        }),
       }).eq('id', starterId)
     ).pipe(
       mergeMap(({ error, data }: PostgrestResponse<Starter>) => {
