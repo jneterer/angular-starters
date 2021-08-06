@@ -98,11 +98,10 @@ export class NewStarterComponent implements OnInit, OnDestroy {
     this.submitted = true;
     if (this.newStarterForm.valid && this.user) {
       const categories: string[] = this.newStarterForm.value.categories.split(',');
-      const { cover_photo, demo_url, ...starterFormValues } = this.newStarterForm.value;
+      const { cover_photo, ...starterFormValues } = this.newStarterForm.value;
       const imgType: string = cover_photo.substring("data:image/".length, cover_photo.indexOf(";base64"))
       this.startersService.createStarter({
         ...starterFormValues,
-        demo_url: `https://${demo_url}`,
         categories,
         user_id: this.user.id,
         cover_photo: `${starterFormValues.starter_name}.${imgType}`

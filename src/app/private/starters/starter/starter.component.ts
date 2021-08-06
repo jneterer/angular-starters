@@ -59,7 +59,7 @@ export class StarterComponent implements OnInit, OnDestroy {
    * Saves the starter.
    * @param {Event} event
    */
-  saveStarter([{ cover_photo, demo_url, ...starterFormValues }, coverHasChanged]: [StarterForm, boolean]): void {
+  saveStarter([{ cover_photo, ...starterFormValues }, coverHasChanged]: [StarterForm, boolean]): void {
     if (this.starter && this.user) {
       const categories: string[] = starterFormValues.categories.split(',');
       const imgType: string = cover_photo.substring("data:image/".length, cover_photo.indexOf(";base64"));
@@ -68,7 +68,6 @@ export class StarterComponent implements OnInit, OnDestroy {
       if (this.starter.has_been_active) {
         this.starterRevisionService.createUpdateStarterRevision({
           ...starterFormValues,
-          demo_url: `https://${demo_url}`,
           categories,
           cover_photo: coverPhotoName,
           user_id: this.user.id,
@@ -117,7 +116,6 @@ export class StarterComponent implements OnInit, OnDestroy {
       } else {
         this.startersService.updateStarter(this.starter.id, {
           ...starterFormValues,
-          demo_url: `https://${demo_url}`,
           categories,
           user_id: this.user.id,
           cover_photo: coverPhotoName
