@@ -58,12 +58,12 @@
         <a href="#" class="flex-shrink-0 group block">
           <div class="flex items-center">
             <div class="h-10 w-10 rounded-full">
-              <img *ngIf="user" class="inline-block h-10 w-10 rounded-full" [src]="user.user_metadata.avatar_url"
+              <img *ngIf="userProfile" class="inline-block h-10 w-10 rounded-full" [src]="userProfile.avatar_url"
                 alt="User Avatar">
             </div>
             <div class="ml-3">
-              <p *ngIf="user" class="text-base font-medium text-gray-700 group-hover:text-gray-900">
-                {{user.user_metadata.full_name}}
+              <p *ngIf="userProfile" class="text-base font-medium text-gray-700 group-hover:text-gray-900">
+                {{userProfile.full_name}}
               </p>
               <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">
                 View profile
@@ -120,12 +120,12 @@
           <a href="#" class="flex-shrink-0 w-full group block">
             <div class="flex items-center">
               <div class="h-9 w-9 rounded-full bg-gray-300">
-                <img *ngIf="user" class="inline-block h-9 w-9 rounded-full" [src]="user.user_metadata.avatar_url"
+                <img *ngIf="userProfile" class="inline-block h-9 w-9 rounded-full" [src]="userProfile.avatar_url"
                   alt="User Avatar">
               </div>
               <div class="ml-3">
-                <p *ngIf="user" class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
-                  {{user.user_metadata.full_name}}
+                <p *ngIf="userProfile" class="text-sm font-medium text-gray-700 group-hover:text-gray-900">
+                  {{userProfile.full_name}}
                 </p>
                 <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
                   View profile

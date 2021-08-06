@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { User } from '@supabase/supabase-js';
 import { RouteData } from 'contracts/general/route-data';
+import { UserProfile } from 'contracts/user/profile';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ContentService } from 'shared/services/content/content.service';
@@ -13,7 +13,7 @@ import { SupabaseService } from 'shared/services/supabase/supabase.service';
 })
 export class PrivateComponent implements OnInit, OnDestroy {
   menuOpen: boolean = false;
-  user: User | null = null;
+  userProfile: UserProfile | null = null;
   currentUrl: string = '';
   private unsubscribe: Subject<any> = new Subject<any>();
 
@@ -23,9 +23,9 @@ export class PrivateComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.supabaseService.$user.pipe(
+    this.supabaseService.$userProfile.pipe(
       takeUntil(this.unsubscribe)
-    ).subscribe((user: User | null) => this.user = user);
+    ).subscribe((userProfile: UserProfile | null) => this.userProfile = userProfile);
     this.contentService.$routeData.pipe(
       takeUntil(this.unsubscribe)
     ).subscribe(({ currentUrl }: RouteData) => {
