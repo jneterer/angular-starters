@@ -1,3 +1,5 @@
+import { UserProfile } from "contracts/user/profile";
+
 export interface Starter {
   id: string;
   created_at: string;
@@ -11,6 +13,7 @@ export interface Starter {
   description: string;
   cover_photo: string;
   categories: string[];
+  user?: UserProfile;
 }
 
 export interface StarterRevision {
