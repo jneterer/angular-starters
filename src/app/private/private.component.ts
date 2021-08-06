@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { RouteData } from 'contracts/general/route-data';
 import { UserProfile } from 'contracts/user/profile';
 import { Subject } from 'rxjs';
@@ -18,6 +19,7 @@ export class PrivateComponent implements OnInit, OnDestroy {
   private unsubscribe: Subject<any> = new Subject<any>();
 
   constructor(
+    private router: Router,
     private supabaseService: SupabaseService,
     private contentService: ContentService
   ) { }
@@ -31,6 +33,17 @@ export class PrivateComponent implements OnInit, OnDestroy {
     ).subscribe(({ currentUrl }: RouteData) => {
       this.currentUrl = currentUrl;
       this.menuOpen = false;
+    });
+  }
+
+  /**
+   * Sign the user out and redirect them home.
+   */
+  signOut(): void {
+    this.supabaseService.signOut().subscribe(() => {
+      this.router.navigate(['/']);
+    }, (error: Error) => {
+      this.router.navigate(['/']);
     });
   }
 

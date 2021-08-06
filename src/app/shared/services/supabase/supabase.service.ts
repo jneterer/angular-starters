@@ -53,6 +53,9 @@ export class SupabaseService {
   signOut(): Observable<Error | null> {
     return from(this.supabase.auth.signOut())
       .pipe(mergeMap(({ error }) => {
+        this.session.next(null);
+        this.user.next(null);
+        this.userProfile.next(null);
         if (error) {
           return throwError(error);
         }

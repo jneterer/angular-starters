@@ -54,8 +54,8 @@
           </a> -->
         </nav>
       </div>
-      <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-        <a href="#" class="flex-shrink-0 group block">
+      <div class="flex-shrink-0 flex border-t border-gray-200">
+        <a (click)="signOut()" class="flex-shrink-0 group block cursor-pointer hover:bg-gray-100 p-4">
           <div class="flex items-center">
             <div class="h-10 w-10 rounded-full">
               <img *ngIf="userProfile" class="inline-block h-10 w-10 rounded-full" [src]="userProfile.avatar_url"
@@ -66,7 +66,7 @@
                 {{userProfile.full_name}}
               </p>
               <p class="text-sm font-medium text-gray-500 group-hover:text-gray-700">
-                View profile
+                Sign Out
               </p>
             </div>
           </div>
@@ -116,8 +116,8 @@
             </a> -->
           </nav>
         </div>
-        <div class="flex-shrink-0 flex border-t border-gray-200 p-4">
-          <a href="#" class="flex-shrink-0 w-full group block">
+        <div class="flex-shrink-0 flex border-t border-gray-200">
+          <a (click)="signOut()" class="flex-shrink-0 w-full group block cursor-pointer hover:bg-gray-100 p-4">
             <div class="flex items-center">
               <div class="h-9 w-9 rounded-full bg-gray-300">
                 <img *ngIf="userProfile" class="inline-block h-9 w-9 rounded-full" [src]="userProfile.avatar_url"
@@ -128,7 +128,7 @@
                   {{userProfile.full_name}}
                 </p>
                 <p class="text-xs font-medium text-gray-500 group-hover:text-gray-700">
-                  View profile
+                  Sign Out
                 </p>
               </div>
             </div>
