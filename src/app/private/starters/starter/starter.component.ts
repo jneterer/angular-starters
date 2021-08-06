@@ -70,7 +70,7 @@ export class StarterComponent implements OnInit, OnDestroy {
           ...starterFormValues,
           categories,
           cover_photo: coverPhotoName,
-          user_id: this.user.id,
+          user_id: this.starter.user_id,
           id: this.starter.id,
         }).pipe(
           mergeMap((result: StarterRevision) => {
@@ -109,6 +109,7 @@ export class StarterComponent implements OnInit, OnDestroy {
             ]);
           })
         ).subscribe((response: [StarterRevision, undefined]) => {
+          this.saveStarterError = '';
           this.starterRevision = response[0];
         }, (error: Error) => {
           this.saveStarterError = error.message;
@@ -151,6 +152,7 @@ export class StarterComponent implements OnInit, OnDestroy {
             ]);
           })
         ).subscribe((response: [Starter, undefined]) => {
+          this.saveStarterError = '';
           this.starter = response[0];
         }, (error: Error) => {
           this.saveStarterError = error.message;
@@ -165,11 +167,11 @@ export class StarterComponent implements OnInit, OnDestroy {
    */
   saveCommentAndStatus(event: Event): void {
     this.submitted = true;
-    if (this.comment.valid && this.starter) {
+    if (this.comment.valid && this.starter && this.user) {
       if (this.starterStatus !== this.starter.status) {
         this.startersService.updateStarterStatus(this.starter.id, {
           starter_id: this.starter.id,
-          user_id: this.starter.user_id,
+          user_id: this.user.id,
           comment: this.comment.value,
           from_status: this.starter.status,
           to_status: this.starterStatus,
@@ -188,7 +190,7 @@ export class StarterComponent implements OnInit, OnDestroy {
       } else {
         this.starterActivityService.createActivityForStarter({
           starter_id: this.starter.id,
-          user_id: this.starter.user_id,
+          user_id: this.user.id,
           comment: this.comment.value
         }).subscribe((activity: StarterActivity) => {
           this.submitted = false;
