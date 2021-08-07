@@ -9,7 +9,7 @@ As of late I have been developing in React and React Native, but I have a true l
 ## Submission Info
 
 - Live site at [angularstarters.io](https://angularstarters.io) hosted by Netlify
-- YouTube demo [video](https://youtu.be/ua5BvNSnH2k).
+- YouTube demo [video](https://youtu.be/_8zkXY7QBHM).
 - My [twitter](https://twitter.com/jacobneterer)
 
 ## Use of Supabase
