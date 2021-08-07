@@ -39,7 +39,7 @@ export class NewStarterComponent implements OnInit, OnDestroy {
       const imgType: string = cover_photo.substring("data:image/".length, cover_photo.indexOf(";base64"))
       this.startersService.createStarter({
         ...starterFormValues,
-        categories: categories.split(','),
+        categories: categories.split(', '),
         user_id: this.user.id,
         cover_photo: `${starterFormValues.starter_name}.${imgType}`
       }, cover_photo.split(',')[1])

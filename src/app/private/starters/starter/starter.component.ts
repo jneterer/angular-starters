@@ -62,7 +62,7 @@ export class StarterComponent implements OnInit, OnDestroy {
    */
   saveStarter([{ cover_photo, ...starterFormValues }, coverHasChanged]: [StarterForm, boolean]): void {
     if (this.starter && this.user) {
-      const categories: string[] = starterFormValues.categories.split(',');
+      const categories: string[] = starterFormValues.categories.split(', ');
       const imgType: string = cover_photo.substring("data:image/".length, cover_photo.indexOf(";base64"));
       const coverPhotoName: string = `${starterFormValues.starter_name}${this.starter.has_been_active ? '_REVISION' : ''}.${imgType}`;
       const coverPhotoBase64: string = cover_photo.split(',')[1];
