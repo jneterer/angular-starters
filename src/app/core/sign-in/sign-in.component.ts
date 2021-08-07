@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { Session } from '@supabase/supabase-js';
-import { of, Subject, timer } from 'rxjs';
+import { Session, User } from '@supabase/supabase-js';
+import { UserProfile } from 'contracts/user/profile';
+import { combineLatest, of, Subject, timer } from 'rxjs';
 import { delayWhen, takeUntil } from 'rxjs/operators';
 import { SupabaseService } from 'shared/services/supabase/supabase.service';
 
@@ -20,19 +21,23 @@ export class SignInComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.supabaseService.$session.pipe(
+    combineLatest([
+      this.supabaseService.$session,
+      this.supabaseService.$user,
+      this.supabaseService.$userProfile,
+    ]).pipe(
       takeUntil(this.unsubscribe),
-      delayWhen((session: Session | null) => {
+      delayWhen(([session, user, userProfile]: [Session | null, User | null, UserProfile | null]) => {
         // If there is a session, return a timer that will wait for the session
         // to be initialized in local storage.
-        if (!!session) {
+        if (!!session && !!user && !!userProfile) {
           this.isRedirecting = true;
           return timer(500);
         }
-        return of(null);
+        return of([session, user, userProfile]);
       }),
-    ).subscribe((session: Session | null) => {
-      if (session) this.router.navigate(['/app/starters']);
+    ).subscribe(([session, user, userProfile]: [Session | null, User | null, UserProfile | null]) => {
+      if (session && user && userProfile) this.router.navigate(['/app/starters']);
     });
   }
 

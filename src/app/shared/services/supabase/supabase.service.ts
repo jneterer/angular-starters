@@ -38,6 +38,8 @@ export class SupabaseService {
   signIn(): Observable<Error | null> {
     return from(this.supabase.auth.signIn({
       provider: 'github',
+    }, {
+      redirectTo: environment.redirectTo
     })).pipe(mergeMap(({ error }) => {
       if (error) {
         return throwError(error);
