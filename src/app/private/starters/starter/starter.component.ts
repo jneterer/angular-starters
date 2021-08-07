@@ -121,7 +121,7 @@ export class StarterComponent implements OnInit, OnDestroy {
         this.startersService.updateStarter(this.starter.id, {
           ...starterFormValues,
           categories,
-          user_id: this.starter.id,
+          user_id: this.starter.user_id,
           cover_photo: coverPhotoName
         }).pipe(
           mergeMap((result: Starter) => {
