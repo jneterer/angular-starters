@@ -218,7 +218,7 @@ export class StarterComponent implements OnInit, OnDestroy {
     if (this.starter) {
       this.startersService.deleteStarter(this.starter.id, this.starter?.user_id)
         .subscribe(() => {
-          this.router.navigate([`/starters`]);
+          this.router.navigate([`/app/starters`]);
         }, (error: Error) => {
           this.deleteStarterError = error.message;
         });
